@@ -1,3 +1,6 @@
+[user]
+    email = Norito.Kato@sony.com
+    name = Norito Kato
 [alias]
     lg = log --graph --date-order -C -M --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --date=short
     lgs = log --stat
