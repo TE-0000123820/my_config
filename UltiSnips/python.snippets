@@ -1,0 +1,44 @@
+snippet isub "import subprocess"
+import subprocess
+endsnippet
+
+snippet io "import os"
+import os
+endsnippet
+
+snippet is "import sys"
+import sys
+endsnippet
+
+snippet pr "print" w
+print('$1')
+endsnippet
+
+snippet pf "%f" w
+%f
+endsnippet
+
+snippet pd "%d" w
+%d
+endsnippet
+
+snippet ps "%s" w
+%s
+endsnippet
+
+snippet args "args"
+"""
+progc args
+"""
+parser = argparse.ArgumentParser(description='')
+parser.add_argument('c_file', type=str, metavar='c_file',
+                    help='c_file')
+parser.add_argument('--verbose', dest='verbose', action='store_const',
+        const=True, default=False,
+        help='specify verbose mode.')
+args = parser.parse_args()
+endsnippet
+
+snippet res "re.search" 
+re.search(
+endsnippet

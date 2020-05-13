@@ -1,0 +1,19 @@
+[alias]
+    lg = log --graph --date-order -C -M --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --date=short
+    lgs = log --stat
+    lga = log --graph --date-order -C -M --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --date=short --all
+    lgo = log --oneline --graph --decorate
+    lgm = log --author Norito --graph --date-order -C -M --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --date=short
+    co = checkout
+    d = diff
+    l = log
+    lp = log -p
+    a = add
+    st = status
+    b = branch
+    p = pull
+    cl = clone
+    chp = cherry-pick
+    root = rev-parse --show-toplevel
+[core]
+  pager = env LESSCHARSET=utf-8 less -cm -R
