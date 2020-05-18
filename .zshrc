@@ -98,7 +98,7 @@ ulimit -c 100000000
 ulimit -s 1000000
 
 #
-# aliases
+# aliases {{{
 #
 alias C="source ~/.vimrc.cwd"
 alias K="kill -9 %"
@@ -135,7 +135,7 @@ alias nv="nvim"
 alias p2="python2"
 alias p3="python3"
 alias p="python"
-alias po="perl -E"
+alias po="perl -nE"
 alias parallel='parallel --gnu'
 alias pd="popd"
 alias r="anyframe-widget-cdr"
@@ -156,9 +156,10 @@ alias vimbin='v -c ":BinEdit'
 alias vimgit="v -c \":Gstatus\""
 alias vimps="v -c \":new | :wincmd o | :PsThisBuffer\""
 alias xxd='xxd -g 1'
+# }}}
 
 #
-# g aliases
+# g aliases {{{
 #
 LOG_FILE_NAME='log'
 alias -g L='2>&1 |less -R'
@@ -168,6 +169,7 @@ alias -g TL='2>&1 |tee ${LOG_FILE_NAME}'
 alias -g TLA='2>&1 |tee -a ${LOG_FILE_NAME}'
 alias -g TLH='2>&1 |tee ~/${LOG_FILE_NAME}'
 alias -g BP='; bp'
+# }}}
 
 if [ "`uname|grep CYGWIN`" != "" ]; then
     chcp.com 65001
@@ -186,7 +188,12 @@ setopt prompt_subst
 zstyle ':vcs_info:*' formats '%s|%F{green}%b%f'    
 zstyle ':vcs_info:*' actionformats '%s|%F{green}%b%f(%F{red}%a%f)'    
 # プロンプト表示直前にvcs_info呼び出し    
-precmd() { vcs_info }    
+precmd() {
+    vcs_info
+
+    psvar=()
+    psvar[1]=$(jobs | wc -l);
+}
 
 # keychain
 #keychain $HOME/.ssh/id_rsa
