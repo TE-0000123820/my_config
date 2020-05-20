@@ -1,4 +1,5 @@
-PROMPT=$'%{\e[31m%}%n%{\e[m%}@%{\e[32m%}%m%{\e[m%}:${vcs_info_msg_0_}:(%1v, $$) %D{%Y/%m/%d %H:%M} %{\e[1;33m%}%~%{\e[m%}\n%# '
+PROMPT_STR=$'(`basename \"$VIRTUAL_ENV\"`) %{\e[31m%}%n%{\e[m%}@%{\e[32m%}%m%{\e[m%}:${vcs_info_msg_0_}:(%1v, $$) %D{%Y/%m/%d %H:%M} %{\e[1;33m%}%~%{\e[m%}\n%{%(?.$bg[black].$bg[red])%}%#%#%#%{$reset_color%} '
+PROMPT=${PROMPT_STR}
 
 export EDITOR='vim'
 export PATH=~/bin:~/utils/:${PATH}
@@ -75,6 +76,9 @@ zstyle ':zle:*' word-style unspecified
 autoload -U compinit
 compinit -u
 
+autoload -U colors
+colors
+
 #
 # history settings
 #
@@ -106,6 +110,7 @@ alias Kill='kill -9'
 alias b="bg"
 alias bp="echo $'\a'"
 alias btar="tar --use-compress-program=pbzip2"
+alias btarc="tar --use-compress-program=pbzip2 -cf"
 alias c="cd"
 alias cmake="cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
 alias df="df -h"
@@ -145,6 +150,11 @@ alias tp="top"
 alias t="tmux -u"
 alias ta="tmux -u a"
 alias tig="env LANG=ja_JP.UTF-8 tig status"
+less_with_unbuffer () {
+    unbuffer "$@" |& less -SR
+}
+alias ub=less_with_unbuffer
+alias ul="ulimit -c 1000000000"
 alias ulimc="ulimit -c 1000000000"
 alias ust="stty stop undef"
 #alias v="vim"
@@ -155,7 +165,11 @@ alias vg="vimgit"
 alias vimbin='v -c ":BinEdit'
 alias vimgit="v -c \":Gstatus\""
 alias vimps="v -c \":new | :wincmd o | :PsThisBuffer\""
+alias xtar="tar --use-compress-prog=pxz"
+alias xtarc="tar --use-compress-prog=pxz -cf"
 alias xxd='xxd -g 1'
+alias ztar="tar --use-compress-prog=pigz"
+alias ztarc="tar --use-compress-prog=pigz -cf"
 # }}}
 
 #
@@ -193,6 +207,7 @@ precmd() {
 
     psvar=()
     psvar[1]=$(jobs | wc -l);
+    PROMPT=${PROMPT_STR}
 }
 
 # keychain
