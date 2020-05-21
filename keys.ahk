@@ -1,5 +1,5 @@
 ﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
-; #Warn  ; Enable warnings to assist with detecting common errors.
+#Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
@@ -17,13 +17,15 @@ FormatTime,TimeString,,yyyy/MM/dd
 Send,%TimeString%
 Return
 
-;
-; Window focus
-;
-!h:: Left
-!l:: Right
-!j:: Down
-!k:: Up
+::ts//::
+FormatTime,TimeString,,M/dd HHmm
+Send,%TimeString% テレワーク開始します
+Return
+
+::te//::
+FormatTime,TimeString,,M/dd HHmm
+Send,%TimeString% テレワーク終了します
+Return
 
 +^w::
     ; Switch focus among the same class window
@@ -38,11 +40,11 @@ Return
     else if Key=i
         Send,+{Insert}
     else if Key=c
-        run,C:\cygwin64\bin\mintty.exe -i /Cygwin-Terminal.ico -
+        run,C:\tool\link\mintty.exe.lnk -i /Cygwin-Terminal.ico -
     else if Key=v
-        run,C:\tools\vim80-kaoriya-win64\gvim.exe
+        run,C:\tool\link\gvim.exe.lnk
     else if Key=e
-        run,iexplore.exe
+        run,C:\tool\link\gvim.exe.lnk %A_ScriptFullPath%
     else if Key=r
         Reload
     return
@@ -67,6 +69,9 @@ Return
         Send,{Right}
     return
 
+;
+; Window focus
+;
 !^f::
     Input Key, L1
     if Key=c
