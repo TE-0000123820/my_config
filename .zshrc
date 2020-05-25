@@ -1,17 +1,18 @@
 PROMPT_STR=$'(`basename \"$VIRTUAL_ENV\"`) %{\e[31m%}%n%{\e[m%}@%{\e[32m%}%m%{\e[m%}:${vcs_info_msg_0_}:(%1v, $$) %D{%Y/%m/%d %H:%M} %{\e[1;33m%}%~%{\e[m%}\n%{%(?.$bg[black].$bg[red])%}%#%#%#%{$reset_color%} '
+PS4_STR='[%D{%Y/%m/%d %H:%M:%S.%6.} ]+ '
 PROMPT=${PROMPT_STR}
+PS4=${PS4_STR}
 
-export EDITOR='vim'
+VIM=nvim
+export EDITOR=${VIM}
 export PATH=~/bin:~/utils/:${PATH}
 export TERM=xterm-256color
-export LANG=C
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 export http_proxy="http://proxy.osk.sony.co.jp:10080/"
 export https_proxy="https://proxy.osk.sony.co.jp:10080/"
 export no_proxy=localhost,127.0.0.0/8,::1,gitlabce.misty.sdna.sony.co.jp,kc.misty.sdna.sony.co.jp
 export PERL5LIB=${MISC_DIR}
-
-# fzf
-source ${MISC_DIR}/.fzf.zsh
 
 # dir color
 eval `dircolors ${MISC_DIR}/.colorrc`
@@ -60,23 +61,6 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt append_history
 setopt share_history
-bindkey "${key[Up]}" up-line-or-local-history
-bindkey "${key[Down]}" down-line-or-local-history
-bindkey "^P" up-line-or-local-history
-bindkey "^N" down-line-or-local-history
-up-line-or-local-history() {
-    zle set-local-history 1
-    zle up-line-or-history
-    zle set-local-history 0
-}
-zle -N up-line-or-local-history
-down-line-or-local-history() {
-    zle set-local-history 1
-    zle down-line-or-history
-    zle set-local-history 0
-}
-zle -N down-line-or-local-history
-
 # }}}
 
 autoload -Uz select-word-style
@@ -107,8 +91,6 @@ ulimit -s 1000000
 # aliases {{{
 #
 alias C="source ~/.vimrc.cwd"
-alias K="kill -9 %"
-alias Kill='kill -9'
 alias b="bg"
 alias bp="echo $'\a'"
 alias btar="tar --use-compress-program=pbzip2"
@@ -130,7 +112,8 @@ alias ip="ipython3"
 alias j="jobs"
 alias java='java -Dfile.encoding=UTF-8'
 alias javac='javac -J-Dfile.encoding=UTF-8'
-alias k="kill -9"
+#alias k="kill -9"
+alias Kill='kill -9'
 alias l="ls -F --color=auto"
 alias ll="ls -F --color=auto -l"
 alias llh="ls -F --color=auto -l -h"
@@ -162,7 +145,6 @@ alias ub=less_with_unbuffer
 alias ul="ulimit -c 1000000000"
 alias ulimc="ulimit -c 1000000000"
 alias ust="stty stop undef"
-VIM=nvim
 v () {
     if [ "$#" = "0" ] ; then
         ${VIM} -c ":FZFMru"
@@ -219,15 +201,12 @@ precmd() {
     psvar=()
     psvar[1]=$(jobs | wc -l);
     PROMPT=${PROMPT_STR}
+    PS4=${PS4_STR}
 }
 
 # keychain
 #keychain $HOME/.ssh/id_rsa
 #source $HOME/.keychain/`uname -n`-sh
-
-# syntax highlighting
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
 #
 # recompile zsh scripts {{{
@@ -242,3 +221,39 @@ if [ ! -f ~/.zshrc.zwc -o ~/.zshrc -nt ~/.zshrc.zwc ]; then
    zcompile ~/.zshrc
 fi
 # }}}
+
+#
+# zplug
+#
+source ${MISC_DIR}/zplug/init.zsh
+
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+zplug "junegunn/fzf-bin"
+zplug "b4b4r07/easy-oneliner"
+export EASY_ONE_REFFILE=${MISC_DIR}/easy-oneliner.txt
+zplug "zsh-users/zsh-syntax-highlighting"
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+zplug "supercrabtree/k"
+zplug "zsh-users/zsh-history-substring-search"
+bindkey "^${key[Up]}" history-substring-search-up
+bindkey "^${key[Down]}" history-substring-search-down
+bindkey "${key[Up]}" up-line-or-local-history
+bindkey "${key[Down]}" down-line-or-local-history
+bindkey "^P" up-line-or-local-history
+bindkey "^N" down-line-or-local-history
+up-line-or-local-history() {
+    zle set-local-history 1
+    #zle up-line-or-history
+    zle history-substring-search-up
+    zle set-local-history 0
+}
+zle -N up-line-or-local-history
+down-line-or-local-history() {
+    zle set-local-history 1
+    #zle down-line-or-history
+    zle history-substring-search-down
+    zle set-local-history 0
+}
+zle -N down-line-or-local-history
+
+zplug load --verbose
