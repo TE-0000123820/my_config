@@ -14,7 +14,7 @@ set encoding=utf-8
 set ruler
 set nonumber
 set statusline=%f:%l(%L)\ %m%r%h%w\ [%{&fenc}][%{&ff}]%y%6l,%-6c[%p%%(%l)]
-"set cursorline
+set cursorline
 "set cursorcolumn
 set fileformats=unix,dos,mac
 set grepprg=mgrep
@@ -26,7 +26,8 @@ set timeoutlen=1000
 set directory=~/vim_swap
 "set foldmethod=syntax
 set foldmethod=marker
-set foldlevel=10
+set foldlevel=0
+set foldlevelstart=0
 
 set guioptions=M
 set filetype=off
@@ -54,13 +55,14 @@ endif
 au! QuickfixCmdPost vimgrep,grep,make if len(getqflist()) != 0 | bo copen | wincmd p | endif
 
 "
-" python mode
+" python mode {{{
 "
 let g:pymode_folding = 0
 let g:pymode_lint_ignore = "E501,E226,E225,E228"
 let g:pymode_lint_write = 0
 autocmd! FileType python
 autocmd  FileType python nnoremap <leader>l :PyLint<CR>
+" }}}
 
 " md preview
 autocmd FileType markdown set makeprg=pandoc\ -r\ markdown\ -t\ html\ -c\ ~/devel/css/markdown.css\ %\ -o\ /tmp/md.html\ &&\ open\ /tmp/md.html
@@ -365,7 +367,7 @@ nnoremap Ul :Unite -direction=below line<cr>
 
 "Bundle 'tomtom/quickfixsigns_vim'
 "let g:quickfixsigns_events = ['BufReadPost', 'BufEnter', 'CursorHold', 'CursorHoldI', 'InsertLeave', 'InsertEnter', 'User']
-"Bundle 'Shougo/neomru.vim'
+Bundle 'Shougo/neomru.vim'
 Bundle 'MultipleSearch'
 
 "
@@ -401,7 +403,9 @@ Bundle 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Bundle 'junegunn/fzf.vim'
 let g:fzf_layout = { 'window': 'bel split' }
 "let g:fzf_layout = { 'window': '~40%' }
+nnoremap Ff :FZFMru<cr>
 " }}}
+Bundle 'pbogut/fzf-mru.vim'
 
 "Bundle 'Raimondi/vim_search_objects'
 "Bundle 'simeji/winresizer'

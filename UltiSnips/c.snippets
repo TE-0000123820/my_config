@@ -79,12 +79,12 @@ snippet oo "||" w
 || 
 endsnippet
 
-snippet #e "#endif" w
+snippet se "#endif" w
 #endif
 endsnippet
 
-snippet #i "#if 0" w
-#if 0
+snippet si "#ifdef" w
+#ifdef DEBUG
 endsnippet
 
 snippet /* "/**/" w
@@ -134,6 +134,10 @@ snippet spr "saprintf()" w
 saprintf("$1\n"$2);
 endsnippet
 
+snippet dp "DEBUGPRINT()" w
+DEBUGPRINT("$1\n"$2);
+endsnippet
+
 snippet pr "printf()" w
 printf("$1\n"$2);
 endsnippet
@@ -159,3 +163,13 @@ snippet sonyh "sony header comment"
  * SUCH DAMAGE.
  */
 endsnippet
+
+
+snippet st "start timer"
+start_timer(${1:0});
+endsnippet
+
+snippet et "stop timer"
+stop_timer(${1:0});
+endsnippet
+

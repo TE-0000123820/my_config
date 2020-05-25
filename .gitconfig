@@ -15,7 +15,7 @@
     st = status
     b = branch
     p = pull
-    cl = clone
+    cl = clone --recursive
     chp = cherry-pick
     root = rev-parse --show-toplevel
 [core]

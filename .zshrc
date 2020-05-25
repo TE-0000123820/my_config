@@ -8,6 +8,7 @@ export LANG=C
 export http_proxy="http://proxy.osk.sony.co.jp:10080/"
 export https_proxy="https://proxy.osk.sony.co.jp:10080/"
 export no_proxy=localhost,127.0.0.0/8,::1,gitlabce.misty.sdna.sony.co.jp,kc.misty.sdna.sony.co.jp
+export PERL5LIB=${MISC_DIR}
 
 # fzf
 source ${MISC_DIR}/.fzf.zsh
@@ -50,7 +51,15 @@ function cd-up { zle push-line && LBUFFER='builtin cd ..' && zle accept-line }
 zle -N cd-up
 bindkey "^O" cd-up
 
-# history
+
+#
+# history settings {{{
+#
+HISTFILE="$HOME/.zhistory"
+HISTSIZE=10000
+SAVEHIST=10000
+setopt append_history
+setopt share_history
 bindkey "${key[Up]}" up-line-or-local-history
 bindkey "${key[Down]}" down-line-or-local-history
 bindkey "^P" up-line-or-local-history
@@ -68,33 +77,26 @@ down-line-or-local-history() {
 }
 zle -N down-line-or-local-history
 
+# }}}
+
 autoload -Uz select-word-style
 select-word-style default
 zstyle ':zle:*' word-chars " _-./;@"
 zstyle ':zle:*' word-style unspecified
 
 autoload -U compinit
-compinit -u
+compinit
 
 autoload -U colors
 colors
-
-#
-# history settings
-#
-HISTFILE="$HOME/.zhistory"
-HISTSIZE=10000
-SAVEHIST=10000
 
 setopt hist_ignore_all_dups
 setopt hist_reduce_blanks
 setopt auto_pushd
 setopt noautoremoveslash
-setopt append_history
 setopt auto_param_slash
 setopt magic_equal_subst
-setopt AUTO_CD
-setopt share_history
+setopt auto_cd
 
 zstyle ':completion:*:default' menu select=1
 
@@ -136,11 +138,14 @@ alias ls="ls -F --color=auto"
 alias lv='lv -c'
 alias m="make"
 alias man='(){ man $1 | col -b | view -}'
+alias md='md5sum'
 alias nv="nvim"
 alias p2="python2"
 alias p3="python3"
 alias p="python"
-alias po="perl -nE"
+alias perl="perl -W"
+alias po="perl -W -MOneLinerLib"
+alias pon="perl -MOneLinerLib -W -nE"
 alias parallel='parallel --gnu'
 alias pd="popd"
 alias r="anyframe-widget-cdr"
@@ -157,14 +162,20 @@ alias ub=less_with_unbuffer
 alias ul="ulimit -c 1000000000"
 alias ulimc="ulimit -c 1000000000"
 alias ust="stty stop undef"
-#alias v="vim"
-alias v="nvim"
-#alias vd="vimdiff"
-alias vd="nvim -d"
+VIM=nvim
+v () {
+    if [ "$#" = "0" ] ; then
+        ${VIM} -c ":FZFMru"
+        echo MRU
+    else
+        ${VIM} $*
+    fi
+}
+alias vd="${VIM} -d"
 alias vg="vimgit"
-alias vimbin='v -c ":BinEdit'
-alias vimgit="v -c \":Gstatus\""
-alias vimps="v -c \":new | :wincmd o | :PsThisBuffer\""
+alias vimbin='${VIM} -c ":BinEdit'
+alias vimgit="${VIM} -c \":Gstatus\""
+alias vimps="${VIM} -c \":new | :wincmd o | :PsThisBuffer\""
 alias xtar="tar --use-compress-prog=pxz"
 alias xtarc="tar --use-compress-prog=pxz -cf"
 alias xxd='xxd -g 1'
@@ -213,3 +224,21 @@ precmd() {
 # keychain
 #keychain $HOME/.ssh/id_rsa
 #source $HOME/.keychain/`uname -n`-sh
+
+# syntax highlighting
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
+#
+# recompile zsh scripts {{{
+#
+if [ ! -f ${MISC_DIR}/.zshrc.zwc -o ${MISC_DIR}/.zshrc -nt ${MISC_DIR}/.zshrc.zwc ]; then
+   zcompile ${MISC_DIR}/.zshrc
+fi
+if [ ! -f ${MISC_DIR}/.fzf.zsh.zwc -o ${MISC_DIR}/.fzf.zsh -nt ${MISC_DIR}/.fzf.zsh.zwc ]; then
+   zcompile ${MISC_DIR}/.fzf.zsh
+fi
+if [ ! -f ~/.zshrc.zwc -o ~/.zshrc -nt ~/.zshrc.zwc ]; then
+   zcompile ~/.zshrc
+fi
+# }}}
