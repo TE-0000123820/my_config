@@ -31,6 +31,13 @@
 : Halide
 [Halide build sa] make CXX=g++-7 LLVM_CONFIG=llvm-config-3.8 CLANG=clang-3.8  -j8
 
+: gcc
+[gcc color] gcc -fdiagnostics-color=always
+[g++ color] g++ -fdiagnostics-color=always
+
+: perl
+[perl reverse] perl -e 'print reverse <>'
+
 : misc
 [edit misc] v ${MISC_DIR}/.zshrc
 [export LD_LIBRARY_PATH] export LD_LIBRARY_PATH=
