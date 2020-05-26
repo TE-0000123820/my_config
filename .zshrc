@@ -238,8 +238,6 @@ zplug "junegunn/fzf-bin"
 zplug "b4b4r07/easy-oneliner"
 export EASY_ONE_REFFILE=${MISC_DIR}/easy-oneliner.txt
 zplug "zsh-users/zsh-syntax-highlighting"
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
-ZSH_HIGHLIGHT_STYLES[globbing]='fg=cyan'
 zplug "supercrabtree/k"
 zplug "zsh-users/zsh-history-substring-search"
 bindkey "^${key[Up]}" history-substring-search-up
@@ -264,3 +262,6 @@ down-line-or-local-history() {
 zle -N down-line-or-local-history
 
 zplug load --verbose
+
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+ZSH_HIGHLIGHT_STYLES[globbing]='fg=cyan'
