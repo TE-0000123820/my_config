@@ -9,7 +9,7 @@
     lgm = log --author Norito --graph --date-order -C -M --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --date=short
     co = checkout
     d = diff
-    l = log
+    l = log --color
     lp = log -p
     a = add
     st = status

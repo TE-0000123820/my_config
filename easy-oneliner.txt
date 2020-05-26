@@ -33,5 +33,6 @@
 
 : misc
 [edit misc] v ${MISC_DIR}/.zshrc
+[export LD_LIBRARY_PATH] export LD_LIBRARY_PATH=
 
 # vim:ft=sh

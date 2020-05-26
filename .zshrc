@@ -13,6 +13,7 @@ export http_proxy="http://proxy.osk.sony.co.jp:10080/"
 export https_proxy="https://proxy.osk.sony.co.jp:10080/"
 export no_proxy=localhost,127.0.0.0/8,::1,gitlabce.misty.sdna.sony.co.jp,kc.misty.sdna.sony.co.jp
 export PERL5LIB=${MISC_DIR}
+export REPORTTIME=3
 
 # dir color
 eval `dircolors ${MISC_DIR}/.colorrc`
@@ -68,11 +69,9 @@ select-word-style default
 zstyle ':zle:*' word-chars " _-./;@"
 zstyle ':zle:*' word-style unspecified
 
-autoload -U compinit
-compinit
-
-autoload -U colors
-colors
+autoload -Uz compinit && compinit
+autoload -Uz colors && colors
+autoload -Uz zmv
 
 setopt hist_ignore_all_dups
 setopt hist_reduce_blanks
@@ -132,6 +131,7 @@ alias pon="perl -MOneLinerLib -W -nE"
 alias parallel='parallel --gnu'
 alias pd="popd"
 alias r="anyframe-widget-cdr"
+alias rg="rg --color=always"
 alias s="source"
 alias ssh='ssh -Y'
 alias tp="top"
@@ -162,6 +162,7 @@ alias vimps="${VIM} -c \":new | :wincmd o | :PsThisBuffer\""
 alias xtar="tar --use-compress-prog=pxz"
 alias xtarc="tar --use-compress-prog=pxz -cf"
 alias xxd='xxd -g 1'
+alias zmvw="noglob zmv -W"
 alias ztar="tar --use-compress-prog=pigz"
 alias ztarc="tar --use-compress-prog=pigz -cf"
 # }}}
@@ -171,7 +172,7 @@ alias ztarc="tar --use-compress-prog=pigz -cf"
 #
 LOG_FILE_NAME='log'
 alias -g L='2>&1 |less -R'
-alias -g G='2>&1 |grep '
+alias -g G='2>&1 |grep --color=always'
 alias -g RL='> ${LOG_FILE_NAME} 2>&1'
 alias -g TL='2>&1 |tee ${LOG_FILE_NAME}'
 alias -g TLA='2>&1 |tee -a ${LOG_FILE_NAME}'
@@ -222,6 +223,10 @@ if [ ! -f ~/.zshrc.zwc -o ~/.zshrc -nt ~/.zshrc.zwc ]; then
    zcompile ~/.zshrc
 fi
 # }}}
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source ${MISC_DIR}/.fzf.zsh
 
 #
 # zplug

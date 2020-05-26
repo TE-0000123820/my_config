@@ -402,6 +402,14 @@ let g:ycm_filetype_blacklist = {}
 Bundle 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Bundle 'junegunn/fzf.vim'
 let g:fzf_layout = { 'window': 'bel split' }
+let g:fzf_preview_window = 'right:60%'
+command! -bang -nargs=* LinesWithPreview
+    \ call fzf#vim#grep(
+    \   'rg --with-filename --color always --column --line-number --no-heading --smart-case . '.fnameescape(expand('%')), 1,
+    \   fzf#vim#with_preview({'options': '--delimiter : --nth 4.. --no-sort --color hl:2,hl+:14'}, 'up:50%', '?'),
+    \   1) 
+"   'rg --with-filename --column --line-number --no-heading --color=always --smart-case . '.fnameescape(expand('%')), 1,
+nnoremap H :LinesWithPreview<CR>
 "let g:fzf_layout = { 'window': '~40%' }
 nnoremap Ff :FZFMru<cr>
 " }}}
