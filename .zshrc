@@ -153,6 +153,7 @@ v () {
         ${VIM} $*
     fi
 }
+alias vc="${VIM} -c AnsiEsc"
 alias vd="${VIM} -d"
 alias vg="vimgit"
 alias vimbin='${VIM} -c ":BinEdit'

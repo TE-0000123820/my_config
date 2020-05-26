@@ -445,6 +445,7 @@ Bundle 'tomasr/molokai'
 Bundle 'mechatroner/rainbow_csv'
 Bundle 'jreybert/vimagit'
 Bundle 'tpope/vim-rhubarb'
+Bundle 'powerman/vim-plugin-AnsiEsc'
 
 "
 " gtags
