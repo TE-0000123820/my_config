@@ -227,6 +227,7 @@ fi
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 source ${MISC_DIR}/.fzf.zsh
+export FZF_DEFAULT_OPTS="-e"
 
 #
 # zplug
