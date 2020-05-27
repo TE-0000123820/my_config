@@ -1,7 +1,12 @@
 # for
-snippet for
+snippet for "for ${2:i} in ${$1:array[@]}; do \n ${3:echo $i} \n done"
 for ${2:i} in ${$1:array[@]}; do
     ${3:echo $i}
 done
 endsnippet
 
+# bash check
+snippet bashcheck "if [ ! `readlink /proc/$$/exe | grep bash` ] ; then echo 'ERROR: use bash' ; exit 1; fi"
+if [ ! \`readlink /proc/$$/exe | grep bash\` ] ; then echo "ERROR: use bash" ; exit 1; fi
+set -o pipefail
+endsnippet

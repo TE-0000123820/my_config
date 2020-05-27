@@ -47,5 +47,8 @@
 [export LD_LIBRARY_PATH] export LD_LIBRARY_PATH=
 [python ve setup] source ~/virtualenv_py36/bin/activate
 [check current shell] readlink /proc/$$/exe
+[check current shell bash] readlink /proc/$$/exe | grep bash
+[check current shell bash if] if [ ! `readlink /proc/$$/exe | grep bash` ] ; then echo "ERROR: use bash" ; exit 1; fi; set -e -o pipefail
+[redirect: file1と標準出力に全ログ、file2にフィルタリングしたログを出力する] command 2>&1 | tee >(grep -i error > file2) | tee file1
 
 # vim:ft=sh
