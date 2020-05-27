@@ -101,6 +101,9 @@ sort -u | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
 
 # rg
 frg() {
+  local target args
   if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
-  rg --color always -n "$1" | fzf --ansi --preview "sh ${MISC_DIR}/fzf_preview.sh {}"
+  target=$(rg --smart-case --color always -n $1 $2 | fzf --ansi --preview "sh ${MISC_DIR}/fzf_preview.sh {}") || return
+  args=$(echo $target | perl -ne 'if(/(\S+):(\d+):/) { print qq{+$2 $1 -c "normal zz"}; }')
+  eval "${EDITOR} ${args}"
 }
