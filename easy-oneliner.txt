@@ -27,6 +27,7 @@
 #
 : AED
 [AED error test run] time bash ../tools/run_error_check_fixed_par.sh ~/file_list_all.new.txt
+[build] make clean gen_table gen_constraint_table FLOAT2FIXED=1 && make clean all FLOAT2FIXED=1
 
 : Halide
 [Halide build sa] make CXX=g++-7 LLVM_CONFIG=llvm-config-3.8 CLANG=clang-3.8  -j8
@@ -38,8 +39,13 @@
 : perl
 [perl reverse] perl -e 'print reverse <>'
 
+: sa
+[sadb est us] perl -ne 'if(/Total=\s*(\d+)/) { print $1/396 ; }' log
+
 : misc
 [edit misc] v ${MISC_DIR}/.zshrc
 [export LD_LIBRARY_PATH] export LD_LIBRARY_PATH=
+[python ve setup] source ~/virtualenv_py36/bin/activate
+[check current shell] readlink /proc/$$/exe
 
 # vim:ft=sh
