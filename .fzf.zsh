@@ -98,3 +98,9 @@ sort -u | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
         --ansi --preview="git log -200 --pretty=format:%s $(echo {+2..} |  sed 's/$/../' )" ) || return
   git checkout $(echo "$target" | awk '{print $2}')
 }
+
+# rg
+frg() {
+  if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
+  rg --color always -n "$1" | fzf --ansi --preview "sh ${MISC_DIR}/fzf_preview.sh {}"
+}
