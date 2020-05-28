@@ -3,7 +3,8 @@ PS4_STR='[%D{%Y/%m/%d %H:%M:%S.%6.} ]+ '
 PROMPT=${PROMPT_STR}
 PS4=${PS4_STR}
 
-VIM=nvim
+#VIM=nvim
+VIM=vim
 export EDITOR=${VIM}
 export PATH=~/bin:~/utils/:${PATH}
 export TERM=xterm-256color
@@ -116,7 +117,8 @@ alias Kill='kill -9'
 alias l="ls -F --color=auto"
 alias ll="ls -F --color=auto -l"
 alias llh="ls -F --color=auto -l -h"
-alias ls="ls -F --color=auto"
+#alias ls="ls -F --color=auto"
+alias ls="env EXA_COLORS="da=37" exa --git --color=auto"
 alias lv='lv -c'
 alias m="make"
 alias man='(){ man $1 | col -b | view -}'
@@ -179,6 +181,13 @@ alias -g TLA='2>&1 |tee -a ${LOG_FILE_NAME}'
 alias -g TLH='2>&1 |tee ~/${LOG_FILE_NAME}'
 alias -g BP='; bp'
 # }}}
+
+# 
+# s aliases
+#
+alias -s tgz="ztar -xvf"
+alias -s tbz="btar -xvf"
+alias -s txz="xtar -xvf"
 
 if [ "`uname|grep CYGWIN`" != "" ]; then
     chcp.com 65001
@@ -261,6 +270,7 @@ down-line-or-local-history() {
     zle set-local-history 0
 }
 zle -N down-line-or-local-history
+zplug "urbainvaes/fzf-marks"
 
 zplug load --verbose
 
