@@ -1,8 +1,26 @@
-# fd - cd to selected directory
-fd() {
-  local dir
-  dir=$(find -maxdepth 2 -type d -o -type l 2> /dev/null | fzf +m) &&
-  cd "$dir"
+export FZF_DEFAULT_OPTS="--bind 'alt-n:down+down+down+down,alt-p:up+up+up+up,ctrl-k:kill-line,ctrl-t:execute(print -z {})+accept,ctrl-j:accept'"
+
+# ffd - select an item from fd result
+ffd() {
+  local path
+  path=$(fd | fzf +m) || return
+  print -z $path
+}
+
+# ff: generic filter
+ff() {
+    local item
+    if [ -p /dev/stdin ]; then
+        if [ $@ ]; then
+            __str=$@
+        else
+            __str=`cat -`
+        fi
+    else
+        __str=$@
+    fi
+    item=$(echo $__str | fzf +m) || return
+    print -z $item
 }
 
 # fe [FUZZY PATTERN] - Open the selected file with the default editor
