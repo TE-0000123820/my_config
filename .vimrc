@@ -26,8 +26,8 @@ set timeoutlen=1000
 set directory=~/vim_swap
 "set foldmethod=syntax
 set foldmethod=marker
-set foldlevel=0
-set foldlevelstart=0
+set foldlevel=10
+set foldlevelstart=10
 
 set guioptions=M
 set filetype=off
@@ -189,6 +189,11 @@ inoremap <c-s> <esc>:w<cr>
 nnoremap <c-s> <esc>:w<cr>
 "nnoremap n nzz
 nnoremap <c-q> @@
+nnoremap <space>[ [`
+nnoremap <space>] ]`
+
+inoremap <c-x><c-i> <esc>:Snippets<cr>
+nnoremap <c-x><c-i> :Snippets<cr>
 
 nnoremap <m-d> dd
 vnoremap <m-d> dd
@@ -232,7 +237,6 @@ nnoremap mm :marks<cr>
 nnoremap mr :reg<cr>
 
 nnoremap <space>f :let @0="+" . line(".") . " " . expand("%:p")<cr>
-nnoremap <space>g :args <c-r>"<cr>
 
 nnoremap ml :doautocmd User<cr>
 nnoremap <space>c :ccl<cr>:copen 50<cr>
@@ -261,7 +265,6 @@ au BufRead,BufNew * match JpSpace /　/
 hi EasyMotionTarget ctermfg=cyan
 hi EasyMotionTarget2First ctermfg=yellow
 " }}}
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin settings
@@ -409,7 +412,7 @@ command! -bang -nargs=* LinesWithPreview
     \   fzf#vim#with_preview({'options': '--delimiter : --nth 4.. --no-sort --color hl:2,hl+:14'}, 'up:50%', '?'),
     \   1) 
 "   'rg --with-filename --column --line-number --no-heading --color=always --smart-case . '.fnameescape(expand('%')), 1,
-nnoremap H :LinesWithPreview<CR>
+nnoremap <space>g :LinesWithPreview<CR>
 "let g:fzf_layout = { 'window': '~40%' }
 nnoremap Ff :FZFMru<cr>
 " }}}
