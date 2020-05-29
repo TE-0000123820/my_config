@@ -10,8 +10,8 @@ export PATH=~/bin:~/utils/:${PATH}
 export TERM=xterm-256color
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export http_proxy="http://proxy.osk.sony.co.jp:10080/"
-export https_proxy="https://proxy.osk.sony.co.jp:10080/"
+export http_proxy="proxy.osk.sony.co.jp:10080"
+export https_proxy="proxy.osk.sony.co.jp:10080"
 export no_proxy=localhost,127.0.0.0/8,::1,gitlabce.misty.sdna.sony.co.jp,kc.misty.sdna.sony.co.jp
 export PERL5LIB=${MISC_DIR}
 export REPORTTIME=3
@@ -117,8 +117,7 @@ alias Kill='kill -9'
 alias l="ls -F --color=auto"
 alias ll="ls -F --color=auto -l"
 alias llh="ls -F --color=auto -l -h"
-#alias ls="ls -F --color=auto"
-alias ls="env EXA_COLORS="da=37" exa --git --color=auto"
+alias ls="ls -F --color=auto"
 alias lv='lv -c'
 alias m="make"
 alias man='(){ man $1 | col -b | view -}'
@@ -205,14 +204,49 @@ setopt prompt_subst
 # vcsの表示    
 zstyle ':vcs_info:*' formats '%s|%F{green}%b%f'    
 zstyle ':vcs_info:*' actionformats '%s|%F{green}%b%f(%F{red}%a%f)'    
-# プロンプト表示直前にvcs_info呼び出し    
+
+is_in_array() {
+    word=$1
+    shift
+
+    for elm in "$@"; do
+        if [[ $elm == $word ]]; then
+            return 1
+        fi
+    done
+    return 0
+}
+
 precmd() {
+    #echo "cur_cmd: " $CUR_CMD
+    #
+    # コマンド実行時間が長い場合かかった時間を表示
+    #
+    exceptions=(vim v vg vd)
+
+    TIME_END=`date +%s`
+    if [ "${TIME_START}" != "" ] && [ $((${TIME_END} - ${TIME_START} > 3)) -eq 1 ] ; then
+        is_in_array $CUR_CMD ${exceptions[@]}
+        RV=$?
+        if [ ${RV} -eq 0 ] ; then
+            echo -e "\a"
+        fi
+    fi
+
+    #
+    # プロンプト関連
+    #
     vcs_info
 
     psvar=()
     psvar[1]=$(jobs | wc -l);
     PROMPT=${PROMPT_STR}
     PS4=${PS4_STR}
+}
+
+preexec() {
+    CUR_CMD=$(echo $1 | cut -d' ' -f 1)
+    TIME_START=`date +%s`
 }
 
 # keychain
