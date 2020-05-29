@@ -42,6 +42,10 @@
 : sa
 [sadb est us] perl -ne 'if(/Total=\s*(\d+)/) { print $1/396 ; }' log
 
+: tmux
+[tmux kill window] prefx &
+[tmux kill pane] prefx x
+
 : misc
 [edit misc] v ${MISC_DIR}/.zshrc
 [export LD_LIBRARY_PATH] export LD_LIBRARY_PATH=

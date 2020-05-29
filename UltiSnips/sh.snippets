@@ -1,12 +1,26 @@
-# for
 snippet for "for ${2:i} in ${$1:array[@]}; do \n ${3:echo $i} \n done"
 for ${2:i} in ${$1:array[@]}; do
     ${3:echo $i}
 done
 endsnippet
 
-# bash check
 snippet bashcheck "if [ ! `readlink /proc/$$/exe | grep bash` ] ; then echo 'ERROR: use bash' ; exit 1; fi"
 if [ ! \`readlink /proc/$$/exe | grep bash\` ] ; then echo "ERROR: use bash" ; exit 1; fi
 set -o pipefail
+endsnippet
+
+snippet tr "trap 'echo ng' INT PIPE TERM"
+trap ${1:'echo ng'} INT PIPE TERM EXIT
+endsnippet
+
+snippet ifeqn "if [ 0 -eq 1 ]; then"
+if [ ${1:0} -eq ${2:1} ]; then
+endsnippet
+
+snippet ifeqs "if [ '' = '' ]; then"
+if [ ${1:""} = ${2:""} ]; then
+endsnippet
+
+snippet ifcmd "if cmd ; then"
+if ${1:cmd} ; then
 endsnippet
