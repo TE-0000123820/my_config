@@ -225,10 +225,8 @@ precmd() {
     exceptions=(vim v vg vd)
 
     TIME_END=`date +%s`
-    if [ "${TIME_START}" != "" ] && [ $((${TIME_END} - ${TIME_START} > 3)) -eq 1 ] ; then
-        is_in_array $CUR_CMD ${exceptions[@]}
-        RV=$?
-        if [ ${RV} -eq 0 ] ; then
+    if [ "${TIME_START}" != "" ] && [ $((${TIME_END} - ${TIME_START} > 10)) -eq 1 ] ; then
+        if is_in_array $CUR_CMD ${exceptions[@]} ; then
             echo -e "\a"
         fi
     fi
