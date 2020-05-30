@@ -46,6 +46,7 @@
 [git push] git push origin master
 [git push] git push origin develop
 [git submodule] git submodule update --init --recursive
+[git change comment] git commit --amend
 
 : tmux
 [tmux kill window] prefx &
