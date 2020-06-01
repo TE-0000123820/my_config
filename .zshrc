@@ -120,7 +120,7 @@ alias llh="ls -F --color=auto -l -h"
 alias ls="ls -F --color=auto"
 alias lv='lv -c'
 alias m="make"
-alias man='(){ man $1 | col -b | view -}'
+alias man='(){ tmpfile=$(mktemp); man $1 | col -b | bat -l Manpage -p > ${tmpfile} ; view ${tmpfile} -c ":set ft=man" ; rm ${tmpfile}}'
 alias md='md5sum'
 alias nv="nvim"
 alias p2="python2"
@@ -137,7 +137,7 @@ alias s="source"
 alias ssh='ssh -Y'
 alias tp="top"
 alias t="tmux -u"
-alias ta="tmux -u a"
+alias ta="t a"
 alias tig="env LANG=ja_JP.UTF-8 tig status"
 less_with_unbuffer () {
     unbuffer "$@" |& less -SR
@@ -180,6 +180,7 @@ alias -g TL='2>&1 |tee ${LOG_FILE_NAME}'
 alias -g TLA='2>&1 |tee -a ${LOG_FILE_NAME}'
 alias -g TLH='2>&1 |tee ~/${LOG_FILE_NAME}'
 alias -g BP='; bp'
+alias -g FF='| ff'
 # }}}
 
 # 
@@ -241,6 +242,8 @@ precmd() {
     psvar[1]=$(jobs | wc -l);
     PROMPT=${PROMPT_STR}
     PS4=${PS4_STR}
+
+    printf "\033k%s\033\\" $(basename $(pwd))
 }
 
 preexec() {
@@ -272,17 +275,20 @@ source ${MISC_DIR}/.fzf.zsh
 export FZF_DEFAULT_OPTS="-e"
 
 #
-# zplug
+# plugins
 #
-source ${MISC_DIR}/zplug/init.zsh
+source ~/.zinit/bin/zinit.zsh
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-zplug "junegunn/fzf-bin"
-zplug "b4b4r07/easy-oneliner"
+zinit light b4b4r07/easy-oneliner
 export EASY_ONE_REFFILE=${MISC_DIR}/easy-oneliner.txt
-zplug "zsh-users/zsh-syntax-highlighting"
-zplug "supercrabtree/k"
-zplug "zsh-users/zsh-history-substring-search"
+zinit light zdharma/fast-syntax-highlighting
+FAST_HIGHLIGHT=(main brackets)
+FAST_HIGHLIGHT_STYLES[globbing]='fg=cyan'
+FAST_HIGHLIGHT[use_brackets]=1
+zinit light supercrabtree/k
+zinit light zsh-users/zsh-history-substring-search
 bindkey "^${key[Up]}" history-substring-search-up
 bindkey "^${key[Down]}" history-substring-search-down
 bindkey "${key[Up]}" up-line-or-local-history
@@ -303,9 +309,4 @@ down-line-or-local-history() {
     zle set-local-history 0
 }
 zle -N down-line-or-local-history
-zplug "urbainvaes/fzf-marks"
-
-zplug load --verbose
-
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
-ZSH_HIGHLIGHT_STYLES[globbing]='fg=cyan'
+zinit light "urbainvaes/fzf-marks"
