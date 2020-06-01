@@ -1,4 +1,4 @@
-export FZF_DEFAULT_OPTS="--bind 'alt-n:down+down+down+down,alt-p:up+up+up+up,ctrl-k:kill-line,ctrl-t:execute(print -z {})+accept,ctrl-j:accept'"
+export FZF_DEFAULT_OPTS="--bind 'btab:toggle-down,tab:toggle-up,alt-n:down+down+down+down,alt-p:up+up+up+up,ctrl-k:kill-line,ctrl-j:accept'"
 
 # ffd - select an item from fd result
 ffd() {
@@ -129,7 +129,8 @@ frg() {
 # git status fiter
 fga() {
 	local selected
-	selected=$(git status -s | bat -l "Git Attributes" --color=always -p | fzf -m --ansi) || return
+	selected=$(git status -s | bat -l "Git Attributes" --color=always -p | fzf -m --ansi --bind "\
+ctrl-d:execute(${VIM} -c \":Gdiff\" {2..} < /dev/tty > /dev/tty 2>&1)") || return
     selected=$(echo ${selected} | cut -c3- | perl -pne 's/\n/ /g')
     print -z $selected
 }
