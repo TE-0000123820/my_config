@@ -7,7 +7,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #^Q:: Send,{Esc}
 !^\:: Shutdown,2
 
-::d//::
+::d..::
 FormatTime,TimeString,,yyyyMMdd
 Send,%TimeString%
 Return
@@ -17,13 +17,13 @@ FormatTime,TimeString,,yyyy/MM/dd
 Send,%TimeString%
 Return
 
-::ts//::
-FormatTime,TimeString,,M/dd HHmm
+::ts..::
+FormatTime,TimeString,,M/d HHmm
 Send,%TimeString% テレワーク開始します
 Return
 
-::te//::
-FormatTime,TimeString,,M/dd HHmm
+::te..::
+FormatTime,TimeString,,M/d HHmm
 Send,%TimeString% テレワーク終了します
 Return
 
