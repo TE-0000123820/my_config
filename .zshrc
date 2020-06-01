@@ -148,7 +148,7 @@ alias ulimc="ulimit -c 1000000000"
 alias ust="stty stop undef"
 v () {
     if [ "$#" = "0" ] ; then
-        ${VIM} -c ":FZFMru"
+        ${VIM} -c ":History"
         echo MRU
     else
         ${VIM} $*
@@ -157,6 +157,7 @@ v () {
 alias vc="${VIM} -c AnsiEsc"
 alias vd="${VIM} -d"
 alias vg="vimgit"
+alias vgd="${VIM} -c \":Gdiff\""
 alias vimbin='${VIM} -c ":BinEdit'
 alias vimgit="${VIM} -c \":Gstatus\""
 alias vimps="${VIM} -c \":new | :wincmd o | :PsThisBuffer\""
