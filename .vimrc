@@ -414,9 +414,8 @@ command! -bang -nargs=* LinesWithPreview
 "   'rg --with-filename --column --line-number --no-heading --color=always --smart-case . '.fnameescape(expand('%')), 1,
 nnoremap <space>g :LinesWithPreview<CR>
 "let g:fzf_layout = { 'window': '~40%' }
-nnoremap Ff :FZFMru<cr>
+nnoremap Ff :History!<cr>
 " }}}
-Bundle 'pbogut/fzf-mru.vim'
 
 "Bundle 'Raimondi/vim_search_objects'
 "Bundle 'simeji/winresizer'
@@ -457,6 +456,11 @@ Bundle 'mechatroner/rainbow_csv'
 Bundle 'jreybert/vimagit'
 Bundle 'tpope/vim-rhubarb'
 Bundle 'powerman/vim-plugin-AnsiEsc'
+Bundle 'airblade/vim-gitgutter'
+hi GitGutterAdd ctermfg=green ctermbg=blue term=bold
+hi GitGutterDelete ctermfg=red ctermbg=blue term=bold
+hi GitGutterChange ctermfg=yellow ctermbg=blue term=bold
+hi GitGutterChangeDelete ctermfg=brown ctermbg=blue term=bold
 
 "
 " gtags
