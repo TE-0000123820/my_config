@@ -461,6 +461,12 @@ hi GitGutterAdd ctermfg=green ctermbg=blue term=bold
 hi GitGutterDelete ctermfg=red ctermbg=blue term=bold
 hi GitGutterChange ctermfg=yellow ctermbg=blue term=bold
 hi GitGutterChangeDelete ctermfg=brown ctermbg=blue term=bold
+Bundle 'junegunn/vim-peekaboo'
+Bundle 'junegunn/rainbow_parentheses.vim'
+augroup rainbow_lisp
+  autocmd!
+  autocmd FileType * RainbowParentheses
+augroup END
 
 "
 " gtags
