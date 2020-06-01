@@ -125,3 +125,11 @@ frg() {
   args=$(echo $target | perl -ne 'if(/(\S+):(\d+):/) { print qq{+$2 $1 -c "normal zz"}; }')
   eval "${EDITOR} ${args}"
 }
+
+# git status fiter
+fga() {
+	local selected
+	selected=$(git status -s | bat -l "Git Attributes" --color=always -p | fzf -m --ansi) || return
+    selected=$(echo ${selected} | cut -c3- | perl -pne 's/\n/ /g')
+    print -z $selected
+}
