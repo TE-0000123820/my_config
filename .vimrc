@@ -38,6 +38,7 @@ let g:clipboard = "tmux"
 "set clipboard=
 set belloff=all
 set completeopt=longest,menuone
+set diffopt=internal,filler,algorithm:histogram,indent-heuristic
 
 if has('persistent_undo')
     set undodir=~/.vim/undo
