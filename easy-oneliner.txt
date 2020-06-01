@@ -49,8 +49,8 @@
 [git change comment] git commit --amend
 
 : tmux
-[tmux kill window] prefx &
-[tmux kill pane] prefx x
+[tmux kill window] echo "prefx &"
+[tmux kill pane] echo "prefx x"
 
 : misc
 [edit misc] v ${MISC_DIR}/.zshrc
@@ -61,5 +61,7 @@
 [check current shell bash if] if [ ! `readlink /proc/$$/exe | grep bash` ] ; then echo "ERROR: use bash" ; exit 1; fi; set -e -o pipefail
 [redirect: file1と標準出力に全ログ、file2にフィルタリングしたログを出力する] command 2>&1 | tee >(grep -i error > file2) | tee file1
 [show 256 color] for c in {000..255}; do echo -n "\e[38;5;${c}m $c" ; [ $(($c%16)) -eq 15 ] && echo;done;echo
+[donwload http link] curl -LJO  
+[edit this file] v ${MISC_DIR}/easy-oneliner.txt
 
 # vim:ft=sh
