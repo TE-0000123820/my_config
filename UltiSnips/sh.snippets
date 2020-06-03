@@ -18,8 +18,8 @@ if [ ! \`readlink /proc/$$/exe | grep bash\` ] ; then echo "ERROR: use bash" ; e
 set -o pipefail
 endsnippet
 
-snippet tr "trap 'echo ng' INT PIPE TERM"
-trap ${1:'echo ng'} INT PIPE TERM EXIT
+snippet tr "trap 'echo done' INT PIPE TERM EXIT"
+trap ${1:'echo done'} INT PIPE TERM EXIT
 endsnippet
 
 snippet ifeqn "if [ 0 -eq 1 ]; then"

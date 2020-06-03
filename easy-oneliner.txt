@@ -26,8 +26,8 @@
 #     #は行頭にあるとfzfが無視しますが、:は問題無いです
 #
 : AED
-[AED error test run] time bash ../tools/run_error_check_fixed_par.sh ~/file_list_all.new.txt
-[build] make clean gen_table gen_constraint_table FLOAT2FIXED=1 && make clean all FLOAT2FIXED=1
+[AED error test run] time bash ../tools/run_error_check_fixed_par.sh ~/file_list_all.new.txt@
+[build] make clean gen_table gen_constraint_table FLOAT2FIXED=@1 && make clean all FLOAT2FIXED=1
 
 : Halide
 [Halide build sa] make CXX=g++-7 LLVM_CONFIG=llvm-config-3.8 CLANG=clang-3.8  -j8
@@ -38,13 +38,15 @@
 
 : perl
 [perl reverse] perl -e 'print reverse <>'
+[print hex] perl -e 'printf("0x%x\n", @100);'
+[print dec] perl -e 'printf("%d\n", @0x100);'
 
 : sa
 [sadb est us] perl -ne 'if(/Total=\s*(\d+)/) { print $1/396 ; }' log
 
 : git
-[git push] git push origin master
-[git push] git push origin develop
+[git push] git push origin @master
+[git push] git push origin @develop
 [git submodule] git submodule update --init --recursive
 [git change comment] git commit --amend
 
@@ -54,16 +56,18 @@
 
 : misc
 [edit misc] v ${MISC_DIR}/.zshrc
-[export LD_LIBRARY_PATH] export LD_LIBRARY_PATH=
+[export LD_LIBRARY_PATH] export LD_LIBRARY_PATH=@
 [python ve setup] source ~/virtualenv_py36/bin/activate
 [check current shell] readlink /proc/$$/exe
 [check current shell bash] readlink /proc/$$/exe | grep bash
 [check current shell bash if] if [ ! `readlink /proc/$$/exe | grep bash` ] ; then echo "ERROR: use bash" ; exit 1; fi; set -e -o pipefail
 [redirect: file1と標準出力に全ログ、file2にフィルタリングしたログを出力する] command 2>&1 | tee >(grep -i error > file2) | tee file1
 [show 256 color] for c in {000..255}; do echo -n "\e[38;5;${c}m $c" ; [ $(($c%16)) -eq 15 ] && echo;done;echo
-[donwload http link] curl -LJO  
+[donwload http link] curl -LJO @ 
 [edit this file] v ${MISC_DIR}/easy-oneliner.txt
 [io監視] vmstat 2
 [io監視] sudo iotop
+[画像情報取得: image,info,size] identify a.jpg@
+[画像サイズ変換: image,resize] convert -resize 1366x768@ input.png output.png
 
 # vim:ft=sh
