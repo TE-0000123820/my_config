@@ -63,5 +63,7 @@
 [show 256 color] for c in {000..255}; do echo -n "\e[38;5;${c}m $c" ; [ $(($c%16)) -eq 15 ] && echo;done;echo
 [donwload http link] curl -LJO  
 [edit this file] v ${MISC_DIR}/easy-oneliner.txt
+[io監視] vmstat 2
+[io監視] sudo iotop
 
 # vim:ft=sh
