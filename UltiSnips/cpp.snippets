@@ -3,8 +3,12 @@ extends c
 #
 # halide
 #
-snippet hd "halide debug()"
+snippet hd "debug(0) << '' << ;" w
 debug(${1:0}) << "$2" << $3 << "\n";
+endsnippet
+
+snippet hdd "debug(${1:0}) << __FILE__ << ': ' << __LINE__ << ': ' << '$2' << $3 << '\n';" w
+debug(${1:0}) << __FILE__ << ": " << __LINE__ << ": $2" << $3 << "\n";
 endsnippet
 
 #
@@ -64,4 +68,17 @@ endsnippet
 
 snippet as "assert" w
 assert($1);
+endsnippet
+
+#
+# min/max
+#
+snippet nummax "std::numeric_limits<T>::max()" w
+std::numeric_limits<${1:int32_t}>::max()
+endsnippet
+snippet numlowest "std::numeric_limits<T>::lowest()" w
+std::numeric_limits<${1:int32_t}>::lowest()
+endsnippet
+snippet nummin "std::numeric_limits<T>::min()" w
+std::numeric_limits<${1:int32_t}>::min()
 endsnippet
