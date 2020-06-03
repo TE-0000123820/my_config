@@ -139,10 +139,15 @@ alias tp="top"
 alias t="tmux -u"
 alias ta="t a"
 alias tig="env LANG=ja_JP.UTF-8 tig status"
-less_with_unbuffer () {
-    unbuffer "$@" |& less -SR
+alias tiv="tiv_wrapper"
+tiv_wrapper () {
+    tmpfile=$(mktemp --suffix=.jpg)
+    trap 'rm ${tmpfile}' INT PIPE TERM EXIT
+
+    identify $1
+    convert -resize 256x256 $1 ${tmpfile}
+    \tiv ${tmpfile}
 }
-alias ub=less_with_unbuffer
 alias ul="ulimit -c 1000000000"
 alias ulimc="ulimit -c 1000000000"
 alias ust="stty stop undef"
