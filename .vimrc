@@ -40,6 +40,11 @@ set belloff=all
 set completeopt=longest,menuone
 set diffopt=internal,filler,algorithm:histogram,indent-heuristic
 
+let &t_ti.="\e[1 q"
+let &t_SI.="\e[5 q"
+let &t_EI.="\e[1 q"
+let &t_te.="\e[0 q"
+
 if has('persistent_undo')
     set undodir=~/.vim/undo
     set undofile
@@ -115,9 +120,10 @@ endfor
 map <silent> [Tag]l :tablast<CR>
 map <silent> [Tag]r :tabnext<CR>
 map <silent> [Tag]e :tabprevious<CR>
-map <silent> [Tag]c :tabnew .<CR>
+map <silent> [Tag]c :tab sp<CR>
 map <silent> [Tag]n :tabnew .<CR>
 map <silent> [Tag]gf <c-w>gf
+map <silent> [Tag]gF <c-w>gF
 " }}}
 
 "
@@ -415,7 +421,8 @@ command! -bang -nargs=* LinesWithPreview
 "   'rg --with-filename --column --line-number --no-heading --color=always --smart-case . '.fnameescape(expand('%')), 1,
 nnoremap <space>g :LinesWithPreview<CR>
 "let g:fzf_layout = { 'window': '~40%' }
-nnoremap Ff :History!<cr>
+"nnoremap Ff :History!<cr>
+nnoremap Ff :call fzf#vim#history(fzf#vim#with_preview('up:30%'), 1)<CR>
 " }}}
 
 "Bundle 'Raimondi/vim_search_objects'
