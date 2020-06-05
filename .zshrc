@@ -151,14 +151,7 @@ tiv_wrapper () {
 alias ul="ulimit -c 1000000000"
 alias ulimc="ulimit -c 1000000000"
 alias ust="stty stop undef"
-v () {
-    if [ "$#" = "0" ] ; then
-        ${VIM} -c ":History"
-        echo MRU
-    else
-        ${VIM} $*
-    fi
-}
+alias v="${VIM}"
 alias vc="${VIM} -c AnsiEsc"
 alias vd="${VIM} -d"
 alias vg="vimgit"
@@ -185,7 +178,7 @@ alias -g TL='2>&1 |tee ${LOG_FILE_NAME}'
 alias -g TLA='2>&1 |tee -a ${LOG_FILE_NAME}'
 alias -g TLH='2>&1 |tee ~/${LOG_FILE_NAME}'
 alias -g BP='; bp'
-alias -g FF='| ff'
+alias -g FF='2>&1 | ff'
 # }}}
 
 # 
@@ -315,3 +308,4 @@ down-line-or-local-history() {
 }
 zle -N down-line-or-local-history
 zinit light "urbainvaes/fzf-marks"
+zinit light "Tarrasch/zsh-bd"

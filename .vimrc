@@ -165,15 +165,12 @@ xnoremap <C-j> 5j
 xnoremap <C-k> 5k
 vnoremap <C-j> 5j
 vnoremap <C-k> 5k
-"nnoremap <C-K> 8<c-y>
 nnoremap <c-_>r :reg<cr>
 nnoremap <leader>C : <c-r><c-w><Home>
 "nnoremap + :let @t=@/<cr>:let @/='[A-Z]'<cr>n:let @/=@t<cr>
 "nnoremap - :let @t=@/<cr>:let @/='[A-Z]'<cr>N:let @/=@t<cr>
 nnoremap <leader>y :call writefile(split(@@, '\n'), $HOME . "/yank.txt")<cr>
 nnoremap <leader>p :read $HOME/yank.txt<cr>
-"nnoremap zm :PosListAdd<CR>
-"nnoremap zl :PosListShow<CR>:QuickfixsignsEnable<cr>
 nnoremap cn :cnext<CR>
 nnoremap cp :cprev<CR>
 nnoremap zn :cnext<cr>
@@ -188,10 +185,9 @@ nnoremap m> >'z<c-o>
 nnoremap m< <'z<c-o>
 nnoremap QQ :wqa<cr>
 nnoremap <space>F /^[^\t #\/}]<cr>
-nnoremap <space>L /\(\<for\>\)\\|\(\<while\>\)\\|\(\<do\>\)<cr>
+"nnoremap <space>L /\(\<for\>\)\\|\(\<while\>\)\\|\(\<do\>\)<cr>
 nnoremap ( F 
 nnoremap ) f 
-nnoremap <space>r :OverCommandLine<cr>
 inoremap <c-s> <esc>:w<cr>
 nnoremap <c-s> <esc>:w<cr>
 "nnoremap n nzz
@@ -420,6 +416,8 @@ command! -bang -nargs=* LinesWithPreview
     \   1) 
 "   'rg --with-filename --column --line-number --no-heading --color=always --smart-case . '.fnameescape(expand('%')), 1,
 nnoremap <space>g :LinesWithPreview<CR>
+nnoremap <space>r :Rg <c-r><c-w>
+nnoremap <space>L :BLines<cr>
 "let g:fzf_layout = { 'window': '~40%' }
 "nnoremap Ff :History!<cr>
 nnoremap Ff :call fzf#vim#history(fzf#vim#with_preview('up:30%'), 1)<CR>
