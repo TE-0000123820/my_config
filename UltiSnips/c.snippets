@@ -61,6 +61,17 @@ snippet px "0x%x" w
 endsnippet
 
 #
+# include
+#
+snippet incio "#include <iostream>" w
+#include <iostream>
+endsnippet
+
+snippet incio "#include <fstream>" w
+#include <fstream>
+endsnippet
+
+#
 # other
 #
 snippet an "&" w
@@ -116,6 +127,20 @@ if(${1:true}) {
     ${2:${VISUAL}}
 } else {
     ${0}
+}
+endsnippet
+
+snippet fwrite "int ret_n = fwrite(out, sizeof(out) ,n ,fp); assert(ret_n == n);"
+int ret_n = fwrite(out, sizeof(out) ,n ,fp);
+assert(ret_n == n);
+endsnippet
+
+snippet fwritel "FILE* fp = fopen('out.bin', 'w'); assert(fp); int rv = fwrite(out, sizeof(out) ,1 ,fp); assert(rv == 1);"
+{
+    FILE* fp = fopen("out.bin", "w");
+    assert(fp);
+    int rv = fwrite(out, sizeof(out) ,1 ,fp);
+    assert(rv == 1);
 }
 endsnippet
 
@@ -179,4 +204,16 @@ endsnippet
 
 snippet hp "printf('o: 0x%x\n', ${1:_0});" w
 printf("o: 0x%x\n", ${1:_0});
+endsnippet
+
+snippet sagetdma "get_data_dma1(dst, src, size)" w
+get_data_dma1(dst, src, size)
+endsnippet
+
+snippet sasetdmaall "set_listadr_dma1(dmalist); set_dmalist_read(&dmalist[list_idx++], dst, src, len); set_dmalist_endcode(&dmalist[list_idx++]); start_dma1(); wait_dma1();" w
+set_listadr_dma1(dmalist);
+set_dmalist_read(&dmalist[list_idx++], dst, src, len);
+set_dmalist_endcode(&dmalist[list_idx++]);
+start_dma1();
+wait_dma1();
 endsnippet

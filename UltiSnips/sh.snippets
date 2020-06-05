@@ -33,3 +33,13 @@ endsnippet
 snippet ifcmd "if cmd ; then"
 if ${1:cmd} ; then
 endsnippet
+
+snippet ifre "if [[ 'aaabbc' =~ 'b+c$' ]]; then"
+if [[ "aaabbc" =~ "b+c$" ]]; then
+endsnippet
+
+snippet ifre2 "if [[ ${foo} =~ ^[a-z]+([0-9]+).*$ ]]; then echo ${BASH_REMATCH[1]}; fi"
+if [[ ${foo} =~ ^[a-z]+([0-9]+).*$ ]]; then
+  echo ${BASH_REMATCH[1]}
+fi
+endsnippet
