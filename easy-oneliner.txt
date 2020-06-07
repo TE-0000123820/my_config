@@ -74,4 +74,9 @@
 [zmv] noglob zmv -W -n @
 [zmv, copy] noglob zmv -W -C -n @
 
+: docker
+[docker rmi] sudo docker rmi @
+[docker rm] sudo docker rm @
+[dcoker run] sudo docker run -it -d --name name image@
+
 # vim:ft=sh
