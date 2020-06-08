@@ -279,9 +279,8 @@ hi EasyMotionTarget2First ctermfg=yellow
 "
 " Vundle
 "
-set rtp+=~/.vim/bundle/Vundle.vim/
+set rtp+=${MISC_DIR}/Vundle.vim/
 call vundle#rc()
-Bundle 'gmarik/Vundle.vim'
 
 "
 " ps.vim {{{
