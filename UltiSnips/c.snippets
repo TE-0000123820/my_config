@@ -217,3 +217,11 @@ set_dmalist_endcode(&dmalist[list_idx++]);
 start_dma1();
 wait_dma1();
 endsnippet
+
+snippet sagetdmarect "void get_rect_data_dma1(void *dst_addr, void *src_addr, uint32_t dst_width, uint32_t dst_height, uint32_t dst_xofst, uint32_t src_width, uint32_t src_height, uint32_t src_xofst)" w
+get_rect_data_dma1(void *dst_addr, void *src_addr, uint32_t dst_width, uint32_t dst_height, uint32_t dst_xofst, uint32_t src_width, uint32_t src_height, uint32_t src_xofst)
+endsnippet
+
+snippet sasetdmalistreadrect "void set_dmalist_read_rect(dmalist_t *listp, void *dst_addr, void *src_addr, uint32_t dst_width, uint32_t dst_height, uint32_t dst_xofst, uint32_t src_width, uint32_t src_height, uint32_t src_xofst)" w
+void set_dmalist_read_rect(listp, dst_addr, src_addr, dst_width, dst_height, dst_xofst, src_width, src_height, src_xofst);
+endsnippet
