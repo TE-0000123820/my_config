@@ -275,7 +275,7 @@ export FZF_DEFAULT_OPTS="-e"
 #
 # plugins
 #
-source ~/.zinit/bin/zinit.zsh
+source ${MISC_DIR}/zinit/zinit.zsh
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
