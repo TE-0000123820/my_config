@@ -195,6 +195,10 @@ nnoremap <c-q> @@
 nnoremap <space>[ [`
 nnoremap <space>] ]`
 
+nnoremap x "_x
+xnoremap x "_x
+vnoremap x "_x
+
 inoremap <c-x><c-i> <esc>:Snippets<cr>
 nnoremap <c-x><c-i> :Snippets<cr>
 
@@ -473,6 +477,10 @@ augroup rainbow_lisp
   autocmd!
   autocmd FileType * RainbowParentheses
 augroup END
+Bundle 'simeji/winresizer'
+let g:winresizer_start_key = '<leader>w'
+Bundle 'dense-analysis/ale'
+let g:ale_lint_on_text_changed = 0
 
 "
 " gtags
