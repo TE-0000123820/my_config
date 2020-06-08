@@ -10,8 +10,8 @@ export PATH=~/bin:~/utils/:${PATH}
 export TERM=xterm-256color
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export http_proxy="proxy.osk.sony.co.jp:10080"
-export https_proxy="proxy.osk.sony.co.jp:10080"
+export http_proxy="https://proxy.osk.sony.co.jp:10080"
+export https_proxy="https://proxy.osk.sony.co.jp:10080"
 export no_proxy=localhost,127.0.0.0/8,::1,gitlabce.misty.sdna.sony.co.jp,kc.misty.sdna.sony.co.jp
 export PERL5LIB=${MISC_DIR}
 export REPORTTIME=3
@@ -285,6 +285,8 @@ zinit light zdharma/fast-syntax-highlighting
 FAST_HIGHLIGHT=(main brackets)
 FAST_HIGHLIGHT_STYLES[globbing]='fg=cyan'
 FAST_HIGHLIGHT[use_brackets]=1
+zinit ice from"gh-r" as"program"
+zinit load junegunn/fzf-bin
 zinit light supercrabtree/k
 zinit light zsh-users/zsh-history-substring-search
 bindkey "^${key[Up]}" history-substring-search-up
