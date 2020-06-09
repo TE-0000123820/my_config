@@ -267,10 +267,6 @@ if [ ! -f ~/.zshrc.zwc -o ~/.zshrc -nt ~/.zshrc.zwc ]; then
 fi
 # }}}
 
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source ${MISC_DIR}/.fzf.zsh
-export FZF_DEFAULT_OPTS="-e"
 
 #
 # plugins
@@ -286,7 +282,14 @@ FAST_HIGHLIGHT=(main brackets)
 FAST_HIGHLIGHT_STYLES[globbing]='fg=cyan'
 FAST_HIGHLIGHT[use_brackets]=1
 zinit ice from"gh-r" as"program"
+
 zinit load junegunn/fzf-bin
+zinit light junegunn/fzf
+source ~/.zinit/plugins/junegunn---fzf/shell/completion.zsh
+source ~/.zinit/plugins/junegunn---fzf/shell/key-bindings.zsh
+source ${MISC_DIR}/.fzf.zsh
+export FZF_DEFAULT_OPTS="-e"
+
 zinit light supercrabtree/k
 zinit light zsh-users/zsh-history-substring-search
 bindkey "^${key[Up]}" history-substring-search-up
