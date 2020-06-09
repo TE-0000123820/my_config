@@ -279,8 +279,9 @@ hi EasyMotionTarget2First ctermfg=yellow
 "
 " Vundle
 "
+filetype off                  " required
 set rtp+=${MISC_DIR}/Vundle.vim/
-call vundle#rc()
+call vundle#begin()
 
 "
 " ps.vim {{{
@@ -480,6 +481,9 @@ Bundle 'simeji/winresizer'
 let g:winresizer_start_key = '<leader>w'
 Bundle 'dense-analysis/ale'
 let g:ale_lint_on_text_changed = 0
+
+call vundle#end()            " required
+filetype plugin indent on    " required
 
 "
 " gtags
