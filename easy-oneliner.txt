@@ -73,6 +73,10 @@
 [windows, open file] cmd.exe /c start @
 [zmv] noglob zmv -W -n @
 [zmv, copy] noglob zmv -W -C -n @
+[proxy] export https_proxy="https://proxy.osk.sony.co.jp:10080"
+[dns] nameserver 43.4.54.16
+[dns] nameserver 137.153.66.28
+[dns] nameserver 137.153.112.2
 
 : docker
 [docker rmi] sudo docker rmi @
