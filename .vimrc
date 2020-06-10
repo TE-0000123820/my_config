@@ -481,6 +481,7 @@ Bundle 'simeji/winresizer'
 let g:winresizer_start_key = '<leader>w'
 Bundle 'dense-analysis/ale'
 let g:ale_lint_on_text_changed = 0
+Bundle 'mbbill/undotree'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
