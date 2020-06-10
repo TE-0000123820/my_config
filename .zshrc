@@ -22,38 +22,25 @@ eval `dircolors ${MISC_DIR}/.colorrc`
 #
 # cdr
 #
-# cdr, add-zsh-hook を有効にする
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
-# cdr の設定
 zstyle ':completion:*' recent-dirs-insert both
 zstyle ':chpwd:*' recent-dirs-max 500
 zstyle ':chpwd:*' recent-dirs-default true
 zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/shell/chpwd-recent-dirs"
 zstyle ':chpwd:*' recent-dirs-pushd true
 
-
 #
 # key binds
 #
 bindkey -e
-#bindkey "^G"
-bindkey "^X^B" backward-word
-bindkey "^X^F" forward-word
-bindkey "^X^D" kill-word
-#bindkey "^R" history-incremental-search-backward
-zle     -N   fh
-bindkey "^x^r" fh
-#bindkey "^T" history-incremental-search-forward
 zle     -N   fr
-bindkey "^x^e" fr
+bindkey "^x^r" fr
 zle -C _complete_files complete-word complete-files
 complete-files () { compadd - $PREFIX* }
-bindkey "^Xl" _complete_files
 function cd-up { zle push-line && LBUFFER='builtin cd ..' && zle accept-line }
 zle -N cd-up
 bindkey "^O" cd-up
-
 
 #
 # history settings {{{
@@ -90,29 +77,20 @@ ulimit -s 1000000
 #
 # aliases {{{
 #
-alias C="source ~/.vimrc.cwd"
-alias b="bg"
+alias b="bd"
 alias bp="echo $'\a'"
 alias btar="tar --use-compress-program=pbzip2"
 alias btarc="tar --use-compress-program=pbzip2 -cf"
 alias c="cd"
 alias cmake="cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
 alias df="df -h"
-alias e="export"
 function myfg() { fg %$1 }
 alias f="myfg"
 alias g="git"
 alias gr="grep --color=always"
-#function myglobal() { global --color=always --result grep -g -o $1 -S $2 $argv[3,-1] }
-function myglobal() { global --result=grep -g $1 }
-alias gg="myglobal"
-alias gpom="git push origin master"
-alias gu="global -uv"
-alias ip="ipython3"
 alias j="jobs"
 alias java='java -Dfile.encoding=UTF-8'
 alias javac='javac -J-Dfile.encoding=UTF-8'
-#alias k="kill -9"
 alias Kill='kill -9'
 alias l="ls -F --color=auto"
 alias ll="ls -F --color=auto -l"
@@ -122,6 +100,7 @@ alias lv='lv -c'
 alias m="make"
 alias man='(){ tmpfile=$(mktemp); man $1 | col -b | bat -l Manpage -p > ${tmpfile} ; view ${tmpfile} -c ":set ft=man" ; rm ${tmpfile}}'
 alias md='md5sum'
+alias ng="noglob"
 alias nv="nvim"
 alias p2="python2"
 alias p3="python3"
@@ -131,7 +110,6 @@ alias po="perl -W -MOneLinerLib"
 alias pon="perl -MOneLinerLib -W -nE"
 alias parallel='parallel --gnu'
 alias pd="popd"
-alias r="anyframe-widget-cdr"
 alias rg="rg --color=always"
 alias s="source"
 alias ssh='ssh -Y'
@@ -150,7 +128,6 @@ tiv_wrapper () {
 }
 alias ul="ulimit -c 1000000000"
 alias ulimc="ulimit -c 1000000000"
-alias ust="stty stop undef"
 alias v="${VIM}"
 alias vc="${VIM} -c AnsiEsc"
 alias vd="${VIM} -d"
@@ -198,7 +175,6 @@ stty -ixon -ixoff
 
 # vcs_infoロード    
 autoload -Uz vcs_info    
-# PROMPT変数内で変数参照する    
 setopt prompt_subst    
 
 # vcsの表示    
