@@ -2,6 +2,10 @@ snippet isub "import subprocess"
 import subprocess
 endsnippet
 
+snippet ia "import argparse"
+import argparse
+endsnippet
+
 snippet io "import os"
 import os
 endsnippet
@@ -26,19 +30,36 @@ snippet ps "%s" w
 %s
 endsnippet
 
-snippet args "args"
-"""
-progc args
-"""
-parser = argparse.ArgumentParser(description='')
-parser.add_argument('c_file', type=str, metavar='c_file',
-                    help='c_file')
-parser.add_argument('--verbose', dest='verbose', action='store_const',
-        const=True, default=False,
-        help='specify verbose mode.')
+snippet ap "parser = argparse.ArgumentParser()"
+parser = argparse.ArgumentParser()
+parser.add_argument('input_file', type=str, nargs=1, help='Input filename.')
+parser.add_argument('--verbose', action='store_const', const=True, default=False, help='specify verbose mode.')
+parser.add_argument('-D', '--dir', required=False, help='Output directory.')
 args = parser.parse_args()
 endsnippet
 
-snippet res "re.search" 
-re.search(
+snippet res "m = re.search(r'asdf', l)"
+m = re.search(r'asdf', l)
+word = m.group(1)
+endsnippet
+
+snippet ifm "if __name__ == '__main__':"
+if __name__ == "__main__":
+    main()
+endsnippet
+
+snippet inp "import numpy as np"
+import numpy as np
+endsnippet
+
+snippet ipil "from PIL import Image, ImageFilter"
+from PIL import Image, ImageFilter
+endsnippet
+
+snippet npm "array = np.maximum(array, 0)"
+array = np.maximum(array, 0)
+endsnippet
+
+snippet npff "array = np.fromfile(args.input_file[0], np.int8)"
+array = np.fromfile(args.input_file[0], np.int8)
 endsnippet
