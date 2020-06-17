@@ -480,6 +480,11 @@ Bundle 'dense-analysis/ale'
 let g:ale_lint_on_text_changed = 0
 Bundle 'mbbill/undotree'
 
+Bundle 'maralla/completor.vim'
+let g:completor_disable_ultisnips = 1
+let g:completor_auto_trigger = 1
+let g:completor_min_chars = 3
+
 call vundle#end()            " required
 filetype plugin indent on    " required
 
