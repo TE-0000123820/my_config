@@ -39,6 +39,7 @@ let g:clipboard = "tmux"
 set belloff=all
 set completeopt=longest,menuone
 set diffopt=internal,filler,algorithm:histogram,indent-heuristic
+set isf-==
 
 let &t_ti.="\e[1 q"
 let &t_SI.="\e[5 q"
@@ -194,10 +195,6 @@ nnoremap <c-s> <esc>:w<cr>
 nnoremap <c-q> @@
 nnoremap <space>[ [`
 nnoremap <space>] ]`
-
-nnoremap x "_x
-xnoremap x "_x
-vnoremap x "_x
 
 inoremap <c-x><c-i> <esc>:Snippets<cr>
 nnoremap <c-x><c-i> :Snippets<cr>
