@@ -120,7 +120,7 @@ alias tig="env LANG=ja_JP.UTF-8 tig status"
 alias tiv="tiv_wrapper"
 tiv_wrapper () {
     tmpfile=$(mktemp --suffix=.jpg)
-    trap 'rm ${tmpfile}' INT PIPE TERM EXIT
+    trap 'rm ${tmpfile} ; trap INT PIPE TERM EXIT' INT PIPE TERM EXIT
 
     identify $1
     convert -resize 256x256 $1 ${tmpfile}
