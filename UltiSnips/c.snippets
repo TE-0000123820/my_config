@@ -130,17 +130,17 @@ if(${1:true}) {
 }
 endsnippet
 
-snippet fwrite "int ret_n = fwrite(out, sizeof(out) ,n ,fp); assert(ret_n == n);"
-int ret_n = fwrite(out, sizeof(out) ,n ,fp);
-assert(ret_n == n);
+snippet fwrite "int wlen = fwrite(out, 1, sizeof(out), ,fp); assert(wlen == sizeof(out) && 'fwrite');"
+int wlen = fwrite(out, 1, sizeof(out), ,fp);
+assert(wlen == sizeof(out) && "fwrite");
 endsnippet
 
 snippet fwritel "FILE* fp = fopen('out.bin', 'w'); assert(fp); int rv = fwrite(out, sizeof(out) ,1 ,fp); assert(rv == 1);"
 {
     FILE* fp = fopen("out.bin", "w");
-    assert(fp);
-    int rv = fwrite(out, sizeof(out) ,1 ,fp);
-    assert(rv == 1);
+    assert(fp && "fopen write");
+	int wlen = fwrite(out, 1, sizeof(out), ,fp);
+	assert(wlen == sizeof(out) && "fwrite");
 }
 endsnippet
 
@@ -224,4 +224,19 @@ endsnippet
 
 snippet sasetdmalistreadrect "void set_dmalist_read_rect(dmalist_t *listp, void *dst_addr, void *src_addr, uint32_t dst_width, uint32_t dst_height, uint32_t dst_xofst, uint32_t src_width, uint32_t src_height, uint32_t src_xofst)" w
 void set_dmalist_read_rect(listp, dst_addr, src_addr, dst_width, dst_height, dst_xofst, src_width, src_height, src_xofst);
+endsnippet
+
+snippet fopr "FILE* fp = fopen('in.bin', 'r');"
+FILE* fp = fopen("in.bin", "r");
+assert(fp && "fopen read");
+endsnippet
+
+snippet fopw "FILE* fp = fopen('out.bin', 'w');"
+FILE* fp = fopen("out.bin", "w");
+assert(fp && "fopen write");
+endsnippet
+
+snippet fread "int rlen = fread(buff, 1, sizeof(buff), fp);"
+int rlen = fread(buff, 1, sizeof(buff), fp);
+assert(rlen == sizeof(buff));
 endsnippet
