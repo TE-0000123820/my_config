@@ -83,6 +83,7 @@
 [docker rm] sudo docker rm @
 [dcoker run] sudo docker run -it -d --name name image@
 [dcoker exec] sudo docker exec -it sd@ /bin/bash
+[dcoker run dns] docker run --dns 137.153.66.28@
 
 : locale
 [sudo locale-gen ja_JP] sudo locale-gen en_US.UTF-8@ ; sudo update-locale LANG=en_US.UTF-8

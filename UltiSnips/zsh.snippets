@@ -1,1 +1,26 @@
-extends c
+extends sh
+
+snippet zoptparsefull "local -A opthash zparseopts -D -M -A opthash -- -help v -verbose=v S: -suffix:=S if [[ -n '${opthash[(i)--help]}' ]]; then echo '--help option' fi" w
+local -A opthash
+zparseopts -D -M -A opthash -- \
+  -help \
+  v -verbose=v \
+  S: -suffix:=S
+
+if [[ -n "${opthash[(i)--help]}" ]]; then
+  # --helpが指定された場合
+  echo "--help option"
+fi
+
+if [[ -n "${opthash[(i)-v]}" ]]; then
+  # -vまたは--verboseが指定された場合
+  echo "-v option"
+fi
+
+if [[ -n "${opthash[(i)-S]}" ]]; then
+  # -Sまたは--suffixが指定された場合
+  echo "-s option : ${opthash[-S]}"
+fi
+
+echo "normal arguments : $@"
+endsnippet
