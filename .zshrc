@@ -264,7 +264,6 @@ zinit light junegunn/fzf
 source ~/.zinit/plugins/junegunn---fzf/shell/completion.zsh
 source ~/.zinit/plugins/junegunn---fzf/shell/key-bindings.zsh
 source ${MISC_DIR}/.fzf.zsh
-export FZF_DEFAULT_OPTS="-e"
 
 zinit light supercrabtree/k
 zinit light zsh-users/zsh-history-substring-search

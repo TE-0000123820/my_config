@@ -1,14 +1,22 @@
-export FZF_DEFAULT_OPTS="--bind 'btab:toggle-down,tab:toggle-up,alt-n:down+down+down+down,alt-p:up+up+up+up,ctrl-k:kill-line,ctrl-j:accept'"
+export FZF_DEFAULT_OPTS="-e --tac --bind 'btab:toggle-down,tab:toggle-up,alt-n:down+down+down+down,alt-p:up+up+up+up,ctrl-k:kill-line,ctrl-j:accept'"
 
-# ffd - select an item from fd result
+# ffd - select items from fd result
 ffd() {
   local path
-  path=$(fd | fzf +m) || return
+  path=$(fd | fzf -m) || return
   print -z $path
 }
 
 # ff: generic filter
 ff() {
+    local -A opthash
+    local field_id
+    zparseopts -D -A opthash -- n:
+
+    if [[ -n "${opthash[(i)-n]}" ]]; then
+        field_id="${opthash[-n]}"
+    fi
+
     local item
     if [ -p /dev/stdin ]; then
         if [ $@ ]; then
@@ -19,7 +27,12 @@ ff() {
     else
         __str=$@
     fi
-    item=$(echo $__str | fzf +m) || return
+    item=$(echo $__str | fzf --tac -m) || return
+    if [[ -n "${field_id}" ]]; then
+        item=$(echo $item | perl -aF'\s+' -ne 'print $F'"[$field_id] . ' '")
+    else
+        item=$(echo $item | perl -pne "s/\n/ /g")
+    fi
     print -z $item
 }
 
