@@ -1,0 +1,25 @@
+snippet fr "FROM ubuntu:16.04"
+FROM ubuntu:16.04
+endsnippet
+
+snippet env "ENV https_proxy http://137.153.66.14:10080 ENV http_proxy http://137.153.66.14:10080"
+ENV https_proxy http://137.153.66.14:10080
+ENV http_proxy http://137.153.66.14:10080
+endsnippet
+
+snippet apt " RUN apt-get update RUN apt-get install net-tools vim -y RUN apt-get install software-properties-common -y RUN add-apt-repository ppa:deadsnakes/ppa -y RUN apt-get update RUN apt-get install python3.6 virtualenv python3-pip python3.6-dev -y RUN apt-get install locales -y RUN localedef -f UTF-8 -i en_US en_US.UTF-8 RUN apt-get install cmake libprotobuf-dev protobuf-compiler -y"
+RUN apt-get update
+RUN apt-get install net-tools vim -y
+RUN apt-get install software-properties-common -y
+RUN add-apt-repository ppa:deadsnakes/ppa -y
+RUN apt-get update
+RUN apt-get install python3.6 virtualenv python3-pip python3.6-dev -y
+RUN apt-get install locales -y
+RUN localedef -f UTF-8 -i en_US en_US.UTF-8
+RUN apt-get install cmake libprotobuf-dev protobuf-compiler -y
+endsnippet
+
+snippet venv "RUN virtualenv -p python3.6 /root/venv_model_conv RUN bash -c 'source /root/venv_model_conv/bin/activate && pip install -r /root/dnn2h_model_conversion_aed2/apps/animal_eye_det2/model_convert/eval/conv_requirements.txt'"
+RUN virtualenv -p python3.6 /root/venv_model_conv
+RUN bash -c "source /root/venv_model_conv/bin/activate && pip install -r /root/dnn2h_model_conversion_aed2/apps/animal_eye_det2/model_convert/eval/conv_requirements.txt"
+endsnippet
