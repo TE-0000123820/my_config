@@ -251,7 +251,6 @@ source ${MISC_DIR}/zinit/zinit.zsh
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-zinit light b4b4r07/easy-oneliner
 export EASY_ONE_REFFILE=${MISC_DIR}/easy-oneliner.txt
 zinit light zdharma/fast-syntax-highlighting
 FAST_HIGHLIGHT=(main brackets)
@@ -265,6 +264,7 @@ source ~/.zinit/plugins/junegunn---fzf/shell/completion.zsh
 source ~/.zinit/plugins/junegunn---fzf/shell/key-bindings.zsh
 source ${MISC_DIR}/.fzf.zsh
 
+zinit light b4b4r07/easy-oneliner
 zinit light supercrabtree/k
 zinit light zsh-users/zsh-history-substring-search
 bindkey "^${key[Up]}" history-substring-search-up
