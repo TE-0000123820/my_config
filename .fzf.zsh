@@ -1,4 +1,4 @@
-export FZF_DEFAULT_OPTS="-e --tac --bind 'btab:toggle-down,tab:toggle-up,alt-n:down+down+down+down,alt-p:up+up+up+up,ctrl-k:kill-line,ctrl-j:accept'"
+export FZF_DEFAULT_OPTS="-e --bind 'btab:toggle-down,tab:toggle-up,alt-n:down+down+down+down,alt-p:up+up+up+up,ctrl-k:kill-line,ctrl-j:accept'"
 
 # ffd - select items from fd result
 ffd() {
