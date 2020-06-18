@@ -196,8 +196,8 @@ nnoremap <c-q> @@
 nnoremap <space>[ [`
 nnoremap <space>] ]`
 
-inoremap <c-x><c-i> <esc>:Snippets<cr>
-nnoremap <c-x><c-i> :Snippets<cr>
+inoremap <c-x><c-s> <esc>:Snippets<cr>
+nnoremap <c-x><c-s> :Snippets<cr>
 
 nnoremap <m-d> dd
 vnoremap <m-d> dd
