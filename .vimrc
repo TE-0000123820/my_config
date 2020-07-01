@@ -196,9 +196,6 @@ nnoremap <c-q> @@
 nnoremap <space>[ [`
 nnoremap <space>] ]`
 
-inoremap <c-x><c-s> <esc>:Snippets<cr>
-nnoremap <c-x><c-s> :Snippets<cr>
-
 nnoremap <m-d> dd
 vnoremap <m-d> dd
 xnoremap <m-d> dd
@@ -360,13 +357,35 @@ Bundle "honza/vim-snippets"
 "
 " unite.vim {{{
 "
-Bundle 'Shougo/unite.vim'
+"Bundle 'Shougo/unite.vim'
+Bundle 'Shougo/denite.nvim'
+Bundle 'roxma/nvim-yarp'
+Bundle 'roxma/vim-hug-neovim-rpc'
+Bundle 'chemzqm/denite-extra'
+" Define mappings
+autocmd! FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> d
+  \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> p
+  \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <Space>
+  \ denite#do_map('toggle_select').'j'
+endfunction
 let g:unite_source_grep_max_candidates = 200
 let g:unite_source_rec_find_args=["-maxdepth=2"]
 nnoremap Uu :Unite -direction=below<cr>
 nnoremap Uf :Unite -direction=below file_mru<cr>
 nnoremap UF :Unite -direction=below file_rec<cr>
 nnoremap Ul :Unite -direction=below line<cr>
+nnoremap <c-g><c-s> :Denite -direction=below ultisnips<cr>
+inoremap <c-g><c-s> <esc>:Denite -direction=below ultisnips<cr>
 "nnoremap Uf :History<cr>
 "nnoremap UF :Files<cr>
 "nnoremap Ul :BLines<cr>
@@ -433,7 +452,7 @@ nnoremap Ff :call fzf#vim#history(fzf#vim#with_preview('up:30%'), 1)<CR>
 "
 " ultisnips {{{
 "
-Bundle 'SirVer/ultisnips'
+Bundle 'neoclide/ultisnips'
 let g:UltiSnipsSnippetDirectories=[$HOME."/misc_kato/UltiSnips"]
 let g:UltiSnipsListSnippets="<c-x><c-o>"
 let g:UltiSnipsExpandTrigger="<c-o>"
@@ -441,6 +460,14 @@ let g:UltiSnipsJumpForwardTrigger="<c-f>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
+
+function! UltiSnipsCallUnite()
+    Unite -start-insert -winheight=100 -immediately -no-empty ultisnips
+    return ''
+endfunction
+
+inoremap <silent> <F12> <C-R>=(pumvisible()? "\<LT>C-E>":"")<CR><C-R>=UltiSnipsCallUnite()<CR>
+nnoremap <silent> <F12> a<C-R>=(pumvisible()? "\<LT>C-E>":"")<CR><C-R>=UltiSnipsCallUnite()<CR>
 " }}}
 
 "
@@ -469,6 +496,7 @@ hi GitGutterDelete ctermfg=red ctermbg=blue term=bold
 hi GitGutterChange ctermfg=yellow ctermbg=blue term=bold
 hi GitGutterChangeDelete ctermfg=brown ctermbg=blue term=bold
 Bundle 'junegunn/vim-peekaboo'
+let g:peekaboo_window="vert bo 60new"
 Bundle 'junegunn/rainbow_parentheses.vim'
 augroup rainbow_lisp
   autocmd!
@@ -484,6 +512,11 @@ Bundle 'maralla/completor.vim'
 let g:completor_disable_ultisnips = 1
 let g:completor_auto_trigger = 1
 let g:completor_min_chars = 3
+
+Bundle "preservim/nerdcommenter"
+Bundle "tpope/vim-surround"
+Bundle "glts/vim-radical"
+Bundle "glts/vim-magnum"
 
 call vundle#end()            " required
 filetype plugin indent on    " required
