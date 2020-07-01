@@ -10,11 +10,12 @@ export PATH=~/bin:~/utils/:${PATH}
 export TERM=xterm-256color
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export http_proxy="https://proxy.osk.sony.co.jp:10080"
+export http_proxy="http://proxy.osk.sony.co.jp:10080"
 export https_proxy="https://proxy.osk.sony.co.jp:10080"
 export no_proxy=localhost,127.0.0.0/8,::1,gitlabce.misty.sdna.sony.co.jp,kc.misty.sdna.sony.co.jp
 export PERL5LIB=${MISC_DIR}
 export REPORTTIME=3
+export MDV_THEME="896.1635"
 
 # dir color
 eval `dircolors ${MISC_DIR}/.colorrc`
