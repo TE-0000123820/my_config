@@ -27,7 +27,7 @@ ff() {
     else
         __str=$@
     fi
-    item=$(echo $__str | fzf --tac -m) || return
+    item=$(echo $__str | fzf --tac -m --ansi) || return
     if [[ -n "${field_id}" ]]; then
         item=$(echo $item | perl -aF'\s+' -ne 'print $F'"[$field_id] . ' '")
     else
