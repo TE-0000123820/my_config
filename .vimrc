@@ -40,6 +40,7 @@ set belloff=all
 set completeopt=longest,menuone
 set diffopt=internal,filler,algorithm:histogram,indent-heuristic
 set isf-==
+set viminfo='1000
 
 let &t_ti.="\e[1 q"
 let &t_SI.="\e[5 q"
