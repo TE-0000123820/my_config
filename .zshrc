@@ -11,7 +11,7 @@ export TERM=xterm-256color
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export http_proxy="http://proxy.osk.sony.co.jp:10080"
-export https_proxy="https://proxy.osk.sony.co.jp:10080"
+export https_proxy="http://proxy.osk.sony.co.jp:10080"
 export no_proxy=localhost,127.0.0.0/8,::1,gitlabce.misty.sdna.sony.co.jp,kc.misty.sdna.sony.co.jp
 export PERL5LIB=${MISC_DIR}
 export REPORTTIME=3
@@ -89,6 +89,7 @@ function myfg() { fg %$1 }
 alias f="myfg"
 alias g="git"
 alias gr="grep --color=always"
+alias h="history"
 alias j="jobs"
 alias java='java -Dfile.encoding=UTF-8'
 alias javac='javac -J-Dfile.encoding=UTF-8'
