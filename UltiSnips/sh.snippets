@@ -13,7 +13,9 @@ done
 endsnippet
 
 # bash check
-snippet bashcheck "if [ ! `readlink /proc/$$/exe | grep bash` ] ; then echo 'ERROR: use bash' ; exit 1; fi"
+snippet bashcheck "#!bin/bash ; if [ ! `readlink /proc/$$/exe | grep bash` ] ; then echo 'ERROR: use bash' ; exit 1; fi"
+#!/bin/bash
+
 if [ ! \`readlink /proc/$$/exe | grep bash\` ] ; then echo "ERROR: use bash" ; exit 1; fi
 set -eu -o pipefail
 endsnippet

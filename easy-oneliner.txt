@@ -51,6 +51,7 @@
 [git submodule] git submodule update --init --recursive
 [git change comment] git commit --amend
 [git show repos root] git rev-parse --show-toplevel
+[git skip lfs files] GIT_LFS_SKIP_SMUDGE=1 git clone https://github.com/asdfsadf@
 
 : tmux
 [tmux kill window] echo "prefx &"
