@@ -27,9 +27,9 @@ def test_0():
 
     extents_diff = extents1 - extents0
 
-    assert 0 == buff_diff.diff("data0.bin data1.bin 8 7 6 5 --stride1 {} {} {} --skip-byte1 {} {} {} {} -v"
+    assert 0 == buff_diff.diff("data0.bin data1.bin 8 7 6 5 --stride1 {} {} {} --skip1 {} {} {} {} -v"
             .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod(), *reversed(extents_diff)).split(" "))
-    assert 0 == buff_diff.diff("data1.bin data0.bin 8 7 6 5 --stride0 {} {} {} --skip-byte0 {} {} {} {} -v"
+    assert 0 == buff_diff.diff("data1.bin data0.bin 8 7 6 5 --stride0 {} {} {} --skip0 {} {} {} {} -v"
             .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod(), *reversed(extents_diff)).split(" "))
 
 def test_1():
@@ -45,9 +45,9 @@ def test_1():
 
     skips = (4, 3, 2, 1)
 
-    assert 0 == buff_diff.diff("data0.bin data1.bin 8 7 6 5 --stride1 {} {} {} --skip-byte1 {} {} {} {} -v"
+    assert 0 == buff_diff.diff("data0.bin data1.bin 8 7 6 5 --stride1 {} {} {} --skip1 {} {} {} {} -v"
             .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod(), *skips).split(" "))
-    assert 0 == buff_diff.diff("data1.bin data0.bin 8 7 6 5 --stride0 {} {} {} --skip-byte0 {} {} {} {} -v"
+    assert 0 == buff_diff.diff("data1.bin data0.bin 8 7 6 5 --stride0 {} {} {} --skip0 {} {} {} {} -v"
             .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod(), *skips).split(" "))
 
 def test_2():
@@ -63,9 +63,9 @@ def test_2():
 
     skips = (0, 0, 0, 0)
 
-    assert 0 == buff_diff.diff("data0.bin data1.bin 8 7 6 5 --stride1 {} {} {} --skip-byte1 {} {} {} {} -v"
+    assert 0 == buff_diff.diff("data0.bin data1.bin 8 7 6 5 --stride1 {} {} {} --skip1 {} {} {} {} -v"
             .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod(), *skips).split(" "))
-    assert 0 == buff_diff.diff("data1.bin data0.bin 8 7 6 5 --stride0 {} {} {} --skip-byte0 {} {} {} {} -v"
+    assert 0 == buff_diff.diff("data1.bin data0.bin 8 7 6 5 --stride0 {} {} {} --skip0 {} {} {} {} -v"
             .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod(), *skips).split(" "))
     assert 0 == buff_diff.diff("data0.bin data1.bin 8 7 6 5 --stride1 {} {} {} -v"
             .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod()).split(" "))
@@ -83,9 +83,9 @@ def test_3():
 
     skips = (0, 0, 0, 0)
 
-    assert 0 == buff_diff.diff("data0.bin data1.bin {} {} {} {} --stride0 {} {} {} --skip-byte1 {} {} {} {} -v"
+    assert 0 == buff_diff.diff("data0.bin data1.bin {} {} {} {} --stride0 {} {} {} --skip1 {} {} {} {} -v"
             .format(*reversed(extents0), extents1[3], extents1[2:4].prod(), extents1[1:4].prod(), *skips).split(" "))
-    assert 0 == buff_diff.diff("data1.bin data0.bin {} {} {} {} --stride1 {} {} {} --skip-byte0 {} {} {} {} -v"
+    assert 0 == buff_diff.diff("data1.bin data0.bin {} {} {} {} --stride1 {} {} {} --skip0 {} {} {} {} -v"
             .format(*reversed(extents0), extents1[3], extents1[2:4].prod(), extents1[1:4].prod(), *skips).split(" "))
     assert 0 == buff_diff.diff("data0.bin data1.bin {} {} {} {} --stride0 {} {} {} -v"
             .format(*reversed(extents0), extents1[3], extents1[2:4].prod(), extents1[1:4].prod()).split(" "))

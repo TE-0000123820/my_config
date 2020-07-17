@@ -14,7 +14,10 @@ def make_stride_list(stride, extent):
         else:
             s = extent[i]
         cur_stride *= s
-        cur_stride_str += "*"+str(s)
+        if i == 0:
+            cur_stride_str = str(s)
+        else:
+            cur_stride_str += "*"+str(s)
         if len(stride) <= i:
             stride.append(cur_stride)
             stride_str.append(cur_stride_str)
@@ -54,16 +57,16 @@ def diff(argv):
         help="stride1",
     )
     parser.add_argument(
-        "--skip-byte0",
+        "--skip0",
         type=int,
         nargs="+",
-        help="skip bytes #0",
+        help="skip0",
     )
     parser.add_argument(
-        "--skip-byte1",
+        "--skip1",
         type=int,
         nargs="+",
-        help="skip bytes #1",
+        help="skip1",
     )
     parser.add_argument('-v', '--verbose', required=False, action='store_true', help='Run in verbose mode.')
     parser.add_argument('-q', '--quiet', required=False, action='store_true', help='Run in quiet mode.')
@@ -82,22 +85,22 @@ def diff(argv):
         stride1 = []
     else:
         stride1 = args.stride1
-    if args.skip_byte0 is None:
-        skip_byte0 = [0, 0, 0, 0]
+    if args.skip0 is None:
+        skip0 = [0, 0, 0, 0]
     else:
-        skip_byte0 = list(args.skip_byte0)
-    if args.skip_byte1 is None:
-        skip_byte1 = [0, 0, 0, 0]
+        skip0 = list(args.skip0)
+    if args.skip1 is None:
+        skip1 = [0, 0, 0, 0]
     else:
-        skip_byte1 = list(args.skip_byte1)
+        skip1 = list(args.skip1)
 
     assert(len(extent) <= 4)
 
     err = 0
 
     extent += [1]*(4-len(extent))
-    skip_byte0 += [0]*(4-len(skip_byte0))
-    skip_byte1 += [0]*(4-len(skip_byte1))
+    skip0 += [0]*(4-len(skip0))
+    skip1 += [0]*(4-len(skip1))
 
     (stride_str0, stride0) = make_stride_list(stride0, extent)
     (stride_str1, stride1) = make_stride_list(stride1, extent)
@@ -108,28 +111,28 @@ def diff(argv):
         print("stride0: {}".format(stride_str0))
         print("stride1: {}".format(stride1))
         print("stride1: {}".format(stride_str1))
-        print("skip_byte0: {}".format(skip_byte0))
-        print("skip_byte1: {}".format(skip_byte1))
+        print("skip0: {}".format(skip0))
+        print("skip1: {}".format(skip1))
 
     orig_dims = len(args.extent)
 
     for l in range(extent[3]):
-        l_act0 = skip_byte0[3] + l
-        l_act1 = skip_byte1[3] + l
+        l_act0 = skip0[3] + l
+        l_act1 = skip1[3] + l
         for k in range(extent[2]):
-            k_act0 = skip_byte0[2] + k
-            k_act1 = skip_byte1[2] + k
+            k_act0 = skip0[2] + k
+            k_act1 = skip1[2] + k
             for j in range(extent[1]):
-                j_act0 = skip_byte0[1] + j
-                j_act1 = skip_byte1[1] + j
-                base0 = skip_byte0[0] + j_act0 * stride0[0] + k_act0 * stride0[1] + (l_act0)*stride0[2]
-                base1 = skip_byte1[0] + j_act1 * stride1[0] + k_act1 * stride1[1] + (l_act1)*stride1[2]
+                j_act0 = skip0[1] + j
+                j_act1 = skip1[1] + j
+                base0 = skip0[0] + j_act0 * stride0[0] + k_act0 * stride0[1] + (l_act0)*stride0[2]
+                base1 = skip1[0] + j_act1 * stride1[0] + k_act1 * stride1[1] + (l_act1)*stride1[2]
                 data0_tmp = data0[base0:base0+extent[0]]
                 data1_tmp = data1[base1:base1+extent[0]]
                 assert(len(data0_tmp) == extent[0])
                 for i in range(extent[0]):
-                    i_act0 = skip_byte0[0] + i
-                    i_act1 = skip_byte1[0] + i
+                    i_act0 = skip0[0] + i
+                    i_act1 = skip1[0] + i
                     if args.verbose:
                         print("{},{}: {},{}: 0x{:02x},0x{:02x}".format(base0+i_act0, base1+i_act1,
                             (i_act0, j_act0, k_act0, l_act0)[0:orig_dims],
