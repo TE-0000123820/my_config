@@ -143,6 +143,7 @@ def diff(argv):
                             (i_act0, j_act0, k_act0, l_act0)[0:orig_dims],
                             (i_act1, j_act1, k_act1, l_act1)[0:orig_dims],
                             data0_tmp[i], data1_tmp[i]))
+                        err += 1
 
     if err == 0 and args.quiet == False:
         print("Indentical: {}, {}".format(args.input0, args.input1))

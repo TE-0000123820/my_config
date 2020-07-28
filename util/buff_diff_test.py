@@ -27,9 +27,9 @@ def test_0():
 
     extents_diff = extents1 - extents0
 
-    assert 0 == buff_diff.diff("data0.bin data1.bin 8 7 6 5 --stride1 {} {} {} --skip1 {} {} {} {} -v"
+    assert 0 == buff_diff.diff("data0.bin data1.bin 8 7 6 5 --stride1 {} {} {} --skip1 {} {} {} {}"
             .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod(), *reversed(extents_diff)).split(" "))
-    assert 0 == buff_diff.diff("data1.bin data0.bin 8 7 6 5 --stride0 {} {} {} --skip0 {} {} {} {} -v"
+    assert 0 == buff_diff.diff("data1.bin data0.bin 8 7 6 5 --stride0 {} {} {} --skip0 {} {} {} {}"
             .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod(), *reversed(extents_diff)).split(" "))
 
 def test_1():
@@ -45,9 +45,9 @@ def test_1():
 
     skips = (4, 3, 2, 1)
 
-    assert 0 == buff_diff.diff("data0.bin data1.bin 8 7 6 5 --stride1 {} {} {} --skip1 {} {} {} {} -v"
+    assert 0 == buff_diff.diff("data0.bin data1.bin 8 7 6 5 --stride1 {} {} {} --skip1 {} {} {} {}"
             .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod(), *skips).split(" "))
-    assert 0 == buff_diff.diff("data1.bin data0.bin 8 7 6 5 --stride0 {} {} {} --skip0 {} {} {} {} -v"
+    assert 0 == buff_diff.diff("data1.bin data0.bin 8 7 6 5 --stride0 {} {} {} --skip0 {} {} {} {}"
             .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod(), *skips).split(" "))
 
 def test_2():
@@ -63,13 +63,13 @@ def test_2():
 
     skips = (0, 0, 0, 0)
 
-    assert 0 == buff_diff.diff("data0.bin data1.bin 8 7 6 5 --stride1 {} {} {} --skip1 {} {} {} {} -v"
+    assert 0 == buff_diff.diff("data0.bin data1.bin 8 7 6 5 --stride1 {} {} {} --skip1 {} {} {} {}"
             .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod(), *skips).split(" "))
-    assert 0 == buff_diff.diff("data1.bin data0.bin 8 7 6 5 --stride0 {} {} {} --skip0 {} {} {} {} -v"
+    assert 0 == buff_diff.diff("data1.bin data0.bin 8 7 6 5 --stride0 {} {} {} --skip0 {} {} {} {}"
             .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod(), *skips).split(" "))
-    assert 0 == buff_diff.diff("data0.bin data1.bin 8 7 6 5 --stride1 {} {} {} -v"
+    assert 0 == buff_diff.diff("data0.bin data1.bin 8 7 6 5 --stride1 {} {} {}"
             .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod()).split(" "))
-    assert 0 == buff_diff.diff("data1.bin data0.bin 8 7 6 5 --stride0 {} {} {} -v"
+    assert 0 == buff_diff.diff("data1.bin data0.bin 8 7 6 5 --stride0 {} {} {}"
             .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod()).split(" "))
 
 def test_3():
@@ -83,21 +83,40 @@ def test_3():
 
     skips = (0, 0, 0, 0)
 
-    assert 0 == buff_diff.diff("data0.bin data1.bin {} {} {} {} --stride0 {} {} {} --skip1 {} {} {} {} -v"
+    assert 0 == buff_diff.diff("data0.bin data1.bin {} {} {} {} --stride0 {} {} {} --skip1 {} {} {} {}"
             .format(*reversed(extents0), extents1[3], extents1[2:4].prod(), extents1[1:4].prod(), *skips).split(" "))
-    assert 0 == buff_diff.diff("data1.bin data0.bin {} {} {} {} --stride1 {} {} {} --skip0 {} {} {} {} -v"
+    assert 0 == buff_diff.diff("data1.bin data0.bin {} {} {} {} --stride1 {} {} {} --skip0 {} {} {} {}"
             .format(*reversed(extents0), extents1[3], extents1[2:4].prod(), extents1[1:4].prod(), *skips).split(" "))
-    assert 0 == buff_diff.diff("data0.bin data1.bin {} {} {} {} --stride0 {} {} {} -v"
+    assert 0 == buff_diff.diff("data0.bin data1.bin {} {} {} {} --stride0 {} {} {}"
             .format(*reversed(extents0), extents1[3], extents1[2:4].prod(), extents1[1:4].prod()).split(" "))
-    assert 0 == buff_diff.diff("data1.bin data0.bin {} {} {} {} --stride1 {} {} {} -v"
+    assert 0 == buff_diff.diff("data1.bin data0.bin {} {} {} {} --stride1 {} {} {}"
             .format(*reversed(extents0), extents1[3], extents1[2:4].prod(), extents1[1:4].prod()).split(" "))
-    assert 0 == buff_diff.diff("data0.bin data1.bin {} {} {} {} -v"
+    assert 0 == buff_diff.diff("data0.bin data1.bin {} {} {} {}"
             .format(*reversed(extents0)).split(" "))
-    assert 0 == buff_diff.diff("data1.bin data0.bin {} {} {} {} -v"
+    assert 0 == buff_diff.diff("data1.bin data0.bin {} {} {} {}"
             .format(*reversed(extents0)).split(" "))
 
+def test_4():
+    extents0 = np.array((5, 6, 7, 8))
+    array0 = make_array(extents0)
+
+    extents1 = np.array((6, 8, 10, 12))
+    array1 = make_array(extents1, 1)
+    array1[1:, 2:, 3:, 4:] = array0
+
+    array0.tofile("data0.bin")
+    array1.tofile("data1.bin")
+
+    extents_diff = extents1 - extents0
+
+    assert 0 != buff_diff.diff("data0.bin data1.bin 8 7 6 5 --stride1 {} {} {}"
+            .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod()).split(" "))
+    assert 0 != buff_diff.diff("data1.bin data0.bin 8 7 6 5 --stride0 {} {} {}"
+            .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod()).split(" "))
+
 if __name__ == "__main__":
-    #test_0()
-    #test_1()
-    #test_2()
+    test_0()
+    test_1()
+    test_2()
     test_3()
+    test_4()
