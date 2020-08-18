@@ -67,3 +67,14 @@ endsnippet
 snippet astype "a_float = a.astype(np.float32)"
 a_float = a.astype(np.float32)
 endsnippet
+
+snippet makedirs "os.makedirs(path, exist_ok=True)"
+os.makedirs(${1:path}, exist_ok=True)
+endsnippet
+
+snippet textwrap "import textwrap ; string = textwrap.dedent('''asdf''')"
+import textwrap
+string = textwrap.dedent('''
+${1:asdf}
+''')
+endsnippet

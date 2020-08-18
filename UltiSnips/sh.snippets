@@ -45,3 +45,9 @@ if [[ ${foo} =~ ^[a-z]+([0-9]+).*$ ]]; then
   echo ${BASH_REMATCH[1]}
 fi
 endsnippet
+
+snippet func "func () { ls }"
+${1:func} () {
+    ${2:ls}
+}
+endsnippet

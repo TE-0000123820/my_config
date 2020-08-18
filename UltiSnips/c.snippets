@@ -240,3 +240,7 @@ snippet fread "int rlen = fread(buff, 1, sizeof(buff), fp);"
 int rlen = fread(buff, 1, sizeof(buff), fp);
 assert(rlen == sizeof(buff));
 endsnippet
+
+snippet prd "printf('%s:%d: \n', __FILE__, __LINE__, );"
+printf("%s:%d: ${1}\n", __FILE__, __LINE__, ${2});
+endsnippet
