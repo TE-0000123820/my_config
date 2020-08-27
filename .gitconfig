@@ -19,4 +19,4 @@
     chp = cherry-pick
     root = rev-parse --show-toplevel
 [core]
-  pager = env LESSCHARSET=utf-8 less -cm -R
+  pager = env LESSCHARSET=utf-8 less -+F -m -R
