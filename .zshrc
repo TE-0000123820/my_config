@@ -228,8 +228,8 @@ preexec() {
 }
 
 # keychain
-#keychain $HOME/.ssh/id_rsa
-#source $HOME/.keychain/`uname -n`-sh
+keychain $HOME/.ssh/id_rsa
+source $HOME/.keychain/`uname -n`-sh
 
 #
 # recompile zsh scripts {{{
