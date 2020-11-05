@@ -238,7 +238,16 @@ endsnippet
 
 snippet fread "int rlen = fread(buff, 1, sizeof(buff), fp);"
 int rlen = fread(buff, 1, sizeof(buff), fp);
-assert(rlen == sizeof(buff));
+assert(rlen == sizeof(buff) && "fread");
+endsnippet
+
+snippet freadl "FILE* fp = fopen('in.bin', 'r'); int rlen = fread(buff, 1, sizeof(buff), fp);"
+{
+	FILE* fp = fopen("in.bin", "r");
+	assert(fp && "fopen read");
+	int rlen = fread(buff, 1, sizeof(buff), fp);
+	assert(rlen == sizeof(buff) && "fread");
+}
 endsnippet
 
 snippet prd "printf('%s:%d: \n', __FILE__, __LINE__, );"
