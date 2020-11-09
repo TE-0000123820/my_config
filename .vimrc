@@ -40,7 +40,7 @@ set belloff=all
 set completeopt=longest,menuone
 set diffopt=internal,filler,algorithm:histogram,indent-heuristic
 set isf-==
-set viminfo='1000
+set viminfo+='1000,s1000
 
 let &t_ti.="\e[1 q"
 let &t_SI.="\e[5 q"
@@ -514,6 +514,17 @@ let g:completor_disable_ultisnips = 1
 let g:completor_auto_trigger = 1
 let g:completor_min_chars = 3
 
+"Bundle 'prabirshrestha/asyncomplete.vim'
+"Bundle 'prabirshrestha/asyncomplete-file.vim'
+"au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+"    \ 'name': 'file',
+"    \ 'whitelist': ['*'],
+"    \ 'priority': 10,
+"    \ 'completor': function('asyncomplete#sources#file#completor')
+"    \ }))
+
+"Bundle "tpope/vim-commentary"
+"autocmd! FileType cpp setlocal commentstring=//\ %s
 Bundle "preservim/nerdcommenter"
 Bundle "tpope/vim-surround"
 Bundle "glts/vim-radical"
