@@ -54,6 +54,7 @@
 [git skip lfs files] GIT_LFS_SKIP_SMUDGE=1 git clone https://github.com/asdfsadf@
 [git fetch shallow] git fetch --depth=1
 [git gc] git gc --aggressive --prune=now
+[git set remote] git remote set-url origin @
 
 : tmux
 [tmux kill window] echo "prefx &"
