@@ -53,6 +53,7 @@
 [git show repos root] git rev-parse --show-toplevel
 [git skip lfs files] GIT_LFS_SKIP_SMUDGE=1 git clone https://github.com/asdfsadf@
 [git fetch shallow] git fetch --depth=1
+[git fetch unshallow] git fetch --unshallow
 [git gc] git gc --aggressive --prune=now
 [git set remote] git remote set-url origin @
 
