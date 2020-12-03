@@ -248,6 +248,7 @@ inoremap <c-b> <left>
 inoremap <c-f> <right>
 " }}}
 
+command -nargs=0 GetCurFile echo expand("%:p")
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " highlight settings {{{

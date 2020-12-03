@@ -17,6 +17,11 @@ FormatTime,TimeString,,yyyy/MM/dd
 Send,%TimeString%
 Return
 
+::d//::
+FormatTime,TimeString,,yyyy/MM/dd
+Send,%TimeString%
+Return
+
 ::ts..::
 FormatTime,TimeString,,M/d HHmm
 Send,%TimeString% テレワーク開始します
@@ -45,6 +50,10 @@ Return
         run,C:\tool\link\gvim.exe.lnk
     else if Key=e
         run,C:\tool\link\gvim.exe.lnk %A_ScriptFullPath%
+    else if Key=w
+        run,C:\Users\0000123820\AppData\Local\Microsoft\WindowsApps\ubuntu2004.exe
+    else if Key=s
+        run,C:\Users\0000123820\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell\Windows PowerShell.lnk
     else if Key=r
         Reload
     return
@@ -76,12 +85,14 @@ Return
     Input Key, L1
     if Key=c
         WinActivate,ahk_exe chrome.exe
+    if Key=b
+        WinActivate,ahk_exe chrome.exe
     if Key=f
         WinActivate,ahk_exe WinSCP.exe
     if Key=m
         WinActivate,ahk_class mintty
-    if Key=d
-        WinActivate,ahk_class mintty
+    if Key=t
+        WinActivate,ahk_exe Teams.exe
     if Key=w
         WinActivate,Cygwin ahk_class mintty
     if Key=e
@@ -96,8 +107,6 @@ Return
         WinActivate,ahk_exe OUTLOOK.EXE
     if Key=v
         WinActivate,ahk_class Vim
-    if Key=t
-        WinActivate,ahk_exe thunderbird.exe
     if Key=p
         WinActivate,ahk_class PPTFrameClass
     if Key=i
@@ -106,6 +115,10 @@ Return
         WinActivate,ahk_exe lync.exe
     if Key=n
         WinActivate,ahk_class ApplicationFrameWindow
+    return
+
+!^m::
+    WinActivate,ahk_exe WindowsTerminal.exe
     return
 
 #IfWinActive ahk_class ApplicationFrameWindow
@@ -138,8 +151,6 @@ Return
 #IfWinActive  
 
 #IfWinNotActive ahk_class mintty
-^Space:: Send, {PgDn}
-^+Space:: Send, {PgUp}
 !d:: SendInput, {Ctrl down}{Del}{Ctrl up}
 !h:: SendInput, {Ctrl down}{BS}{Ctrl up}
 #IfWinNotActive
@@ -147,26 +158,6 @@ Return
 ;
 ; Mouse
 ;
-; Up
-;#Up::
-;    MouseMove 0,-20,0,R
-;    return
-;
-;; Down
-;#Down::
-;    MouseMove 0,20,0,R
-;    return
-;
-;; Left
-;#Left::
-;    MouseMove -20,0,0,R
-;    return
-;
-;; Right
-;#Right::
-;    MouseMove 20,0,0,R
-;    return
-
 ; Up
 #+k::
     MouseMove 0,-20,0,R
@@ -207,7 +198,6 @@ Return
     MouseMove 160,0,0,R
     return
 
-
 ; Left click
 #[::
     MouseClick,left,,,,,D
@@ -226,10 +216,8 @@ Return
 #]::
     MouseClick ,Right
     return
-; Wheel
-;+^p::
-;    Send,{WheelUp 3}
-;    return
-;+^n::
-;    Send,{WheelDown 3}
-;    return
+
+; PrintScreen
+^!q::  SendInput, {LWin Down}{PrintScreen}{LWin Up}
+
+vkac:: SendInput, {LWin Down}{PrintScreen}{LWin Up}
