@@ -15,6 +15,8 @@ def make_array(extents, val=None):
     return array
 
 def test_0():
+    print(f'#### START test_0')
+
     extents0 = np.array((5, 6, 7, 8))
     array0 = make_array(extents0)
 
@@ -33,6 +35,8 @@ def test_0():
             .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod(), *reversed(extents_diff)).split(" "))
 
 def test_1():
+    print(f'#### START test_1')
+
     extents0 = np.array((5, 6, 7, 8))
     array0 = make_array(extents0)
 
@@ -51,6 +55,8 @@ def test_1():
             .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod(), *skips).split(" "))
 
 def test_2():
+    print(f'#### START test_2')
+
     extents0 = np.array((5, 6, 7, 8))
     array0 = make_array(extents0)
 
@@ -73,6 +79,8 @@ def test_2():
             .format(extents1[3], extents1[2:4].prod(), extents1[1:4].prod()).split(" "))
 
 def test_3():
+    print(f'#### START test_3')
+
     extents0 = np.array((6, 7, 8, 9))
     extents1 = extents0
     array0 = make_array(extents0)
@@ -97,6 +105,8 @@ def test_3():
             .format(*reversed(extents0)).split(" "))
 
 def test_4():
+    print(f'#### START test_4')
+
     extents0 = np.array((5, 6, 7, 8))
     array0 = make_array(extents0)
 

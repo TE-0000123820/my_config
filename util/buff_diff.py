@@ -22,7 +22,9 @@ def make_stride_list(stride, extent):
             stride.append(cur_stride)
             stride_str.append(cur_stride_str)
         else:
-            stride_str.append(str(stride[i]))
+            cur_stride = stride[i]
+            cur_stride_str = str(stride[i])
+            stride_str.append(cur_stride_str)
     return (stride_str, stride)
 
 def diff(argv):
@@ -148,7 +150,7 @@ def diff(argv):
     if err == 0 and args.quiet == False:
         print("Indentical: {}, {}".format(args.input0, args.input1))
 
-    return err
+    return err != 0
 
 if __name__ == "__main__":
     sys.exit(diff(sys.argv[1:]))
