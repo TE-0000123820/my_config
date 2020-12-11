@@ -74,8 +74,19 @@ function Invoke-FuzzySelect() {
     }
 }
 
+function OpenCurrentLoc() {
+    $matched = (get-location | Select-Object -Property Path) -match "::(.+)}$"
+    if ($matched) {
+        explorer.exe $Matches[1]
+    }
+    else {
+        explorer.exe .
+    }
+}
+
 # alias
 Set-Alias -name e -value explorer.exe
+Set-Alias -name ec -value OpenCurrentLoc
 Set-Alias -name fz -value Invoke-FuzzyZLocation2
 #Set-Alias -name fcp -value Invoke-FuzzyClip
 Set-Alias -name fes -value Invoke-FuzzySelect
