@@ -113,6 +113,7 @@ alias pon="perl -MOneLinerLib -W -nE"
 alias parallel='parallel --gnu'
 alias pd="popd"
 alias rg="rg --color=always"
+alias rp="realpath"
 alias s="source"
 alias ssh='ssh -Y'
 alias tp="top"

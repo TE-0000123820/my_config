@@ -413,6 +413,9 @@ nnoremap + :Switch<cr>
 " }}}
 
 Bundle 'davidhalter/jedi-vim'
+let g:jedi#completions_enabled = 0
+let g:jedi#goto_command = "<Leader>d"
+
 "Bundle 'osyo-manga/vim-over'
 "Bundle 'benekastah/neomake'
 Bundle 'lyuts/vim-rtags'
@@ -506,8 +509,6 @@ augroup rainbow_lisp
 augroup END
 Bundle 'simeji/winresizer'
 let g:winresizer_start_key = '<leader>w'
-Bundle 'dense-analysis/ale'
-let g:ale_lint_on_text_changed = 0
 Bundle 'mbbill/undotree'
 
 Bundle 'maralla/completor.vim'
@@ -540,3 +541,39 @@ filetype plugin indent on    " required
 nnoremap <C-G>r :Gtags -r <C-R><C-W><CR>
 nnoremap <C-G>d :Gtags <C-R><C-W><CR>
 nnoremap <C-G>g :Gtags -g <C-R><C-W><CR>
+
+Bundle "Vimjas/vim-python-pep8-indent"
+
+Bundle 'prabirshrestha/vim-lsp'
+Bundle 'mattn/vim-lsp-settings'
+if executable('pyls')
+    " pip install python-language-server
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'allowlist': ['python'],
+        \ })
+endif
+
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gD <plug>(lsp-declaration)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <Plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <Plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+    
+    " refer to doc to add more commands
+endfunction
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
