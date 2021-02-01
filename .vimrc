@@ -77,7 +77,6 @@ autocmd FileType markdown set makeprg=pandoc\ -r\ markdown\ -t\ html\ -c\ ~/deve
 autocmd FileType log set makeprg=cat\ %
 autocmd FileType text set makeprg=cat\ %
 
-
 let g:Gtags_No_Auto_Jump=1
 let g:errorformat="%*[^\"]\"%f\"%*\D%l: %m,\"%f\"%*\D%l: %m,%-G%f:%l: (Each undeclared identifier is reported only once,%-G%f:%l: for each function it appears in.),%-GIn file included from %f:%l:%c:,%-GIn file included from %f:%l:%c\,,%-GIn file included from %f:%l:%c,%-GIn file included from %f:%l,%-G%*[ ]from %f:%l:%c,%-G%*[ ]from %f:%l:,%-G%*[ ]from %f:%l\,,%-G%*[ ]from %f:%l,%f:%l:%c:%m,%f(%l) :%m,%f:%l:%m,\"%f\"\, line %l%*\D%c%*[^ ] %m,%D%*\a[%*\d]: Entering directory %*[`']%f',%X%*\a[%*\d]: Leaving directory %*[`']%f',%D%*\a: Entering directory %*[`']%f',%X%*\a: Leaving directory %*[` ']%f',%DMaking %*\a in %f,%f|%l| %m"
 "let &makeprg="make -j " . system('cat /proc/cpuinfo | grep "core id" | wc -l | tr -d "\r" | tr -d "\n"')
@@ -159,7 +158,7 @@ nnoremap <Leader><C-M> :make<CR>
 nnoremap <C-W>C :cclose<CR>
 nnoremap <Leader>C :set cursorcolumn!<CR>
 nnoremap <Leader>N :set relativenumber! number!<CR>
-nnoremap <Leader>S :syntax off<CR>
+nnoremap <Leader>S :if exists("g:syntax_on") \| syntax off \| else \| syntax enable \| endif<CR>
 nnoremap <Leader>Q :QuickfixsignsToggle<CR>
 nnoremap <C-j> 5j
 nnoremap <C-k> 5k
@@ -249,6 +248,7 @@ inoremap <c-f> <right>
 " }}}
 
 command -nargs=0 GetCurFile echo expand("%:p")
+command -nargs=0 NOHL :nohl | :SearchReset
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " highlight settings {{{
@@ -577,3 +577,10 @@ augroup lsp_install
     " call s:on_lsp_buffer_enabled only for languages that has the server registered.
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
+"command! LspDebug let lsp_log_verbose=1 | let lsp_log_file = expand('~/lsp.log')
+let lsp_log_verbose=1
+let lsp_log_file = expand('~/lsp.log')
+let g:lsp_diagnostics_echo_cursor = 1 
+
+Bundle 'liuchengxu/vista.vim'
+nnoremap <space>v :Vista<CR>
