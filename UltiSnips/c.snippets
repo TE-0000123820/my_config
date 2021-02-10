@@ -155,6 +155,18 @@ snippet forh "for half"
 for(int ${2:i} = 0; $2 < ${1:count}; $2${3:++}) {
 endsnippet
 
+snippet fore "for(const auto& itr :: container) { }"
+for(const auto& ${1:itr} : ${2:container}) {
+	${3}
+}
+endsnippet
+
+snippet foree "for(auto& itr :: container) { }"
+for(auto& ${1:itr} : ${2:container}) {
+	${3}
+}
+endsnippet
+
 snippet spr "saprintf()" w
 saprintf("$1\n"$2);
 endsnippet
@@ -252,4 +264,13 @@ endsnippet
 
 snippet prd "printf('%s:%d: \n', __FILE__, __LINE__, );"
 printf("%s:%d: ${1}\n", __FILE__, __LINE__, ${2});
+endsnippet
+
+snippet dumpbuff "unsigned char*p = (unsigned char*)${1}; for(int i = 0; i < ${2:100}; i++) { printf('o: 0x%02x\n', *p++); }"
+{
+	unsigned char*p = (unsigned char*)${1};
+	for(int i = 0; i < ${2:100}; i++) {
+		printf("o: 0x%02x\n", *p++);
+	}
+}
 endsnippet
