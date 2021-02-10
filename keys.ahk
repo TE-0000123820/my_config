@@ -86,7 +86,7 @@ Return
     if Key=c
         WinActivate,ahk_exe chrome.exe
     if Key=b
-        WinActivate,ahk_exe chrome.exe
+        WinActivate,ahk_exe msedge.exe
     if Key=f
         WinActivate,ahk_exe WinSCP.exe
     if Key=m
@@ -221,3 +221,18 @@ Return
 ^!q::  SendInput, {LWin Down}{PrintScreen}{LWin Up}
 
 vkac:: SendInput, {LWin Down}{PrintScreen}{LWin Up}
+
+XButton2::
+    IfWinActive ahk_exe msedge.exe
+    {
+        SendInput, {Alt down}{Space}
+        Sleep 100
+        SendInput, {m}{Alt up}
+    }
+    Else
+    {
+        WinGetPos, xpos, ypos, width, height, A
+        pos := width - 300
+        Click,%pos%,20,0
+    }
+    return
