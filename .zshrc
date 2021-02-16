@@ -97,6 +97,7 @@ alias Kill='kill -9'
 alias l="ls -F --color=auto"
 alias ll="ls -F --color=auto -l"
 alias llh="ls -F --color=auto -l -h"
+alias lr="ls -ltc"
 alias ls="ls -F --color=auto"
 alias lv='lv -c'
 alias m="make"
@@ -112,6 +113,7 @@ alias po="perl -W -MOneLinerLib"
 alias pon="perl -MOneLinerLib -W -nE"
 alias parallel='parallel --gnu'
 alias pd="popd"
+alias pytest="pytest -rap"
 alias rg="rg --color=always"
 alias rp="realpath"
 alias s="source"
