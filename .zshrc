@@ -43,6 +43,15 @@ function cd-up { zle push-line && LBUFFER='builtin cd ..' && zle accept-line }
 zle -N cd-up
 bindkey "^O" cd-up
 
+# pet
+call_pet () {
+    local snippets=$(pet search | cat)
+    LBUFFER="${LBUFFER}${snippets}"
+    zle reset-prompt
+}
+zle -N call_pet
+bindkey '^x^p' call_pet
+
 #
 # history settings {{{
 #
@@ -51,6 +60,16 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt append_history
 setopt share_history
+zshaddhistory() {
+    local line=${1%%$'\n'}
+    local cmd=${line%% *}
+
+    # 以下の条件をすべて満たすものだけをヒストリに追加する
+    [[ ${#line} -ge 3
+        && ${cmd} != (l|l[sal])
+        && ${cmd} != fg
+    ]]
+}
 # }}}
 
 autoload -Uz select-word-style
@@ -161,6 +180,7 @@ alias -g TLA='2>&1 |tee -a ${LOG_FILE_NAME}'
 alias -g TLH='2>&1 |tee ~/${LOG_FILE_NAME}'
 alias -g BP='; bp'
 alias -g FF='2>&1 | ff'
+alias -g B='| read -d "" _TMUX_BUFF_TMP ; tmux set-buff ${_TMUX_BUFF_TMP}'
 # }}}
 
 # 
