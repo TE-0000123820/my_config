@@ -56,6 +56,7 @@
 [git fetch unshallow] git fetch --unshallow && git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*" && git fetch origin
 [git gc] git gc --aggressive --prune=now
 [git set remote] git remote set-url origin @
+[gen git diff] git diff > $(basename $(pwd)).diff
 
 : tmux
 [tmux kill window] echo "prefx &"
@@ -83,6 +84,7 @@
 [dns] nameserver 43.4.54.16
 [dns] nameserver 137.153.66.28
 [dns] nameserver 137.153.112.2
+[glog stacktrace parse addr2line] perl -ne 'if(/\s+@\s+(0x[0-9a-f]+)/) { system("addr2line -pfai $1 | c++filt | grep -v \\?"); }' @
 
 : docker
 [docker rmi] sudo docker rmi @
