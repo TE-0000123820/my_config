@@ -2,11 +2,12 @@
     email = Norito.Kato@sony.com
     name = Norito Kato
 [alias]
-    lg = log --graph --date-order -C -M --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --date=short
-    lgs = log --stat
-    lga = log --graph --date-order -C -M --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --date=short --all
-    lgo = log --oneline --graph --decorate
-    lgm = log --author Norito --graph --date-order -C -M --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --date=short
+    lg    = log --graph --date-order -C -M --pretty=format:\"%C(cyan)<%h> %ad [%an] %Cgreen%d%Creset %C(yellow)%s%Creset%n%-b\" --date=short
+    lgs   = log --graph --date-order -C -M --pretty=format:\"%C(cyan)<%h> %ad [%an] %Cgreen%d%Creset %C(yellow)%s%Creset%n%-b\" --date=short --stat
+    lga   = log --graph --date-order -C -M --pretty=format:\"%C(cyan)<%h> %ad [%an] %Cgreen%d%Creset %C(yellow)%s%Creset%n%-b\" --date=short --all
+    slg = log --graph --date-order -C -M --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %C(yellow)%s\" --date=short
+    slgs = log --graph --date-order -C -M --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %C(yellow)%s\" --date=short --stat
+    slga = log --graph --date-order -C -M --pretty=format:\"<%h> %ad [%an] %Cgreen%d%Creset %s\" --date=short --all
     co = checkout
     d = diff
     l = log --color
