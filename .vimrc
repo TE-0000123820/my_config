@@ -269,6 +269,18 @@ hi EasyMotionTarget ctermfg=cyan
 hi EasyMotionTarget2First ctermfg=yellow
 " }}}
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Utility functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd BufWritePost * :call AddExePermission()
+function AddExePermission()
+    let line = getline(1)
+    if strpart(line, 0, 2) == "#!"
+        call system("chmod +x ". expand("%"))
+    endif
+endfunction
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -440,9 +452,10 @@ command! -bang -nargs=* LinesWithPreview
     \   fzf#vim#with_preview({'options': '--delimiter : --nth 4.. --no-sort --color hl:2,hl+:14'}, 'up:50%', '?'),
     \   1) 
 "   'rg --with-filename --column --line-number --no-heading --color=always --smart-case . '.fnameescape(expand('%')), 1,
-nnoremap <space>g :LinesWithPreview<CR>
-nnoremap <space>r :Rg <c-r><c-w>
-nnoremap <space>L :BLines<cr>
+nnoremap <c-g>g :LinesWithPreview<CR>
+nnoremap <c-g>r :Rg <c-r><c-w>
+nnoremap <c-g>L :BLines<cr>
+nnoremap <c-g>t :Tags<cr>
 "let g:fzf_layout = { 'window': '~40%' }
 "nnoremap Ff :History!<cr>
 nnoremap Ff :call fzf#vim#history(fzf#vim#with_preview('up:30%'), 1)<CR>

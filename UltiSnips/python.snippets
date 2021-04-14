@@ -82,3 +82,12 @@ string = textwrap.dedent('''
 ${1:asdf}
 ''')
 endsnippet
+
+snippet abs "os.path.abspath(__file__)" w
+os.path.abspath(${1:__file__})
+endsnippet
+
+snippet absi "impot os ; os.path.abspath(__file__)" w
+impot os
+os.path.abspath(${1:__file__})
+endsnippet

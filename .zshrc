@@ -103,12 +103,22 @@ alias btar="tar --use-compress-program=pbzip2"
 alias btarc="tar --use-compress-program=pbzip2 -cf"
 alias c="cd"
 alias cmake="cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
+alias dck="docker"
 alias df="df -h"
 function myfg() { fg %$1 }
 alias f="myfg"
 alias g="git"
 alias gr="grep --color=always"
 alias h="history"
+function incp() {
+    local new_name=$(echo $1 | perl -ne 'if(/(.*)(\d+)(.*)$/) { print $1 . (int($2)+1) . $3; }')
+    cp -v $1 $new_name
+}
+function incpe() {
+    local new_name=$(echo $1 | perl -ne 'if(/(.*)(\d+)(.*)$/) { print $1 . (int($2)+1) . $3; }')
+    cp -v $1 $new_name
+    vim $new_name
+}
 alias j="jobs"
 alias java='java -Dfile.encoding=UTF-8'
 alias javac='javac -J-Dfile.encoding=UTF-8'
@@ -132,7 +142,7 @@ alias po="perl -W -MOneLinerLib"
 alias pon="perl -MOneLinerLib -W -nE"
 alias parallel='parallel --gnu'
 alias pd="popd"
-alias pytest="pytest -rap"
+alias pytest="pytest -rap --tb=line"
 alias rg="rg --color=always"
 alias rp="realpath"
 alias s="source"

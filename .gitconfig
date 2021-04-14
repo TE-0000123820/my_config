@@ -20,5 +20,6 @@
     cls = clone --recursive --depth 1
     chp = cherry-pick
     root = rev-parse --show-toplevel
+    re = remote
 [core]
   pager = env LESSCHARSET=utf-8 less -+F -m -R
