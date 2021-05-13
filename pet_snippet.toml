@@ -1,0 +1,96 @@
+[[snippets]]
+  command = "time bash ../tools/run_error_check_fixed_par.sh ~/file_list_all.new.txt"
+  description = "AED error test run"
+[[snippets]]
+  command = "make clean gen_table gen_constraint_table FLOAT2FIXED=1 && make clean all FLOAT2FIXED=1"
+  description = "build"
+[[snippets]]
+  command = "make CXX=g++-7 LLVM_CONFIG=llvm-config-3.8 CLANG=clang-3.8  -j8"
+  description = "Halide build sa"
+[[snippets]]
+  command = "gcc -fdiagnostics-color=always"
+  description = "gcc color"
+[[snippets]]
+  command = "g++ -fdiagnostics-color=always"
+  description = "g++ color"
+[[snippets]]
+  command = "perl -e 'print reverse <>'"
+  description = "perl reverse"
+[[snippets]]
+  command = "perl -ne 'if(/Total=\\s*(\\d+)/) { print $1/396 ; }' log"
+  description = "sadb est us"
+[[snippets]]
+  command = "git push origin master"
+  description = "git push"
+[[snippets]]
+  command = "git push origin develop"
+  description = "git push"
+[[snippets]]
+  command = "git submodule update --init --recursive"
+  description = "git submodule"
+[[snippets]]
+  command = "git commit --amend"
+  description = "git change comment"
+[[snippets]]
+  command = "echo \"prefx &\""
+  description = "tmux kill window"
+[[snippets]]
+  command = "echo \"prefx x\""
+  description = "tmux kill pane"
+[[snippets]]
+  command = "v ${MISC_DIR}/.zshrc"
+  description = "edit misc"
+[[snippets]]
+  command = "export LD_LIBRARY_PATH="
+  description = "export LD_LIBRARY_PATH"
+[[snippets]]
+  command = "source ~/virtualenv_py36/bin/activate"
+  description = "python ve setup"
+[[snippets]]
+  command = "readlink /proc/$$/exe"
+  description = "check current shell"
+[[snippets]]
+  command = "readlink /proc/$$/exe | grep bash"
+  description = "check current shell bash"
+[[snippets]]
+  command = "if [ ! `readlink /proc/$$/exe | grep bash` ] ; then echo \"ERROR: use bash\" ; exit 1; fi; set -e -o pipefail"
+  description = "check current shell bash if"
+[[snippets]]
+  command = "command 2>&1 | tee >(grep -i error > file2) | tee file1"
+  description = "tips: redirect: file1と標準出力に全ログ、file2にフィルタリングしたログを出力する"
+[[snippets]]
+  command = "for c in {000..255}; do echo -n \"\\e[38;5;${c}m $c\" ; [ $(($c%16)) -eq 15 ] && echo;done;echo"
+  description = "tips: show 256 color"
+[[snippets]]
+  command = "curl -LJO  "
+  description = "donwload http link"
+[[snippets]]
+  command = "v ${MISC_DIR}/easy-oneliner.txt"
+  description = "edit this file"
+[[snippets]]
+  command = "vmstat 2"
+  description = "io監視"
+[[snippets]]
+  command = "sudo iotop"
+  description = "io監視"
+[[snippets]]
+  command = "identify @a.jpg"
+  description = "画像情報取得: image info"
+[[snippets]]
+  command = "convert -resize @1366x768 input.png output.png"
+  description = "画像サイズ変換: image resize"
+[[snippets]]
+  command = "cp ~/.config/pet/snippet.toml ${MISC_DIR}/pet/snippet.toml"
+  description = "pet: save"
+[[snippets]]
+  command = "cp ${MISC_DIR}/pet/snippet.toml ~/.config/pet/snippet.toml"
+  description = "pet: load"
+[[snippets]]
+  command = "pet edit"
+  description = "pet edit"
+[[snippets]]
+  command = "hex()"
+  description = "hex()"
+[[snippets]]
+  command = "git submodule foreach --recursive git clean -ffdx && git clean -ffdx"
+  description = "git clean all, submodule"

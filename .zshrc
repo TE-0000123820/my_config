@@ -45,7 +45,7 @@ bindkey "^O" cd-up
 
 # pet
 call_pet () {
-    local snippets=$(pet search | cat)
+    local snippets=$(pet --config ${MISC_DIR}/pet_config.toml search | cat)
     LBUFFER="${LBUFFER}${snippets}"
     zle reset-prompt
 }
@@ -138,6 +138,7 @@ alias p2="python2"
 alias p3="python3"
 alias p="python"
 alias perl="perl -W"
+alias pet="pet --config ${MISC_DIR}/pet_config.toml"
 alias po="perl -W -MOneLinerLib"
 alias pon="perl -MOneLinerLib -W -nE"
 alias parallel='parallel --gnu'
