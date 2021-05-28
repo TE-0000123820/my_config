@@ -91,3 +91,11 @@ snippet absi "impot os ; os.path.abspath(__file__)" w
 impot os
 os.path.abspath(${1:__file__})
 endsnippet
+
+snippet signalhandle "import signal; def handler(_): assert 0 signal.signal(signal.SIGTERM, handler) signal.signal(signal.SIGINT,  handler)" w
+import signal
+def handler(_):
+    assert 0
+signal.signal(signal.SIGTERM, handler)
+signal.signal(signal.SIGINT,  handler)
+endsnippet

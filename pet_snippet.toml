@@ -94,3 +94,12 @@
 [[snippets]]
   command = "git submodule foreach --recursive git clean -ffdx && git clean -ffdx"
   description = "git clean all, submodule"
+[[snippets]]
+  command = "grep -rl w0 * | xargs perl -i -pnE 's/w0/w1/g'"
+  description = "replace all word in files"
+[[snippets]]
+  command = "git fetch --unshallow"
+  description = "git,unshallow"
+[[snippets]]
+  command = "git fetch . b_src:b_dst"
+  description = "git,merge,fastforward,checkout"
