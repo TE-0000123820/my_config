@@ -103,3 +103,12 @@
 [[snippets]]
   command = "git fetch . b_src:b_dst"
   description = "git,merge,fastforward,checkout"
+[[snippets]]
+  command = "git gc --aggressive --prune"
+  description = "git"
+[[snippets]]
+  command = "git rev-parse --show-toplevel"
+  description = "git,root,directory,print"
+[[snippets]]
+  command = "STR=\"$(IFS=,; echo \"${ARRAY[*]}\")\""
+  description = "bash,array,join"

@@ -314,9 +314,9 @@ autocmd FileType ps nnoremap <buffer> <silent> <C-K> 8k
 "
 Bundle 'tpope/vim-fugitive'
 autocmd! FileType gitcommit
-autocmd! FileType gitcommit nmap <c-d> :let @t=winnr()<cr>:normal D<cr>:exec @t . "wincmd w"<cr>
+autocmd! FileType gitcommit nmap <c-d> :let @t=winnr()<cr>:normal dd<cr>:exec @t . "wincmd w"<cr>
 autocmd! FileType fugitive
-autocmd! FileType fugitive nmap <c-d> :let @t=winnr()<cr>:normal D<cr>:exec @t . "wincmd w"<cr>
+autocmd! FileType fugitive nmap <c-d> :let @t=winnr()<cr>:normal dd<cr>:exec @t . "wincmd w"<cr>
 " }}}
 
 "Bundle 'kana/vim-textobj-user'
@@ -400,8 +400,8 @@ nnoremap Uu :Unite -direction=below<cr>
 nnoremap Uf :Unite -direction=below file_mru<cr>
 nnoremap UF :Unite -direction=below file_rec<cr>
 nnoremap Ul :Unite -direction=below line<cr>
-nnoremap <c-g><c-s> :Denite -direction=below ultisnips<cr>
-inoremap <c-g><c-s> <esc>:Denite -direction=below ultisnips<cr>
+nnoremap <c-g><c-s> :Snippets<cr>
+inoremap <c-g><c-s> <esc>:Snippets<cr>
 "nnoremap Uf :History<cr>
 "nnoremap UF :Files<cr>
 "nnoremap Ul :BLines<cr>
@@ -472,7 +472,8 @@ nnoremap Ff :call fzf#vim#history(fzf#vim#with_preview('up:30%'), 1)<CR>
 "
 " ultisnips {{{
 "
-Bundle 'neoclide/ultisnips'
+"Bundle 'neoclide/ultisnips'
+Bundle 'SirVer/ultisnips'
 let g:UltiSnipsSnippetDirectories=[$HOME."/misc_kato/UltiSnips"]
 let g:UltiSnipsListSnippets="<c-x><c-o>"
 let g:UltiSnipsExpandTrigger="<c-o>"
