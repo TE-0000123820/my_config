@@ -112,3 +112,9 @@
 [[snippets]]
   command = "STR=\"$(IFS=,; echo \"${ARRAY[*]}\")\""
   description = "bash,array,join"
+[[snippets]]
+  command = "for i in {1..5}; do echo $i; done"
+  description = "for,bash,1line"
+[[snippets]]
+  command = "git rev-parse --show-toplevel"
+  description = "git,top,root,show"

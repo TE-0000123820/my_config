@@ -99,3 +99,11 @@ def handler(_):
 signal.signal(signal.SIGTERM, handler)
 signal.signal(signal.SIGINT,  handler)
 endsnippet
+
+snippet lambda "lambda n: n * 2" w
+lambda n: n * 2
+endsnippet
+
+snippet astliteral "ast.literal_eval()" w
+ast.literal_eval(${1:a})
+endsnippet
