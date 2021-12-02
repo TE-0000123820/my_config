@@ -169,7 +169,7 @@ alias vd="${VIM} -d"
 alias vg="vimgit"
 alias vgd="${VIM} -c \":Gdiff\""
 alias vimbin='${VIM} -c ":BinEdit'
-alias vimgit="${VIM} -c \":Gstatus\""
+alias vimgit="${VIM} -c \":Git\""
 alias vimps="${VIM} -c \":new | :wincmd o | :PsThisBuffer\""
 alias xtar="tar --use-compress-prog=pxz"
 alias xtarc="tar --use-compress-prog=pxz -cf"
