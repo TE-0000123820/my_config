@@ -287,7 +287,7 @@ source ${MISC_DIR}/zinit/zinit.zsh
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-zinit light zdharma/fast-syntax-highlighting
+zinit light zdharma-continuum/fast-syntax-highlighting
 FAST_HIGHLIGHT=(main brackets)
 FAST_HIGHLIGHT_STYLES[globbing]='fg=cyan'
 FAST_HIGHLIGHT[use_brackets]=1
