@@ -7,27 +7,27 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #^Q:: Send,{Esc}
 !^\:: Shutdown,2
 
-::d..::
+::;d;::
 FormatTime,TimeString,,yyyyMMdd
 Send,%TimeString%
 Return
 
-::d??::
+::;d/;::
 FormatTime,TimeString,,yyyy/MM/dd
 Send,%TimeString%
 Return
 
-::d//::
-FormatTime,TimeString,,yyyy/MM/dd
+::;d-;::
+FormatTime,TimeString,,yyyy-MM-dd
 Send,%TimeString%
 Return
 
-::ts..::
+::;ts;::
 FormatTime,TimeString,,M/d HHmm
 Send,%TimeString% テレワーク開始します
 Return
 
-::te..::
+::;te;::
 FormatTime,TimeString,,M/d HHmm
 Send,%TimeString% テレワーク終了します
 Return
@@ -49,7 +49,7 @@ Return
     else if Key=v
         run,C:\tool\link\gvim.exe.lnk
     else if Key=e
-        run,C:\tool\link\gvim.exe.lnk %A_ScriptFullPath%
+        run,"C:\Users\0000123820\OneDrive - Sony\tool\vim81-kaoriya-win64\gvim.exe" %A_ScriptFullPath%
     else if Key=w
         run,C:\Users\0000123820\AppData\Local\Microsoft\WindowsApps\ubuntu2004.exe
     else if Key=s
@@ -115,6 +115,13 @@ Return
         WinActivate,ahk_exe lync.exe
     if Key=n
         WinActivate,ahk_class ApplicationFrameWindow
+    if Key=d
+        if WinExist("SuperPuTTY ahk_exe SuperPutty.exe") {
+            WinActivate  ; Uses the last found window.
+            Sleep 100
+            WinActivate  ; Uses the last found window.
+            MouseClick ,Left
+        }
     return
 
 !^m::
@@ -123,10 +130,10 @@ Return
 
 #IfWinActive ahk_class ApplicationFrameWindow
 
-^b:: SendInput, {Left}
-^f:: SendInput, {Right}
-^p:: SendInput, {Up}
-^n:: SendInput, {Down}
+;^b:: SendInput, {Left}
+;^f:: SendInput, {Right}
+;^p:: SendInput, {Up}
+;^n:: SendInput, {Down}
 
 !^b:: SendInput, {Left 5}
 !^s:: SendInput, {Left 5}
