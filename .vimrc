@@ -474,7 +474,7 @@ nnoremap Ff :call fzf#vim#history(fzf#vim#with_preview('up:30%'), 1)<CR>
 "
 "Bundle 'neoclide/ultisnips'
 Bundle 'SirVer/ultisnips'
-let g:UltiSnipsSnippetDirectories=[$HOME."/misc_kato/UltiSnips"]
+let g:UltiSnipsSnippetDirectories=[$MISC_DIR."/UltiSnips"]
 let g:UltiSnipsListSnippets="<c-x><c-o>"
 let g:UltiSnipsExpandTrigger="<c-o>"
 let g:UltiSnipsJumpForwardTrigger="<c-f>"
@@ -594,8 +594,8 @@ augroup lsp_install
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
 "command! LspDebug let lsp_log_verbose=1 | let lsp_log_file = expand('~/lsp.log')
-let lsp_log_verbose=1
-let lsp_log_file = expand('~/lsp.log')
+"let lsp_log_verbose=1
+"let lsp_log_file = expand('~/lsp.log')
 let g:lsp_diagnostics_echo_cursor = 1 
 
 Bundle 'liuchengxu/vista.vim'
