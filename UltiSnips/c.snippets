@@ -277,3 +277,21 @@ snippet ofstream "std::ofstream f(filename, std::ios_base::out);"
 }
 endsnippet
 
+#
+# opencl
+#
+snippet clgetbuildinfo "log,dump,clGetProgramBuildInfo" w
+{
+	cl_device_id di = deviceID;
+	printf("e: %d\n", ret);
+	// Determine the size of the log
+	size_t log_size;
+	clGetProgramBuildInfo(program, di, CL_PROGRAM_BUILD_LOG, 0, NULL, &log_size);
+	// Allocate memory for the log
+	char *log = (char *) malloc(log_size);
+	// Get the log
+	clGetProgramBuildInfo(program, di, CL_PROGRAM_BUILD_LOG, log_size, log, NULL);
+	// Print the log
+	printf(">>> %s\n", log);
+}
+endsnippet
