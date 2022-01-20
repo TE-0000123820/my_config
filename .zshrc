@@ -86,6 +86,7 @@ setopt noautoremoveslash
 setopt auto_param_slash
 setopt magic_equal_subst
 setopt auto_cd
+setopt extended_glob
 
 zstyle ':completion:*:default' menu select=1
 
