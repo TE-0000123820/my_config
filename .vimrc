@@ -133,7 +133,7 @@ map <silent> [Tag]gF <c-w>gF
 autocmd BufRead,BufNewFile *.log setfiletype log
 autocmd BufRead,BufNewFile log setfiletype log
 autocmd BufRead,BufNewFile log setfiletype log
-autocmd BufWritePost COMMIT_EDITMSG !bash ${MISC_DIR}/git_hook/commit-msg %
+autocmd BufWritePost COMMIT_EDITMSG !bash $MISC_DIR/git_hook/commit-msg %
 
 augroup vimrcEx
   au BufRead * if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -290,7 +290,7 @@ endfunction
 " Vundle
 "
 filetype off                  " required
-set rtp+=${MISC_DIR}/Vundle.vim/
+set rtp+=$MISC_DIR/Vundle.vim/
 call vundle#begin()
 
 "
