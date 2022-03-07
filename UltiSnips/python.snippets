@@ -111,3 +111,11 @@ endsnippet
 snippet nprand "numpy,np.random.rand()" w
 np.random.rand(${1:100})
 endsnippet
+
+snippet pdbsig "pdb,signal,trap,trace" w
+import signal
+def handle_pdb(sig, frame):
+    import pdb
+    pdb.Pdb().set_trace(frame)
+signal.signal(signal.SIGUSR1, handle_pdb)
+endsnippet

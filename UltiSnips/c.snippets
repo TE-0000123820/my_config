@@ -130,6 +130,7 @@ snippet fwritel "FILE* fp = fopen('out.bin', 'w'); assert(fp); int rv = fwrite(o
     assert(fp && "fopen write");
 	int wlen = fwrite(out, 1, sizeof(out), ,fp);
 	assert(wlen == sizeof(out) && "fwrite");
+	fclose(fp);
 }
 endsnippet
 
@@ -248,6 +249,7 @@ snippet freadl "FILE* fp = fopen('in.bin', 'r'); int rlen = fread(buff, 1, sizeo
 	assert(fp && "fopen read");
 	int rlen = fread(buff, 1, sizeof(buff), fp);
 	assert(rlen == sizeof(buff) && "fread");
+	fclose(fp);
 }
 endsnippet
 
