@@ -1,4 +1,4 @@
-PROMPT_STR=$'(`basename \"$VIRTUAL_ENV\"`) %{\e[31m%}%n%{\e[m%}@%{\e[32m%}%m%{\e[m%}:${vcs_info_msg_0_}:(%1v, $$) %D{%Y/%m/%d %H:%M} %{\e[1;33m%}%~%{\e[m%}\n%{%(?.$bg[black].$bg[red])%}%#%#%#%{$reset_color%} '
+PROMPT_STR=$'(`basename \"$VIRTUAL_ENV\"`) %{\e[31m%}%n%{\e[m%}@%{\e[32m%}%m%{\e[m%}:${vcs_info_msg_0_}|(%1v, $$)|$(get_cpu_info)|%D{%Y/%m/%d %H:%M} %{\e[1;33m%}%~%{\e[m%}\n%{%(?.$bg[black].$bg[red])%}%#%#%#%{$reset_color%} '
 PS4_STR='[%D{%Y/%m/%d %H:%M:%S.%6.} ]+ '
 PROMPT=${PROMPT_STR}
 PS4=${PS4_STR}
@@ -260,6 +260,17 @@ precmd() {
 preexec() {
     CUR_CMD=$(echo $1 | cut -d' ' -f 1)
     TIME_START=`date +%s`
+}
+
+get_cpu_info() {
+    echo -n %F{cyan}
+    cat /proc/cpuinfo | grep "model name" | uniq | perl -ne '
+    if(/model name\s+:\s+(.+)$/) {
+        print "$1";
+    }
+    '
+    echo -n \(x$(nproc)\)
+    echo -n %F{reset_color}
 }
 
 # keychain
