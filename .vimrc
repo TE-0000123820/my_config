@@ -13,6 +13,7 @@ set hlsearch
 set encoding=utf-8
 set ruler
 set nonumber
+"set number
 set statusline=%f:%l(%L)\ %m%r%h%w\ [%{&fenc}][%{&ff}]%y%6l,%-6c[%p%%(%l)]
 set cursorline
 "set cursorcolumn
@@ -31,14 +32,14 @@ set foldlevelstart=10
 
 set guioptions=M
 set filetype=off
-set relativenumber number
+"set relativenumber number
 "set scrolloff=5
 set scrolloff=0
 let g:clipboard = "tmux"
 "set clipboard=
 set belloff=all
 set completeopt=longest,menuone
-set diffopt=internal,filler,algorithm:histogram,indent-heuristic
+"set diffopt=internal,filler,algorithm:histogram,indent-heuristic
 set isf-==
 set viminfo+='1000,s1000
 
@@ -432,7 +433,7 @@ let g:jedi#goto_command = "<Leader>d"
 
 "Bundle 'osyo-manga/vim-over'
 "Bundle 'benekastah/neomake'
-Bundle 'lyuts/vim-rtags'
+"Bundle 'lyuts/vim-rtags'
 "Bundle 'Valloric/YouCompleteMe'
 let g:ycm_filetype_blacklist = {}
 "Bundle 'tpope/vim-surround'
@@ -508,9 +509,9 @@ nmap g/ <Plug>(vigemo-search)
 
 Bundle 'tomasr/molokai'
 Bundle 'mechatroner/rainbow_csv'
-Bundle 'jreybert/vimagit'
-Bundle 'tpope/vim-rhubarb'
-Bundle 'powerman/vim-plugin-AnsiEsc'
+"Bundle 'jreybert/vimagit'
+"Bundle 'tpope/vim-rhubarb'
+"Bundle 'powerman/vim-plugin-AnsiEsc'
 Bundle 'airblade/vim-gitgutter'
 hi GitGutterAdd ctermfg=green ctermbg=blue term=bold
 hi GitGutterDelete ctermfg=red ctermbg=blue term=bold
@@ -545,11 +546,8 @@ let g:completor_min_chars = 3
 "autocmd! FileType cpp setlocal commentstring=//\ %s
 Bundle "preservim/nerdcommenter"
 Bundle "tpope/vim-surround"
-Bundle "glts/vim-radical"
-Bundle "glts/vim-magnum"
-
-call vundle#end()            " required
-filetype plugin indent on    " required
+"Bundle "glts/vim-radical"
+"Bundle "glts/vim-magnum"
 
 "
 " gtags
@@ -562,6 +560,12 @@ Bundle "Vimjas/vim-python-pep8-indent"
 
 Bundle 'prabirshrestha/vim-lsp'
 Bundle 'mattn/vim-lsp-settings'
+"Bundle 'liuchengxu/vista.vim'
+"nnoremap <space>v :Vista<CR>
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+
 if executable('pyls')
     " pip install python-language-server
     au User lsp_setup call lsp#register_server({
@@ -570,6 +574,12 @@ if executable('pyls')
         \ 'allowlist': ['python'],
         \ })
 endif
+let g:lsp_log_file = expand('~/vim-lsp.log') 
+call lsp#register_server({
+        \ 'name': 'clangd',
+        \ 'cmd': {server_info->['ccls']},
+        \ 'allowlist': ['c','cpp'],
+        \ })
 
 function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
@@ -598,5 +608,3 @@ augroup END
 "let lsp_log_file = expand('~/lsp.log')
 let g:lsp_diagnostics_echo_cursor = 1 
 
-Bundle 'liuchengxu/vista.vim'
-nnoremap <space>v :Vista<CR>
