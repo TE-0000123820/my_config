@@ -290,14 +290,12 @@ endfunction
 "
 " Vundle
 "
-filetype off                  " required
-set rtp+=$MISC_DIR/Vundle.vim/
-call vundle#begin()
+call plug#begin()
 
 "
 " ps.vim {{{
 "
-Bundle 'katonori/ps.vim'
+Plug 'katonori/ps.vim', {'on': []}
 if stridx(system("uname -a "), "Linux") != -1
     let g:PS_PsCmd = "ps axuf"
 else
@@ -313,14 +311,14 @@ autocmd FileType ps nnoremap <buffer> <silent> <C-K> 8k
 "
 " vim-fugitive {{{
 "
-Bundle 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive', {'on': []}
 autocmd! FileType gitcommit
 autocmd! FileType gitcommit nmap <c-d> :let @t=winnr()<cr>:normal dd<cr>:exec @t . "wincmd w"<cr>
 autocmd! FileType fugitive
 autocmd! FileType fugitive nmap <c-d> :let @t=winnr()<cr>:normal dd<cr>:exec @t . "wincmd w"<cr>
 " }}}
 
-"Bundle 'kana/vim-textobj-user'
+"Plug 'kana/vim-textobj-user'
 let g:textobj_multiblock_blocks = [
     \ [ ",", ","],
     \ [ ",", ")"],
@@ -340,7 +338,7 @@ vmap ib <Plug>(textobj-multiblock-i)
 "
 " vim-easymotion {{{
 "
-Bundle 'Lokaltog/vim-easymotion'
+Plug 'Lokaltog/vim-easymotion', {'on': []}
 " Show target key with upper case to improve readability
 let g:EasyMotion_use_upper = 1
 " Jump to first match with enter & space
@@ -369,16 +367,15 @@ nmap <space>k <Plug>(easymotion-k)
 xmap <space>k <Plug>(easymotion-k)
 " }}}
 
-Bundle "honza/vim-snippets"
+Plug 'honza/vim-snippets', {'on': []}
 
 "
 " unite.vim {{{
 "
-"Bundle 'Shougo/unite.vim'
-Bundle 'Shougo/denite.nvim'
-Bundle 'roxma/nvim-yarp'
-Bundle 'roxma/vim-hug-neovim-rpc'
-Bundle 'chemzqm/denite-extra'
+Plug 'Shougo/denite.nvim', {'on': []}
+Plug 'roxma/nvim-yarp', {'on': []}
+Plug 'roxma/vim-hug-neovim-rpc', {'on': []}
+Plug 'chemzqm/denite-extra', {'on': []}
 " Define mappings
 autocmd! FileType denite call s:denite_my_settings()
 function! s:denite_my_settings() abort
@@ -408,15 +405,13 @@ inoremap <c-g><c-s> <esc>:Snippets<cr>
 "nnoremap Ul :BLines<cr>
 "}}}
 
-"Bundle 'tomtom/quickfixsigns_vim'
-"let g:quickfixsigns_events = ['BufReadPost', 'BufEnter', 'CursorHold', 'CursorHoldI', 'InsertLeave', 'InsertEnter', 'User']
-Bundle 'Shougo/neomru.vim'
-Bundle 'MultipleSearch'
+Plug 'Shougo/neomru.vim', {'on': []}
+Plug 'vim-scripts/MultipleSearch', {'on': []}
 
 "
 " Switch.vim {{{
 "
-Bundle 'AndrewRadev/switch.vim'
+Plug 'AndrewRadev/switch.vim', {'on': []}
 let g:switch_custom_definitions =
     \ [
     \   {
@@ -427,26 +422,16 @@ let g:switch_custom_definitions =
 nnoremap + :Switch<cr>
 " }}}
 
-Bundle 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim', {'on': []}
 let g:jedi#completions_enabled = 0
 let g:jedi#goto_command = "<Leader>d"
 
-"Bundle 'osyo-manga/vim-over'
-"Bundle 'benekastah/neomake'
-"Bundle 'lyuts/vim-rtags'
-"Bundle 'Valloric/YouCompleteMe'
-let g:ycm_filetype_blacklist = {}
-"Bundle 'tpope/vim-surround'
-"Bundle 'scrooloose/nerdtree'
-"let NERDTreeShowHidden=1
-"let NERDTreeMapOpenInTab='T'
-"let NERDTreeMapOpenInTabSilent='<c-t>'
 
 "
 " fzf {{{
 "
-Bundle 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Bundle 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all', 'on': [] }
+Plug 'junegunn/fzf.vim', {'on': []}
 let g:fzf_layout = { 'window': 'bel split' }
 let g:fzf_preview_window = 'right:60%'
 command! -bang -nargs=* LinesWithPreview
@@ -464,8 +449,7 @@ nnoremap <c-g>t :Tags<cr>
 nnoremap Ff :call fzf#vim#history(fzf#vim#with_preview('up:30%'), 1)<CR>
 " }}}
 
-"Bundle 'Raimondi/vim_search_objects'
-"Bundle 'simeji/winresizer'
+"Plug 'simeji/winresizer'
 "let g:winresizer_vert_resize = 1
 "let g:winresizer_horiz_resize = 1
 "let g:winresizer_start_key = '<c-x><c-e>'
@@ -473,8 +457,7 @@ nnoremap Ff :call fzf#vim#history(fzf#vim#with_preview('up:30%'), 1)<CR>
 "
 " ultisnips {{{
 "
-"Bundle 'neoclide/ultisnips'
-Bundle 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips', {'on': []}
 let g:UltiSnipsSnippetDirectories=[$MISC_DIR."/UltiSnips"]
 let g:UltiSnipsListSnippets="<c-x><c-o>"
 let g:UltiSnipsExpandTrigger="<c-o>"
@@ -492,62 +475,32 @@ inoremap <silent> <F12> <C-R>=(pumvisible()? "\<LT>C-E>":"")<CR><C-R>=UltiSnipsC
 nnoremap <silent> <F12> a<C-R>=(pumvisible()? "\<LT>C-E>":"")<CR><C-R>=UltiSnipsCallUnite()<CR>
 " }}}
 
-"
-" yankround.vim {{{
-"
-Bundle 'LeafCage/yankround.vim'
-nmap p <Plug>(yankround-p)
-nmap P <Plug>(yankround-P)
-nmap <C-p> <Plug>(yankround-prev)
-nmap <C-n> <Plug>(yankround-next)
-let g:yankround_max_history = 50
-"" }}}
+Plug 'vim-scripts/YankRing.vim', {'on': []}
 
-"Bundle 'Shougo/vimproc.vim'
-Bundle 'osyo-manga/vim-vigemo'
+Plug 'osyo-manga/vim-vigemo', {'on': []}
 nmap g/ <Plug>(vigemo-search)
 
-Bundle 'tomasr/molokai'
-Bundle 'mechatroner/rainbow_csv'
-"Bundle 'jreybert/vimagit'
-"Bundle 'tpope/vim-rhubarb'
-"Bundle 'powerman/vim-plugin-AnsiEsc'
-Bundle 'airblade/vim-gitgutter'
+Plug 'tomasr/molokai', {'on': []}
+Plug 'mechatroner/rainbow_csv', {'on': []}
+Plug 'airblade/vim-gitgutter', {'on': []}
 hi GitGutterAdd ctermfg=green ctermbg=blue term=bold
 hi GitGutterDelete ctermfg=red ctermbg=blue term=bold
 hi GitGutterChange ctermfg=yellow ctermbg=blue term=bold
 hi GitGutterChangeDelete ctermfg=brown ctermbg=blue term=bold
-Bundle 'junegunn/vim-peekaboo'
+Plug 'junegunn/vim-peekaboo', {'on': []}
 let g:peekaboo_window="vert bo 60new"
-Bundle 'junegunn/rainbow_parentheses.vim'
-augroup rainbow_lisp
-  autocmd!
-  autocmd FileType * RainbowParentheses
-augroup END
-Bundle 'simeji/winresizer'
+Plug 'junegunn/rainbow_parentheses.vim', {'on': []}
+Plug 'simeji/winresizer', {'on': []}
 let g:winresizer_start_key = '<leader>w'
-Bundle 'mbbill/undotree'
+Plug 'mbbill/undotree', {'on': []}
 
-Bundle 'maralla/completor.vim'
+Plug 'maralla/completor.vim', {'on': []}
 let g:completor_disable_ultisnips = 1
 let g:completor_auto_trigger = 1
 let g:completor_min_chars = 3
 
-"Bundle 'prabirshrestha/asyncomplete.vim'
-"Bundle 'prabirshrestha/asyncomplete-file.vim'
-"au User asyncomplete_setup call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-"    \ 'name': 'file',
-"    \ 'whitelist': ['*'],
-"    \ 'priority': 10,
-"    \ 'completor': function('asyncomplete#sources#file#completor')
-"    \ }))
-
-"Bundle "tpope/vim-commentary"
-"autocmd! FileType cpp setlocal commentstring=//\ %s
-Bundle "preservim/nerdcommenter"
-Bundle "tpope/vim-surround"
-"Bundle "glts/vim-radical"
-"Bundle "glts/vim-magnum"
+Plug 'preservim/nerdcommenter', {'on': []}
+Plug 'tpope/vim-surround', {'on': []}
 
 "
 " gtags
@@ -556,30 +509,13 @@ nnoremap <C-G>r :Gtags -r <C-R><C-W><CR>
 nnoremap <C-G>d :Gtags <C-R><C-W><CR>
 nnoremap <C-G>g :Gtags -g <C-R><C-W><CR>
 
-Bundle "Vimjas/vim-python-pep8-indent"
+Plug 'Vimjas/vim-python-pep8-indent', {'on': []}
 
-Bundle 'prabirshrestha/vim-lsp'
-Bundle 'mattn/vim-lsp-settings'
-"Bundle 'liuchengxu/vista.vim'
-"nnoremap <space>v :Vista<CR>
+Plug 'prabirshrestha/vim-lsp', {'on': []}
+Plug 'mattn/vim-lsp-settings', {'on': []}
 
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#end()
 
-if executable('pyls')
-    " pip install python-language-server
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'pyls',
-        \ 'cmd': {server_info->['pyls']},
-        \ 'allowlist': ['python'],
-        \ })
-endif
-let g:lsp_log_file = expand('~/vim-lsp.log') 
-call lsp#register_server({
-        \ 'name': 'clangd',
-        \ 'cmd': {server_info->['ccls']},
-        \ 'allowlist': ['c','cpp'],
-        \ })
 
 function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
@@ -608,3 +544,57 @@ augroup END
 "let lsp_log_file = expand('~/lsp.log')
 let g:lsp_diagnostics_echo_cursor = 1 
 
+
+" Load Event
+function! s:load_plug(timer)
+    call plug#load(
+                \ 'ps.vim',
+                \ 'vim-fugitive',
+                \ 'vim-easymotion',
+                \ 'vim-snippets',
+                \ 'denite.nvim',
+                \ 'nvim-yarp',
+                \ 'vim-hug-neovim-rpc',
+                \ 'denite-extra',
+                \ 'neomru.vim',
+                \ 'MultipleSearch',
+                \ 'switch.vim',
+                \ 'jedi-vim',
+                \ 'fzf',
+                \ 'fzf.vim',
+                \ )
+    call plug#load(
+                \ 'ultisnips',
+                \ 'YankRing.vim',
+                \ 'vim-vigemo',
+                \ 'molokai',
+                \ 'rainbow_csv',
+                \ 'vim-gitgutter',
+                \ 'vim-peekaboo',
+                \ 'rainbow_parentheses.vim',
+                \ 'winresizer',
+                \ 'undotree',
+                \ 'completor.vim',
+                \ 'nerdcommenter',
+                \ 'vim-surround',
+                \ 'vim-python-pep8-indent',
+                \ 'vim-lsp',
+                \ 'vim-lsp-settings',
+                \ )
+    if executable('pyls')
+        " pip install python-language-server
+        au User lsp_setup call lsp#register_server({
+            \ 'name': 'pyls',
+            \ 'cmd': {server_info->['pyls']},
+            \ 'allowlist': ['python'],
+            \ })
+    endif
+    let g:lsp_log_file = expand('~/vim-lsp.log') 
+    call lsp#register_server({
+            \ 'name': 'clangd',
+            \ 'cmd': {server_info->['ccls']},
+            \ 'allowlist': ['c','cpp'],
+            \ })
+endfunction
+" load after 500ms
+call timer_start(500, function("s:load_plug"))
