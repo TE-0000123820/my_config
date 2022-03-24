@@ -297,3 +297,12 @@ snippet clgetbuildinfo "log,dump,clGetProgramBuildInfo" w
 	printf(">>> %s\n", log);
 }
 endsnippet
+
+snippet gdbint0 "gdb,int,set_trace,break,raise(SIGTRAP);" w
+#include <signal.h>
+raise(SIGTRAP);
+endsnippet
+
+snippet gdbint1 "gdb,int,set_trace,break,x86,__asm__('int3');" w
+__asm__("int3");
+endsnippet

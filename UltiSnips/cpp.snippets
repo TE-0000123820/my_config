@@ -86,3 +86,10 @@ endsnippet
 snippet nummin "std::numeric_limits<T>::min()" w
 std::numeric_limits<${1:int32_t}>::min()
 endsnippet
+
+snippet chrono "timer,c++11,std::chrono::system_clock::time_point start = std::chrono::system_clock::now();" w
+#include <chrono>
+std::chrono::system_clock::time_point start = std::chrono::system_clock::now();
+std::chrono::system_clock::time_point end = std::chrono::system_clock::now();
+double elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count();
+endsnippet
