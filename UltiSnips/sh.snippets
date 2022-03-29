@@ -77,3 +77,9 @@ endsnippet
 snippet export_gpu_flush_on_execution "export GPU_FLUSH_ON_EXECUTION=1,amd,rocm"
 export GPU_FLUSH_ON_EXECUTION=1
 endsnippet
+
+snippet fileexists "if,file,exists,then"
+if [[ -f file ]] ; then
+	echo "exists"
+fi
+endsnippet
