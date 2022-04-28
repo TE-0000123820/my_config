@@ -162,6 +162,8 @@ Return
 !h:: SendInput, {Ctrl down}{BS}{Ctrl up}
 #IfWinNotActive
 
+#m:: WinMinimize, A
+
 ;
 ; Mouse
 ;
@@ -243,3 +245,5 @@ XButton2::
         Click,%pos%,20,0
     }
     return
+
+Insert::Return
