@@ -400,6 +400,7 @@ nnoremap UF :Unite -direction=below file_rec<cr>
 nnoremap Ul :Unite -direction=below line<cr>
 nnoremap <c-g><c-s> :Snippets<cr>
 inoremap <c-g><c-s> <esc>:Snippets<cr>
+nnoremap <c-g>f :Denite file_mru<cr>
 "nnoremap Uf :History<cr>
 "nnoremap UF :Files<cr>
 "nnoremap Ul :BLines<cr>
