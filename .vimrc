@@ -257,12 +257,17 @@ command -nargs=0 NOHL :nohl | :SearchReset
 " highlight settings {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax on
-set bg=dark
-colorscheme industry
+if has('gui_running')
+    colorscheme morning
+    set bg=light
+else
+    colorscheme ron
+    set bg=dark
+endif
 "colorscheme evening
 " overwrite settings
-hi CursorLine   term=reverse cterm=bold 
-hi CursorColumn   term=reverse cterm=bold 
+hi CursorLine term=reverse ctermbg=18 guibg=gray40
+hi CursorColumn term=reverse ctermbg=18 guibg=gray40
 
 hi JpSpace cterm=underline ctermbg=red
 au BufRead,BufNew * match JpSpace /　/
