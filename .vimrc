@@ -16,7 +16,7 @@ set nonumber
 "set number
 set statusline=%f:%l(%L)\ %m%r%h%w\ [%{&fenc}][%{&ff}]%y%6l,%-6c[%p%%(%l)]
 set cursorline
-"set cursorcolumn
+set cursorcolumn
 set fileformats=unix,dos,mac
 set grepprg=mgrep
 set nf="hex"
@@ -258,8 +258,7 @@ command -nargs=0 NOHL :nohl | :SearchReset
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax on
 if has('gui_running')
-    colorscheme morning
-    set bg=light
+    colorscheme evening
 else
     colorscheme ron
     set bg=dark
