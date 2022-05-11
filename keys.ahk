@@ -40,16 +40,34 @@ Return
 
 !^g::
     Input Key, L1
-    if Key=p
+    if Key=1
+    {
+        WinGetPos,X,Y,W,H,A
+        WinMove,A,,60,0,1860,1070
+    }
+    else if Key=2
+    {
+        WinGetPos,X,Y,W,H,A
+        WinMove,A,,60,1080,1860,1070
+    }
+    else if Key=3
+    {
+        WinGetPos,X,Y,W,H,A
+        WinMove,A,,1920,0,1860,1070
+    }
+    else if Key=4
+    {
+        WinGetPos,X,Y,W,H,A
+        WinMove,A,,1920,1080,1860,1070
+    }
+    else if Key=p
         WinSet, AlwaysOnTop, TOGGLE, A
-    else if Key=i
-        Send,+{Insert}
     else if Key=c
         run,C:\tool\link\mintty.exe.lnk -i /Cygwin-Terminal.ico -
-    else if Key=v
-        run,C:\tool\link\gvim.exe.lnk
     else if Key=e
         run,"C:\Users\0000123820\OneDrive - Sony\tool\vim81-kaoriya-win64\gvim.exe" %A_ScriptFullPath%
+    else if Key=v
+        run,C:\tool\link\gvim.exe.lnk
     else if Key=w
         run,C:\Users\0000123820\AppData\Local\Microsoft\WindowsApps\ubuntu2004.exe
     else if Key=s
@@ -163,6 +181,8 @@ Return
 #IfWinNotActive
 
 #m:: WinMinimize, A
+#z:: WinMinimize, A
+!^z:: WinMinimize, A
 
 ;
 ; Mouse
@@ -171,7 +191,6 @@ Return
 #+k::
     MouseMove 0,-20,0,R
     return
-
 ; Down
 #+j::
     MouseMove 0,20,0,R
@@ -247,3 +266,22 @@ XButton2::
     return
 
 Insert::Return
+
+;;
+;; Numpad
+;;
+NumpadEnter:: SendInput, {Esc}
+NumpadSub:: SendInput, {Home}
+NumpadAdd:: SendInput, {End}
+NumpadDel:: SendInput, {F5}
+
+NumpadPgDn:: SendInput, {Right}
+NumpadEnd:: SendInput, {Left}
+NumpadDown:: SendInput, {Down}
+NumpadClear:: SendInput, {Up}
+NumpadRight:: SendInput, {PgUp}
+NumpadLeft:: SendInput, {PgDn}
+NumpadHome:: SendInput, +^{Tab}
+NumpadPgUp:: SendInput, ^{Tab}
+NumpadUp:: SendInput, ^w
+NumpadDiv:: SendInput, ^!s
