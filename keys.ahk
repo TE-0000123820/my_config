@@ -60,6 +60,16 @@ Return
         WinGetPos,X,Y,W,H,A
         WinMove,A,,1920,1080,1860,1070
     }
+    else if Key=5
+    {
+        WinGetPos,X,Y,W,H,A
+        WinMove,A,,60,0,1860,2100
+    }
+    else if Key=6
+    {
+        WinGetPos,X,Y,W,H,A
+        WinMove,A,,1920,0,1860,2100
+    }
     else if Key=p
         WinSet, AlwaysOnTop, TOGGLE, A
     else if Key=c
@@ -154,7 +164,7 @@ Return
 ;^n:: SendInput, {Down}
 
 !^b:: SendInput, {Left 5}
-!^s:: SendInput, {Left 5}
+;!^s:: SendInput, {Left 5}
 !^f:: SendInput, {Right 5}
 !^p:: SendInput, {Up 5}
 !^n:: SendInput, {Down 5}
@@ -178,6 +188,14 @@ Return
 #IfWinNotActive ahk_class mintty
 !d:: SendInput, {Ctrl down}{Del}{Ctrl up}
 !h:: SendInput, {Ctrl down}{BS}{Ctrl up}
+#IfWinNotActive
+
+#IfWinActive ahk_exe msedge.exe
+^n::
+    SendInput, ^{l}
+    Click, L, , 300, 200
+    SendInput, {b}
+    return
 #IfWinNotActive
 
 #m:: WinMinimize, A
@@ -279,8 +297,9 @@ NumpadPgDn:: SendInput, {Right}
 NumpadEnd:: SendInput, {Left}
 NumpadDown:: SendInput, {Down}
 NumpadClear:: SendInput, {Up}
-NumpadRight:: SendInput, {PgUp}
-NumpadLeft:: SendInput, {PgDn}
+NumpadRight:: SendInput, {PgDn}
+NumpadLeft:: SendInput, {PgUp}
+
 NumpadHome:: SendInput, +^{Tab}
 NumpadPgUp:: SendInput, ^{Tab}
 NumpadUp:: SendInput, ^w
