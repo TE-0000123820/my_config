@@ -4,8 +4,6 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ^h:: Send,{BS}
-#^Q:: Send,{Esc}
-!^\:: Shutdown,2
 
 ::;d;::
 FormatTime,TimeString,,yyyyMMdd
@@ -107,6 +105,20 @@ Return
     return
 
 ;
+; resize window
+;
++#q::
+    WinGetPos,X,Y,W,H,A
+    H := H + 200
+    WinMove,A,,X,Y,W,H
+    return
++#w::
+    WinGetPos,X,Y,W,H,A
+    H := H - 200
+    WinMove,A,,X,Y,W,H
+    return
+
+;
 ; Window focus
 ;
 !^f::
@@ -191,7 +203,7 @@ Return
 #IfWinNotActive
 
 #IfWinActive ahk_exe msedge.exe
-^n::
++^n::
     SendInput, ^{l}
     Click, L, , 300, 200
     SendInput, {b}
@@ -244,24 +256,27 @@ Return
     MouseMove 160,0,0,R
     return
 
-; Left click
-#[::
-    MouseClick,left,,,,,D
++#a::
+    CoordMode, Mouse, Screen
+    MouseMove 500,400,0,
+    CoordMode, Mouse, Relative
     return
-#[ Up::
-    MouseClick,left,,,,,U
++#z::
+    CoordMode, Mouse, Screen
+    MouseMove 500,1600,0,
+    CoordMode, Mouse, Relative
     return
-; Left click
-#Enter::
-    MouseClick,left,,,,,D
++#s::
+    CoordMode, Mouse, Screen
+    MouseMove 3500,400,0,
+    CoordMode, Mouse, Relative
     return
-#Enter Up::
-    MouseClick,left,,,,,U
++#x::
+    CoordMode, Mouse, Screen
+    MouseMove 3500,1600,0,
+    CoordMode, Mouse, Relative
     return
-; Right click
-#]::
-    MouseClick ,Right
-    return
+
 
 ; PrintScreen
 ^!q::  SendInput, {LWin Down}{PrintScreen}{LWin Up}
@@ -282,8 +297,21 @@ XButton2::
         Click,%pos%,20,0
     }
     return
+Media_Play_Pause:: MouseClick ,Right
++LButton:: MouseClick ,Right
+!LButton::
+    WinGetPos, xpos, ypos, width, height, A
+    xpos := width/2
+    ypos := height/2
+    MouseMove xpos,ypos,0,
+    return
 
 Insert::Return
+
+
+;Shift＋マウスホイールで水平スクロール
++WheelDown::WheelRight
++WheelUp::WheelLeft
 
 ;;
 ;; Numpad
@@ -304,3 +332,13 @@ NumpadHome:: SendInput, +^{Tab}
 NumpadPgUp:: SendInput, ^{Tab}
 NumpadUp:: SendInput, ^w
 NumpadDiv:: SendInput, ^!s
+
+;;
+;; Numpad(NumLocked)
+;;
+Numpad3:: SendInput, {Right}
+Numpad1:: SendInput, {Left}
+Numpad2:: SendInput, {Down}
+Numpad5:: SendInput, {Up}
+Numpad6:: SendInput, {PgDn}
+Numpad4:: SendInput, {PgUp}
