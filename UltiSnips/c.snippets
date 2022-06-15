@@ -253,8 +253,30 @@ snippet freadl "FILE* fp = fopen('in.bin', 'r'); int rlen = fread(buff, 1, sizeo
 }
 endsnippet
 
-snippet prd "printf('%s:%d: \n', __FILE__, __LINE__, );"
-printf("%s:%d: ${1}\n", __FILE__, __LINE__, ${2});
+snippet prd "printf('%s:%s:%d: \n', __FILE__, __FUNCTION__, __LINE__);"
+printf("%s:%s:%d: ${1}\n", __FILE__, __FUNCTION__, __LINE__);
+endsnippet
+
+snippet prk "printk('%s:%s:%d: \n', __FILE__, __FUNCTION__, __LINE__);"
+printf("%s:%s:%d: ${1}\n", __FILE__, __FUNCTION__, __LINE__);
+endsnippet
+
+snippet prcr "color, red, printf('\x1b[31m');"
+printf("\x1b[1m\x1b[31m");
+printf("\x1b[0m");
+endsnippet
+
+snippet prcy "color, yellow, printf('\x1b[33m');"
+printf("\x1b[1m\x1b[33m");
+printf("\x1b[0m");
+endsnippet
+
+snippet prcm "color, magenta, printf('\x1b[35m');"
+printf("\x1b[35m");
+endsnippet
+
+snippet prcc "color, clear, printf('\x1b[0m');"
+printf("\x1b[0m");
 endsnippet
 
 snippet dumpbuff "unsigned char*p = (unsigned char*)${1}; for(int i = 0; i < ${2:100}; i++) { printf('o: 0x%02x\n', *p++); }"

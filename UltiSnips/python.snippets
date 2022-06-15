@@ -22,6 +22,16 @@ snippet pro "print('')" w
 print('$1')
 endsnippet
 
+snippet prcr "print red color" w
+print("\x1b[1m\x1b[31m", end="");
+print("\x1b[0m", end="");
+endsnippet
+
+snippet prcy "print yellow color" w
+print("\x1b[1m\x1b[33m", end="");
+print("\x1b[0m", end="");
+endsnippet
+
 snippet pf "%f" w
 %f
 endsnippet
@@ -118,4 +128,9 @@ def handle_pdb(sig, frame):
     import pdb
     pdb.Pdb().set_trace(frame)
 signal.signal(signal.SIGUSR1, handle_pdb)
+endsnippet
+
+snippet jsonload "json,load,file,open" w
+with open('a.json') as f:
+    df = json.load(f)
 endsnippet
