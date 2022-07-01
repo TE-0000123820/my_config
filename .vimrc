@@ -39,6 +39,7 @@ set belloff=all
 set completeopt=longest,menuone
 set isf-==
 set viminfo+='1000,s1000
+set switchbuf+=newtab
 
 let &t_ti.="\e[1 q"
 let &t_SI.="\e[5 q"
@@ -110,7 +111,7 @@ set showtabline=2 " 常にタブラインを表示
 
 " The prefix key.
 nnoremap    [Tag]   <Nop>
-nmap    t [Tag]
+nmap    <c-t> [Tag]
 " Tab jump
 for n in range(1, 9)
   execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
@@ -459,8 +460,8 @@ nnoremap Ff :call fzf#vim#history(fzf#vim#with_preview('up:30%'), 1)<CR>
 "
 Plug 'SirVer/ultisnips', {'on': []}
 let g:UltiSnipsSnippetDirectories=[$MISC_DIR."/UltiSnips"]
-let g:UltiSnipsListSnippets="<c-x><c-o>"
-let g:UltiSnipsExpandTrigger="<c-o>"
+"let g:UltiSnipsListSnippets="<c-x><c-o>"
+let g:UltiSnipsExpandTrigger="<c-x><c-o>"
 let g:UltiSnipsJumpForwardTrigger="<c-f>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 " If you want :UltiSnipsEdit to split your window.
@@ -513,6 +514,7 @@ Plug 'Vimjas/vim-python-pep8-indent', {'on': []}
 
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
+Plug 'powerman/vim-plugin-AnsiEsc'
 
 call plug#end()
 
