@@ -13,7 +13,6 @@ set hlsearch
 set encoding=utf-8
 set ruler
 set nonumber
-"set number
 set statusline=%f:%l(%L)\ %m%r%h%w\ [%{&fenc}][%{&ff}]%y%6l,%-6c[%p%%(%l)]
 set cursorline
 set cursorcolumn
@@ -25,7 +24,6 @@ set smartcase
 set smarttab
 set timeoutlen=1000
 set directory=~/vim_swap
-"set foldmethod=syntax
 set foldmethod=marker
 set foldlevel=10
 set foldlevelstart=10
@@ -39,7 +37,6 @@ let g:clipboard = "tmux"
 "set clipboard=
 set belloff=all
 set completeopt=longest,menuone
-"set diffopt=internal,filler,algorithm:histogram,indent-heuristic
 set isf-==
 set viminfo+='1000,s1000
 
@@ -187,7 +184,7 @@ nnoremap mY "ry'z<c-o>
 nnoremap m= ='z<c-o>
 nnoremap m> >'z<c-o>
 nnoremap m< <'z<c-o>
-nnoremap QQ :wqa<cr>
+nnoremap Q :q<cr>
 nnoremap <space>F /^[^\t #\/}]<cr>
 "nnoremap <space>L /\(\<for\>\)\\|\(\<while\>\)\\|\(\<do\>\)<cr>
 nnoremap ( F 
@@ -257,16 +254,14 @@ command -nargs=0 NOHL :nohl | :SearchReset
 " highlight settings {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax on
-if has('gui_running')
-    colorscheme evening
-else
-    colorscheme ron
+colorscheme evening
+if "0" == has('gui_running')
     set bg=dark
 endif
 "colorscheme evening
 " overwrite settings
-hi CursorLine term=reverse ctermbg=18 guibg=gray40
-hi CursorColumn term=reverse ctermbg=18 guibg=gray40
+hi CursorLine term=reverse ctermbg=238 guibg=gray40
+hi CursorColumn term=reverse ctermbg=28 guibg=gray40
 
 hi JpSpace cterm=underline ctermbg=red
 au BufRead,BufNew * match JpSpace /　/
@@ -315,7 +310,7 @@ autocmd FileType ps nnoremap <buffer> <silent> <C-K> 8k
 "
 " vim-fugitive {{{
 "
-Plug 'tpope/vim-fugitive', {'on': []}
+Plug 'tpope/vim-fugitive'
 autocmd! FileType gitcommit
 autocmd! FileType gitcommit nmap <c-d> :let @t=winnr()<cr>:normal dd<cr>:exec @t . "wincmd w"<cr>
 autocmd! FileType fugitive
@@ -480,7 +475,7 @@ inoremap <silent> <F12> <C-R>=(pumvisible()? "\<LT>C-E>":"")<CR><C-R>=UltiSnipsC
 nnoremap <silent> <F12> a<C-R>=(pumvisible()? "\<LT>C-E>":"")<CR><C-R>=UltiSnipsCallUnite()<CR>
 " }}}
 
-Plug 'vim-scripts/YankRing.vim', {'on': []}
+Plug 'vim-scripts/YankRing.vim'
 
 Plug 'osyo-manga/vim-vigemo', {'on': []}
 nmap g/ <Plug>(vigemo-search)
@@ -516,8 +511,8 @@ nnoremap <C-G>g :Gtags -g <C-R><C-W><CR>
 
 Plug 'Vimjas/vim-python-pep8-indent', {'on': []}
 
-Plug 'prabirshrestha/vim-lsp', {'on': []}
-Plug 'mattn/vim-lsp-settings', {'on': []}
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
 
 call plug#end()
 
@@ -549,12 +544,25 @@ augroup END
 "let lsp_log_file = expand('~/lsp.log')
 let g:lsp_diagnostics_echo_cursor = 1 
 
+if executable('pylsp')
+    " pip install python-language-server
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pylsp',
+        \ 'cmd': {server_info->['pylsp']},
+        \ 'allowlist': ['python'],
+        \ })
+endif
+let g:lsp_log_file = expand('~/vim-lsp.log') 
+call lsp#register_server({
+        \ 'name': 'clangd-14',
+        \ 'cmd': {server_info->['clangd-14']},
+        \ 'allowlist': ['c','cpp'],
+        \ })
 
 " Load Event
 function! s:load_plug(timer)
     call plug#load(
                 \ 'ps.vim',
-                \ 'vim-fugitive',
                 \ 'vim-easymotion',
                 \ 'vim-snippets',
                 \ 'denite.nvim',
@@ -570,9 +578,7 @@ function! s:load_plug(timer)
                 \ )
     call plug#load(
                 \ 'ultisnips',
-                \ 'YankRing.vim',
                 \ 'vim-vigemo',
-                \ 'molokai',
                 \ 'rainbow_csv',
                 \ 'vim-gitgutter',
                 \ 'vim-peekaboo',
@@ -583,23 +589,7 @@ function! s:load_plug(timer)
                 \ 'nerdcommenter',
                 \ 'vim-surround',
                 \ 'vim-python-pep8-indent',
-                \ 'vim-lsp',
-                \ 'vim-lsp-settings',
                 \ )
-    if executable('pyls')
-        " pip install python-language-server
-        au User lsp_setup call lsp#register_server({
-            \ 'name': 'pyls',
-            \ 'cmd': {server_info->['pyls']},
-            \ 'allowlist': ['python'],
-            \ })
-    endif
-    let g:lsp_log_file = expand('~/vim-lsp.log') 
-    call lsp#register_server({
-            \ 'name': 'clangd',
-            \ 'cmd': {server_info->['ccls']},
-            \ 'allowlist': ['c','cpp'],
-            \ })
 endfunction
 " load after 500ms
 call timer_start(500, function("s:load_plug"))
