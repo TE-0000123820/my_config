@@ -118,3 +118,6 @@
 [[snippets]]
   command = "git rev-parse --show-toplevel"
   description = "git,top,root,show"
+[[snippets]]
+  command = "git remote set-url origin "
+  description = "git,remote,set,url,switch,origin"
