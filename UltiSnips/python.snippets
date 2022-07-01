@@ -22,13 +22,40 @@ snippet pro "print('')" w
 print('$1')
 endsnippet
 
+# Black: \u001b[30m
+# Red: \u001b[31m
+# Green: \u001b[32m
+# Yellow: \u001b[33m
+# Blue: \u001b[34m
+# Magenta: \u001b[35m
+# Cyan: \u001b[36m
 snippet prcr "print red color" w
-print("\x1b[1m\x1b[31m", end="");
+print("\x1b[1m\x1b[31m", end=""); # red
+print("\x1b[0m", end="");
+endsnippet
+
+snippet prcg "print green color" w
+print("\x1b[1m\x1b[32m", end=""); # green
 print("\x1b[0m", end="");
 endsnippet
 
 snippet prcy "print yellow color" w
-print("\x1b[1m\x1b[33m", end="");
+print("\x1b[1m\x1b[33m", end=""); # yellow
+print("\x1b[0m", end="");
+endsnippet
+
+snippet prcb "print blue color" w
+print("\x1b[1m\x1b[34m", end=""); # blue
+print("\x1b[0m", end="");
+endsnippet
+
+snippet prcm "print magenta color" w
+print("\x1b[1m\x1b[35m", end=""); # magenta
+print("\x1b[0m", end="");
+endsnippet
+
+snippet prcc "print cyan color" w
+print("\x1b[1m\x1b[35m", end=""); # cyan
 print("\x1b[0m", end="");
 endsnippet
 
