@@ -3,6 +3,8 @@ PS4_STR='[%D{%Y/%m/%d %H:%M:%S.%6.} ]+ '
 PROMPT=${PROMPT_STR}
 PS4=${PS4_STR}
 
+bindkey -e
+
 #VIM=nvim
 VIM=vim
 export EDITOR=${VIM}
@@ -29,17 +31,6 @@ zstyle ':chpwd:*' recent-dirs-default true
 zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/shell/chpwd-recent-dirs"
 zstyle ':chpwd:*' recent-dirs-pushd true
 
-#
-# key binds
-#
-bindkey -e
-zle     -N   fr
-bindkey "^x^r" fr
-zle -C _complete_files complete-word complete-files
-complete-files () { compadd - $PREFIX* }
-function cd-up { zle push-line && LBUFFER='builtin cd ..' && zle accept-line }
-zle -N cd-up
-bindkey "^O" cd-up
 
 # pet
 call_pet () {
@@ -335,3 +326,19 @@ down-line-or-local-history() {
 zle -N down-line-or-local-history
 zinit light "urbainvaes/fzf-marks"
 zinit light "Tarrasch/zsh-bd"
+
+#
+# additional keybinding settings
+#
+bindkey -r "^O"
+bindkey '^t' kill-word
+bindkey '^j' undo
+bindkey '^o^b' backward-word
+bindkey '^o^f' forward-word
+zle     -N   fr
+bindkey "^x^r" fr
+zle -C _complete_files complete-word complete-files
+complete-files () { compadd - $PREFIX* }
+function cd-up { zle push-line && LBUFFER='builtin cd ..' && zle accept-line }
+zle -N cd-up
+#bindkey "^O" cd-up
