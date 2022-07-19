@@ -423,10 +423,6 @@ let g:switch_custom_definitions =
 nnoremap + :Switch<cr>
 " }}}
 
-Plug 'davidhalter/jedi-vim', {'on': []}
-let g:jedi#completions_enabled = 0
-let g:jedi#goto_command = "<Leader>d"
-
 
 "
 " fzf {{{
@@ -574,7 +570,6 @@ function! s:load_plug(timer)
                 \ 'neomru.vim',
                 \ 'MultipleSearch',
                 \ 'switch.vim',
-                \ 'jedi-vim',
                 \ 'fzf',
                 \ 'fzf.vim',
                 \ )
