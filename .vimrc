@@ -262,7 +262,7 @@ endif
 "colorscheme evening
 " overwrite settings
 hi CursorLine term=reverse ctermbg=238 guibg=gray40
-hi CursorColumn term=reverse ctermbg=28 guibg=gray40
+hi CursorColumn term=reverse ctermbg=238 guibg=gray40
 
 hi JpSpace cterm=underline ctermbg=red
 au BufRead,BufNew * match JpSpace /　/
