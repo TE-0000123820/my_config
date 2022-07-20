@@ -3,8 +3,62 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
-^h:: Send,{BS}
+SCREEN_WIDTH  := 3840
+SCREEN_HEIGHT := 2160
+TILE_WIDTH_LEFT := 2020
+X_CENTER_MARGIN := 60
+X_RIGHT_MARGIN := 30 
+TILE_BORDER_X := TILE_WIDTH_LEFT + X_CENTER_MARGIN
+TILE_WIDTH_RIGHT := SCREEN_WIDTH - TILE_BORDER_X - X_RIGHT_MARGIN
 
+IME_SET(SetSts, WinTitle="A")    {
+	ControlGet,hwnd,HWND,,,%WinTitle%
+	if	(WinActive(WinTitle))	{
+		ptrSize := !A_PtrSize ? 4 : A_PtrSize
+	    VarSetCapacity(stGTI, cbSize:=4+4+(PtrSize*6)+16, 0)
+	    NumPut(cbSize, stGTI,  0, "UInt")   ;	DWORD   cbSize;
+		hwnd := DllCall("GetGUIThreadInfo", Uint,0, Uint,&stGTI)
+	             ? NumGet(stGTI,8+PtrSize,"UInt") : hwnd
+	}
+
+    return DllCall("SendMessage"
+          , UInt, DllCall("imm32\ImmGetDefaultIMEWnd", Uint,hwnd)
+          , UInt, 0x0283  ;Message : WM_IME_CONTROL
+          ,  Int, 0x006   ;wParam  : IMC_SETOPENSTATUS
+          ,  Int, SetSts) ;lParam  : 0 or 1
+}
+
+MoveCursorToFocusedWindow()
+{
+    WinGetPos, _xpos, _ypos, _width, _height, A
+    _xpos_r := _width/2
+    _ypos_r := _height/2
+    _xpos_a := _xpos + _width/2
+    _ypos_a := _ypos + _height/2
+    MouseMove _xpos_r,_ypos_r,0,
+    WinGetTitle, win_title, A
+	SplashImage,,B1 FM14 W400 X%_xpos_a% Y%_ypos_a%,, %win_title%
+    Sleep, 2000
+	SplashImage,off
+    Return
+}
+
+ExtendWindow(diff_w, diff_h)
+{
+    WinGetPos,_X,_Y,_W,_H,A
+    _W := _W + diff_w
+    _H := _H + diff_h
+    WinMove,A,,_X,_Y,_W,_H
+    return
+}
+
+^h:: Send,{BS}
+Insert:: Return
+^M:: SendInput, {Enter}
+
+;;;
+;;; date
+;;;
 ::;d;::
 FormatTime,TimeString,,yyyyMMdd
 Send,%TimeString%
@@ -38,83 +92,62 @@ Return
 
 !^g::
     Input Key, L1
-    if Key=1
-    {
-        WinGetPos,X,Y,W,H,A
-        WinMove,A,,60,0,1860,1070
+    switch Key {
+        case "1": {
+            WinGetPos,X,Y,W,H,A
+            WinMove,A,,60,0,TILE_WIDTH_LEFT,1070
+        }
+        case "2": {
+            WinGetPos,X,Y,W,H,A
+            WinMove,A,,60,1080,TILE_WIDTH_LEFT,1070
+        }
+        case "3": {
+            WinGetPos,X,Y,W,H,A
+            WinMove,A,,TILE_BORDER_X,0,TILE_WIDTH_RIGHT,1070
+        }
+        case "4": {
+            WinGetPos,X,Y,W,H,A
+            WinMove,A,,TILE_BORDER_X,1080,TILE_WIDTH_RIGHT,1070
+        }
+        case "5": {
+            WinGetPos,X,Y,W,H,A
+            WinMove,A,,60,0,TILE_WIDTH_LEFT,2100
+        }
+        case "6": {
+            WinGetPos,X,Y,W,H,A
+            WinMove,A,,TILE_BORDER_X,0,TILE_WIDTH_RIGHT,2100
+        }
+        case "p": WinSet, AlwaysOnTop, TOGGLE, A
+        case "c": run,C:\tool\link\mintty.exe.lnk -i /Cygwin-Terminal.ico -
+        case "e": run,"C:\Users\0000123820\OneDrive - Sony\tool\vim81-kaoriya-win64\gvim.exe" %A_ScriptFullPath%
+        case "v": run,C:\tool\link\gvim.exe.lnk
+        case "w": run,C:\Users\0000123820\AppData\Local\Microsoft\WindowsApps\ubuntu2004.exe
+        case "s": run,C:\Users\0000123820\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell\Windows PowerShell.lnk
+        case "r": Reload
     }
-    else if Key=2
-    {
-        WinGetPos,X,Y,W,H,A
-        WinMove,A,,60,1080,1860,1070
-    }
-    else if Key=3
-    {
-        WinGetPos,X,Y,W,H,A
-        WinMove,A,,1920,0,1860,1070
-    }
-    else if Key=4
-    {
-        WinGetPos,X,Y,W,H,A
-        WinMove,A,,1920,1080,1860,1070
-    }
-    else if Key=5
-    {
-        WinGetPos,X,Y,W,H,A
-        WinMove,A,,60,0,1860,2100
-    }
-    else if Key=6
-    {
-        WinGetPos,X,Y,W,H,A
-        WinMove,A,,1920,0,1860,2100
-    }
-    else if Key=p
-        WinSet, AlwaysOnTop, TOGGLE, A
-    else if Key=c
-        run,C:\tool\link\mintty.exe.lnk -i /Cygwin-Terminal.ico -
-    else if Key=e
-        run,"C:\Users\0000123820\OneDrive - Sony\tool\vim81-kaoriya-win64\gvim.exe" %A_ScriptFullPath%
-    else if Key=v
-        run,C:\tool\link\gvim.exe.lnk
-    else if Key=w
-        run,C:\Users\0000123820\AppData\Local\Microsoft\WindowsApps\ubuntu2004.exe
-    else if Key=s
-        run,C:\Users\0000123820\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell\Windows PowerShell.lnk
-    else if Key=r
-        Reload
-    return
-
-!^e::
-    Input Key, L1
-    if Key=a
-        Send,{Home}
-    else if Key=e
-        Send,{End}
-    else if Key=b
-        Send,{PgUp}
-    else if Key=f
-        Send,{PgDn}
-    else if Key=j
-        Send,{Down}
-    else if Key=k
-        Send,{Up}
-    else if Key=h
-        Send,{Left}
-    else if Key=l
-        Send,{Right}
     return
 
 ;
 ; resize window
 ;
-+#q::
+^!Down::
     WinGetPos,X,Y,W,H,A
     H := H + 200
     WinMove,A,,X,Y,W,H
     return
-+#w::
+^!Up::
     WinGetPos,X,Y,W,H,A
     H := H - 200
+    WinMove,A,,X,Y,W,H
+    return
+^!Right::
+    WinGetPos,X,Y,W,H,A
+    W := W + 200
+    WinMove,A,,X,Y,W,H
+    return
+^!Left::
+    WinGetPos,X,Y,W,H,A
+    W := W - 200
     WinMove,A,,X,Y,W,H
     return
 
@@ -123,84 +156,42 @@ Return
 ;
 !^f::
     Input Key, L1
-    if Key=c
-        WinActivate,ahk_exe chrome.exe
-    if Key=b
-        WinActivate,ahk_exe msedge.exe
-    if Key=f
-        WinActivate,ahk_exe WinSCP.exe
-    if Key=m
-        WinActivate,ahk_class mintty
-    if Key=t
-        WinActivate,ahk_exe Teams.exe
-    if Key=w
-        WinActivate,Cygwin ahk_class mintty
-    if Key=e
-        WinActivate,ahk_exe explorer.exe
-    if Key=s
-        WinActivate,ahk_exe slack.exe
-    if Key=x
-        WinActivate,ahk_class XLMAIN
-    if Key=u
-        WinActivate,ahk_exe lync.exe
-    if Key=o
-        WinActivate,ahk_exe OUTLOOK.EXE
-    if Key=v
-        WinActivate,ahk_class Vim
-    if Key=p
-        WinActivate,ahk_class PPTFrameClass
-    if Key=i
-        WinActivate,ahk_exe iexplore.exe
-    if Key=u
-        WinActivate,ahk_exe lync.exe
-    if Key=n
-        WinActivate,ahk_class ApplicationFrameWindow
-    if Key=d
-        if WinExist("SuperPuTTY ahk_exe SuperPutty.exe") {
-            WinActivate  ; Uses the last found window.
-            Sleep 100
-            WinActivate  ; Uses the last found window.
-            MouseClick ,Left
+    switch Key {
+        case "c": WinActivate,ahk_exe chrome.exe
+        case "b": WinActivate,ahk_exe msedge.exe
+        case "f": WinActivate,ahk_exe WinSCP.exe
+        case "m": WinActivate,ahk_class mintty
+        case "t": WinActivate,ahk_exe Teams.exe
+        case "w": WinActivate,Cygwin ahk_class mintty
+        case "e": WinActivate,ahk_exe explorer.exe
+        case "s": WinActivate,ahk_exe slack.exe
+        case "x": WinActivate,ahk_class XLMAIN
+        case "o": WinActivate,ahk_exe OUTLOOK.EXE
+        case "v": WinActivate,ahk_class Vim
+        case "p": WinActivate,ahk_class PPTFrameClass
+        case "i": WinActivate,ahk_exe iexplore.exe
+        case "n": WinActivate,ahk_class ApplicationFrameWindow
+        case "d": {
+            if WinExist("SuperPuTTY ahk_exe SuperPutty.exe") {
+                WinActivate  ; Uses the last found window.
+                Sleep 100
+                WinActivate  ; Uses the last found window.
+                MouseClick ,Left
+            }
         }
+        default:
+            ;; do nothing
+            return
+    }
+    MoveCursorToFocusedWindow() ;; move cursor
     return
 
-!^m::
-    WinActivate,ahk_exe WindowsTerminal.exe
-    return
+!^m:: WinActivate,ahk_exe WindowsTerminal.exe
 
-#IfWinActive ahk_class ApplicationFrameWindow
-
-;^b:: SendInput, {Left}
-;^f:: SendInput, {Right}
-;^p:: SendInput, {Up}
-;^n:: SendInput, {Down}
-
-!^b:: SendInput, {Left 5}
-;!^s:: SendInput, {Left 5}
-!^f:: SendInput, {Right 5}
-!^p:: SendInput, {Up 5}
-!^n:: SendInput, {Down 5}
-
-^e:: SendInput, {End}
-^^:: SendInput, {Home}
-
-!f:: SendInput, {Right}
-!e:: SendInput, {Up}
-!l:: SendInput, {Right}
-!k:: SendInput, {Up}
-!j:: SendInput, {Down}
-!+s:: SendInput, {Left 5}
-!+f:: SendInput, {Right 5}
-!+e:: SendInput, {Up 5}
-!+d:: SendInput, {Down 5}
-^k:: Send, {Shift down}{End}{Del}{Shift up}
-^d:: SendInput, {Del}
-#IfWinActive  
-
-#IfWinNotActive ahk_class mintty
-!d:: SendInput, {Ctrl down}{Del}{Ctrl up}
-!h:: SendInput, {Ctrl down}{BS}{Ctrl up}
-#IfWinNotActive
+#IfWinActive ahk_class TablacusExplorer
++^a:: SendInput, {Alt down}{Left}{Alt Up}
++^s:: SendInput, {Alt down}{Right}{Alt Up}
+#IfWinActive
 
 #IfWinActive ahk_exe msedge.exe
 +^n::
@@ -208,6 +199,8 @@ Return
     Click, L, , 300, 200
     SendInput, {b}
     return
+^n:: SendInput, {Down}
+^p:: SendInput, {Up}
 #IfWinNotActive
 
 #m:: WinMinimize, A
@@ -217,45 +210,6 @@ Return
 ;
 ; Mouse
 ;
-; Up
-#+k::
-    MouseMove 0,-20,0,R
-    return
-; Down
-#+j::
-    MouseMove 0,20,0,R
-    return
-
-; Left
-#+h::
-    MouseMove -20,0,0,R
-    return
-
-; Right
-#+l::
-    MouseMove 20,0,0,R
-    return
-
-; Up fast
-#^k::
-    MouseMove 0,-160,0,R
-    return
-
-; Down fast
-#^j::
-    MouseMove 0,160,0,R
-    return
-
-; Left fast
-#^h::
-    MouseMove -160,0,0,R
-    return
-
-; Right fast
-#^l::
-    MouseMove 160,0,0,R
-    return
-
 +#a::
     CoordMode, Mouse, Screen
     MouseMove 500,400,0,
@@ -277,7 +231,6 @@ Return
     CoordMode, Mouse, Relative
     return
 
-
 ; PrintScreen
 ^!q::  SendInput, {LWin Down}{PrintScreen}{LWin Up}
 
@@ -297,21 +250,195 @@ XButton2::
         Click,%pos%,20,0
     }
     return
-Media_Play_Pause:: MouseClick ,Right
-+LButton:: MouseClick ,Right
-!LButton::
-    WinGetPos, xpos, ypos, width, height, A
-    xpos := width/2
-    ypos := height/2
-    MouseMove xpos,ypos,0,
-    return
-
-Insert::Return
-
-
-;Shift＋マウスホイールで水平スクロール
 +WheelDown::WheelRight
 +WheelUp::WheelLeft
+
+;; select text
+#+j::
+    Send, {LButton Down}
+    MouseMove 100,0,0,R
+    Send, {LButton Up}
+    return
+
+;;;;;;;;;;;;;;;
+;;;; RAlt
+;;;;;;;;;;;;;;;
+vka5 & s:: SendInput, {Down 5}
+vka5 & w:: SendInput, {Up 5}
+vka5 & a:: SendInput, {Left 5}
+vka5 & d:: SendInput, {Right 5}
+
+;;;;;;;;;;;;;;;
+;;;; RCtrl
+;;;;;;;;;;;;;;;
+vka3 & c:: SendInput, {Esc}
+vka3 & n:: SendInput, {Down}
+vka3 & p:: SendInput, {Up}
+vka3 & b:: SendInput, {Left}
+vka3 & f:: SendInput, {Right}
+vka3 & e:: SendInput, {End}
+vka3 & a:: SendInput, {Home}
+vka3 & Down::   ExtendWindow(0, 200)
+vka3 & Up::     ExtendWindow(0, -200)
+vka3 & Right::  ExtendWindow(200, 0)
+vka3 & Left::   ExtendWindow(-200, 0)
+; num
+vka3 & u:: SendInput, {1}
+vka3 & i:: SendInput, {2}
+vka3 & o:: SendInput, {3}
+vka3 & j:: SendInput, {4}
+vka3 & k:: SendInput, {5}
+vka3 & l:: SendInput, {6}
+vka3 & m:: SendInput, {7}
+vka3 & ,:: SendInput, {8}
+vka3 & .:: SendInput, {9}
+vka3 & `;:: SendInput, {0}
+
+;;;;;;;;;;;;;;;
+;;;; 無変換
+;;;;;;;;;;;;;;;
+vk1d & g:: SendInput, {Esc}
+vk1d & x:: SendInput, {Del}
+vk1d & h:: SendInput, {BS}
+vk1d & z:: SendInput, {BS}
+vk1d & v:: SendInput, {Shift Down}{Insert}{Shift Up}
+vk1d & 1:: SendInput, {Home}
+vk1d & 2:: SendInput, {End}
+vk1d & f:: SendInput, {PgDn}
+vk1d & b:: SendInput, {PgUp}
+vk1d & p:: SendInput, {|}
+vk1d & Down::
+    WinGetPos,X,Y,W,H,A
+    Y := Y + 200
+    WinMove,A,,X,Y,W,H
+    return
+vk1d & Up::
+    WinGetPos,X,Y,W,H,A
+    Y := Y - 200
+    WinMove,A,,X,Y,W,H
+    return
+vk1d & Right::
+    WinGetPos,X,Y,W,H,A
+    X := X + 200
+    WinMove,A,,X,Y,W,H
+    return
+vk1d & Left::
+    WinGetPos,X,Y,W,H,A
+    X := X - 200
+    WinMove,A,,X,Y,W,H
+    return
+; num
+vk1d & u:: SendInput, {1}
+vk1d & i:: SendInput, {2}
+vk1d & o:: SendInput, {3}
+vk1d & j:: SendInput, {4}
+vk1d & k:: SendInput, {5}
+vk1d & l:: SendInput, {6}
+vk1d & m:: SendInput, {7}
+vk1d & ,:: SendInput, {8}
+vk1d & .:: SendInput, {9}
+vk1d & `;:: SendInput, {0}
+; cursor
+vk1d & a:: SendInput, {Left}
+vk1d & s:: SendInput, {Down}
+vk1d & d:: SendInput, {Right}
+vk1d & w:: SendInput, {Up}
+vk1d & q:: SendInput, {PgUp}
+vk1d & e:: SendInput, {PgDn}
+
+;;;;;;;;;;;;;;;
+;;;; LAlt
+;;;;;;;;;;;;;;;
+!g:: SendInput, {Esc}
+!x:: SendInput, {Del}
+!h:: SendInput, {BS}
+!z:: SendInput, {BS}
+!v:: SendInput, {Shift Down}{Insert}{Shift Up}
+!1:: SendInput, {PgUp}
+!2:: SendInput, {PgDn}
+; cursor
+!a:: SendInput, {Left}
+!s:: SendInput, {Down}
+!d:: SendInput, {Right}
+!w:: SendInput, {Up}
+!q:: SendInput, {Home}
+!e:: SendInput, {End}
+!n:: SendInput, {Down}
+!p:: SendInput, {Up}
+!b:: SendInput, {Left}
+!f:: SendInput, {Right}
+!r:: MoveCursorToFocusedWindow()
++!a:: SendInput, {Shift Down}{Left}{Shift Up}
++!s:: SendInput, {Shift Down}{Down}{Shift Up}
++!d:: SendInput, {Shift Down}{Right}{Shift Up}
++!w:: SendInput, {Shift Down}{Up}{Shift Up}
++!q:: SendInput, {Shift Down}{Home}{Shift Up}
++!e:: SendInput, {Shift Down}{End}{Shift Up}
++!n:: SendInput, {Shift Down}{Down}{Shift Up}
++!p:: SendInput, {Shift Down}{Up}{Shift Up}
++!b:: SendInput, {Shift Down}{Left}{Shift Up}
++!f:: SendInput, {Shift Down}{Right}{Shift Up}
+!Space:: SendInput, {vk1d}
+!4:: SendInput, {Alt Down}{F4}{Alt Up}
+!5:: SendInput, {Alt Down}{F5}{Alt Up}
+!Down::   ExtendWindow(0, 200)
+!Up::     ExtendWindow(0, -200)
+!Right::  ExtendWindow(200, 0)
+!Left::   ExtendWindow(-200, 0)
+!u:: SendInput, {_}
+!y:: SendInput, {\}
+!,:: SendInput, {~}
+!/:: SendInput, {\}
+!m:: SendInput, {_}
+!j:: SendInput, {~}
+
+;;;;;;;;;;;;;;;
+;;; 変換
+;;;;;;;;;;;;;;;
+vk1c:: SendInput, {Enter}
+
+;;;;;;;;;;;;;;;
+;;; カタカナ/ひらがな(ChangeKeyでF13(vk7c(sc64))にマップ)
+;;;;;;;;;;;;;;;
+vk7c:: IME_SET(1)         ;;; IME on
+vk7c & Space:: IME_SET(0) ;;; IME off
+vk7c & j:: SendInput, {vkf2} ;;; IME on
+vk7c & k:: SendInput, {vk1d} ;;; IME off
+vk7c & u:: SendInput, {F10}    ;;; hankaku
+vk7c & o:: SendInput, {F10}    ;;; hankaku
+vk7c & l:: SendInput, {F10}    ;;; hankaku
+vk7c & i:: SendInput, {F7}     ;;; カタカナ
+vk7c & q:: SendInput, {|}
+vk7c & w:: SendInput, {~}
+; symbols
+vk7c & t:: SendInput, {~}
+vk7c & b:: SendInput, {_}
+vk7c & p:: SendInput, {|}
+vk7c & a:: SendInput, {&}
+vk7c & y:: SendInput, {\}
+vk7c & m:: SendInput, {_}
+vk7c & ,:: SendInput, {~}
+vk7c & e:: SendInput, {=}
+vk7c & d:: SendInput, {+}
+vk7c & h:: SendInput, {^}
+
+;;;;;;;;;;;;;;;
+;;; RAlt
+;;;;;;;;;;;;;;;
+vka5 & j:: SendInput, {vkf2} ;;; IME on
+vka5 & k:: SendInput, {vk1d} ;;; IME off
+vka5 & u:: SendInput, {F10}{Enter}    ;;; hankaku
+vka5 & o:: SendInput, {F10}{Enter}    ;;; hankaku
+vka5 & l:: SendInput, {F10}{Enter}    ;;; hankaku
+vka5 & i:: SendInput, {F7}{Enter}     ;;; カタカナ
+vka5 & q:: SendInput, {|}
+; symbol
+vka5 & t:: SendInput, {~}
+vka5 & b:: SendInput, {``}
+vka5 & p:: SendInput, {|}
+vka5 & Space:: SendInput, {vkf2}
+
+AppsKey & z:: SendInput,{_}
 
 ;;
 ;; Numpad
@@ -342,3 +469,9 @@ Numpad2:: SendInput, {Down}
 Numpad5:: SendInput, {Up}
 Numpad6:: SendInput, {PgDn}
 Numpad4:: SendInput, {PgUp}
+
+;; for 60% keyboeard
+^+/:: SendInput, {_}
+^+Up:: SendInput, {\}
++BS:: SendInput, {|}
+^+BS:: SendInput, {\}
