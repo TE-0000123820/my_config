@@ -8,7 +8,7 @@ bindkey -e
 #VIM=nvim
 VIM=vim
 export EDITOR=${VIM}
-export PATH=~/bin:~/utils/:${PATH}
+export PATH=~/bin:~/utils/:~/.cargo/bin:${PATH}
 export TERM=xterm-256color
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8

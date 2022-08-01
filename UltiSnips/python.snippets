@@ -161,3 +161,20 @@ snippet jsonload "json,load,file,open" w
 with open('a.json') as f:
     df = json.load(f)
 endsnippet
+
+snippet hbarmatplotlib "hbar,matplotlib,graph,chart,draw" w
+import matplotlib.pyplot as plt
+import pandas as pd
+
+data = {'Quantity': [320,450,300,120,280],
+        'Price': [800,250,1200,150,300]
+       }
+df = pd.DataFrame(data,columns=['Quantity','Price'], index = ['Computer','Monitor','Laptop','Printer','Tablet'])
+
+df.plot.barh()
+
+plt.title('Store Inventory')
+plt.ylabel('Product')
+plt.xlabel('Quantity')
+plt.show()
+endsnippet
