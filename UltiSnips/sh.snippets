@@ -83,3 +83,42 @@ if [[ -f file ]] ; then
 	echo "exists"
 fi
 endsnippet
+
+snippet gitfetchbranch "git pull origin <Remote-branch-name>:<Local-branch-name>`,remote,fetch,branch,git"
+git pull origin ${1:remote}:${2:local}
+endsnippet
+
+snippet gitsyncforkallbranch "git,sync,frok,branch,all,pull,fetch"
+#!/bin/bash
+set -eu -o pipefail
+
+REMOTE_SRC=git@github.com:BoostAnywhere/rocm_test_env.git
+REMOTE_DST=git@github.sie.sony.com:SIE-Private/rdc-cronos-rocm-test-env.git
+PREFIX=fork/
+GIT_DIR=
+PUSH_OPTIONS=""
+#PUSH_OPTIONS=+"--prune --push-option=ci.skip"
+#PUSH_OPTIONS=+"--prune"
+
+# Initialize bare repository in temporary $GIT_DIR
+if test -z "$GIT_DIR"; then
+    GIT_DIR=$(mktemp -d)
+    trap "rm -rf $GIT_DIR" EXIT
+fi
+
+export GIT_DIR
+
+git init --bare
+
+# Fetch all branches/tags from src repository
+git fetch $REMOTE_SRC +refs/heads/*:refs/src/heads/* --prune 
+git fetch $REMOTE_SRC +refs/tags/*:refs/src/tags/* --prune
+
+# Fetch $PREFIX-ed branches/tags from dst to local src
+#git fetch $REMOTE_DST +refs/heads/${PREFIX}*:refs/src/heads/${PREFIX}* --no-tags
+#git fetch $REMOTE_DST +refs/tags/${PREFIX}*:refs/src/tags/${PREFIX}* --no-tags
+
+# Push all branches/tags from local src to dst repository
+git push $REMOTE_DST +refs/src/heads/*:refs/heads/* $PUSH_OPTIONS
+git push $REMOTE_DST +refs/src/tags/*:refs/tags/* $PUSH_OPTIONS
+endsnippet
