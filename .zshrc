@@ -8,7 +8,7 @@ bindkey -e
 #VIM=nvim
 VIM=vim
 export EDITOR=${VIM}
-export PATH=~/bin:~/utils/:~/.cargo/bin:${PATH}
+export PATH=~/bin:~/utils/:${PATH}:~/.local/bin:~/.cargo/bin
 export TERM=xterm-256color
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -120,7 +120,7 @@ alias lr="ls -ltc"
 alias ls="ls -F --color=auto"
 alias lv='lv -c'
 alias m="make"
-alias man='(){ tmpfile=$(mktemp); man $1 | col -b | bat -l Manpage -p > ${tmpfile} ; view ${tmpfile} -c ":set ft=man" ; rm ${tmpfile}}'
+#alias man='(){ tmpfile=$(mktemp); man $1 | col -b | bat -l Manpage -p > ${tmpfile} ; view ${tmpfile} -c ":set ft=man" ; rm ${tmpfile}}'
 alias md='md5sum'
 alias n="ninja"
 alias ncl="ninja -t clean"
