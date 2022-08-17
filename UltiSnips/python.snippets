@@ -178,3 +178,19 @@ plt.ylabel('Product')
 plt.xlabel('Quantity')
 plt.show()
 endsnippet
+
+snippet sysexit "import sys; sys.exit(0)" w
+import sys; sys.exit(0)
+endsnippet
+
+snippet matplotlibtileimage "matplotlib,tile,image,plot" w
+import matplotlib.pyplot as plt
+plt.figure(figsize=(40, 40))
+nrow = 10
+ncol = 10
+for i in range(nrow*ncol):
+	plt.subplot(nrow, ncol, i + 1)
+	plt.imshow(img)
+plt.axis("off")
+plt.savefig("out_pt.png")
+endsnippet
