@@ -38,10 +38,14 @@ MoveCursorToFocusedWindow()
     MouseMove _xpos_r,_ypos_r,0,
     WinGetTitle, win_title, A
 	SplashImage,,B1 FM14 W400 X%_xpos_a% Y%_ypos_a%,, %win_title%
-    Sleep, 2000
-	SplashImage,off
+    SetTimer, RemoveSplash, 2000
     Return
 }
+
+RemoveSplash:
+    SetTimer, RemoveSplash, Off
+	SplashImage,off
+    Return
 
 ExtendWindow(diff_w, diff_h)
 {
@@ -52,9 +56,12 @@ ExtendWindow(diff_w, diff_h)
     return
 }
 
-^h:: Send,{BS}
 Insert:: Return
+^h:: Send,{BS}
 ^M:: SendInput, {Enter}
++Esc:: SendInput, {``}
+^1:: SendInput, {Up}
+^2:: SendInput, {Down}
 
 ;;;
 ;;; date
@@ -124,6 +131,42 @@ Return
         case "w": run,C:\Users\0000123820\AppData\Local\Microsoft\WindowsApps\ubuntu2004.exe
         case "s": run,C:\Users\0000123820\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell\Windows PowerShell.lnk
         case "r": Reload
+    }
+    return
+
+!^w::
+    Input Key, L1
+    switch Key {
+        case "1": {
+            WinGetPos,X,Y,W,H,A
+            WinMove,A,,60,0,TILE_WIDTH_LEFT,1070
+            MoveCursorToFocusedWindow()
+        }
+        case "q": {
+            WinGetPos,X,Y,W,H,A
+            WinMove,A,,60,1080,TILE_WIDTH_LEFT,1070
+            MoveCursorToFocusedWindow()
+        }
+        case "2": {
+            WinGetPos,X,Y,W,H,A
+            WinMove,A,,TILE_BORDER_X,0,TILE_WIDTH_RIGHT,1070
+            MoveCursorToFocusedWindow()
+        }
+        case "w": {
+            WinGetPos,X,Y,W,H,A
+            WinMove,A,,TILE_BORDER_X,1080,TILE_WIDTH_RIGHT,1070
+            MoveCursorToFocusedWindow()
+        }
+        case "3": {
+            WinGetPos,X,Y,W,H,A
+            WinMove,A,,60,0,TILE_WIDTH_LEFT,2000
+            MoveCursorToFocusedWindow()
+        }
+        case "4": {
+            WinGetPos,X,Y,W,H,A
+            WinMove,A,,TILE_BORDER_X,0,TILE_WIDTH_RIGHT,2000
+            MoveCursorToFocusedWindow()
+        }
     }
     return
 
@@ -278,10 +321,14 @@ vka3 & b:: SendInput, {Left}
 vka3 & f:: SendInput, {Right}
 vka3 & e:: SendInput, {End}
 vka3 & a:: SendInput, {Home}
+vka3 & w:: SendInput, {Up}
+vka3 & s:: SendInput, {Down}
+vka3 & v:: SendInput, {Shift Down}{Insert}{Shift Up}
 vka3 & Down::   ExtendWindow(0, 200)
 vka3 & Up::     ExtendWindow(0, -200)
 vka3 & Right::  ExtendWindow(200, 0)
 vka3 & Left::   ExtendWindow(-200, 0)
+vka3 & Tab:: SendInput, {Alt Down}{Tab}
 ; num
 vka3 & u:: SendInput, {1}
 vka3 & i:: SendInput, {2}
@@ -357,11 +404,11 @@ vk1d & e:: SendInput, {PgDn}
 !1:: SendInput, {PgUp}
 !2:: SendInput, {PgDn}
 ; cursor
-!a:: SendInput, {Left}
 !s:: SendInput, {Down}
 !d:: SendInput, {Right}
 !w:: SendInput, {Up}
 !q:: SendInput, {Home}
+!a:: SendInput, {Home}
 !e:: SendInput, {End}
 !n:: SendInput, {Down}
 !p:: SendInput, {Up}
@@ -378,7 +425,7 @@ vk1d & e:: SendInput, {PgDn}
 +!p:: SendInput, {Shift Down}{Up}{Shift Up}
 +!b:: SendInput, {Shift Down}{Left}{Shift Up}
 +!f:: SendInput, {Shift Down}{Right}{Shift Up}
-!Space:: SendInput, {vk1d}
+!Space:: IME_SET(1)
 !4:: SendInput, {Alt Down}{F4}{Alt Up}
 !5:: SendInput, {Alt Down}{F5}{Alt Up}
 !Down::   ExtendWindow(0, 200)
@@ -391,6 +438,12 @@ vk1d & e:: SendInput, {PgDn}
 !/:: SendInput, {\}
 !m:: SendInput, {_}
 !j:: SendInput, {~}
+~LAlt up::   ; 連打
+    If (A_PriorHotKey == A_ThisHotKey && A_TimeSincePriorHotkey < 300)
+    {
+        IME_SET(1)
+    }
+    Return
 
 ;;;;;;;;;;;;;;;
 ;;; 変換
@@ -400,7 +453,7 @@ vk1c:: SendInput, {Enter}
 ;;;;;;;;;;;;;;;
 ;;; カタカナ/ひらがな(ChangeKeyでF13(vk7c(sc64))にマップ)
 ;;;;;;;;;;;;;;;
-vk7c:: IME_SET(1)         ;;; IME on
+;vk7c:: IME_SET(1)         ;;; IME on
 vk7c & Space:: IME_SET(0) ;;; IME off
 vk7c & j:: SendInput, {vkf2} ;;; IME on
 vk7c & k:: SendInput, {vk1d} ;;; IME off
@@ -412,15 +465,32 @@ vk7c & q:: SendInput, {|}
 vk7c & w:: SendInput, {~}
 ; symbols
 vk7c & t:: SendInput, {~}
-vk7c & b:: SendInput, {_}
+vk7c & b:: SendInput, {``}
 vk7c & p:: SendInput, {|}
-vk7c & a:: SendInput, {&}
+vk7c & a:: SendInput, {+}
 vk7c & y:: SendInput, {\}
 vk7c & m:: SendInput, {_}
+vk7c & n:: SendInput, {&}
 vk7c & ,:: SendInput, {~}
 vk7c & e:: SendInput, {=}
 vk7c & d:: SendInput, {+}
 vk7c & h:: SendInput, {^}
+vk7c & s:: SendInput, {_}
+vk7c & f::
+    IME_SET(0)
+    SendInput, {-}
+    Return
+vk7c & 1:: SendInput, {[}
+vk7c & 2:: SendInput, {]}
+vk7c & 3:: SendInput, {{}
+vk7c & 4:: SendInput, {}}
+vk7c up::   ; 連打
+    If (A_PriorHotKey == A_ThisHotKey && A_TimeSincePriorHotkey < 300)
+    {
+        ;IME_SET(0)
+        SendInput, {Esc}
+    }
+    Return
 
 ;;;;;;;;;;;;;;;
 ;;; RAlt
@@ -436,6 +506,7 @@ vka5 & q:: SendInput, {|}
 vka5 & t:: SendInput, {~}
 vka5 & b:: SendInput, {``}
 vka5 & p:: SendInput, {|}
+vka5 & n:: SendInput, {&}
 vka5 & Space:: SendInput, {vkf2}
 
 AppsKey & z:: SendInput,{_}
