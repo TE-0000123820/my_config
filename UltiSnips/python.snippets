@@ -18,8 +18,8 @@ snippet pr "print(f'')" w
 print(f'$1')
 endsnippet
 
-snippet pro "print('')" w
-print('$1')
+snippet pre "print()" w
+print($1)
 endsnippet
 
 # Black: \u001b[30m
@@ -193,4 +193,36 @@ for i in range(nrow*ncol):
 	plt.imshow(img)
 plt.axis("off")
 plt.savefig("out_pt.png")
+endsnippet
+
+snippet matplotlibsavefig "matplotlib,image,save,image,figure" w
+plt.savefig("out.png")
+endsnippet
+
+snippet npprintoptions "numpy,set,printoptions,threshold" w
+np.set_printoptions(threshold=30000000)
+endsnippet
+
+snippet mkdiros "os,mkdir" w
+os.makedirs(dirname, exist_ok=True)
+endsnippet
+
+snippet subprocessrun "subprocess,run" w
+cmd = ['ls', '-a']
+cp = subprocess.run(cmd)
+assert cp.returncode == 0
+endsnippet
+
+snippet splitext "split,extension,kakutyousi" w
+os.path.splitext(filename)[0]
+endsnippet
+
+snippet tfenjit "tf,tensorflow,enable,jit" w
+tf.keras.backend.clear_session()
+tf.config.optimizer.set_jit(True)
+endsnippet
+
+snippet kerasfitparaopt "keras,fit,parallel,args" w
+workers=1,
+use_multiprocessing=False
 endsnippet
