@@ -20,7 +20,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # python
 #
 sudo apt install python3-pip
-pip3 install --user neovim
+pip3 install --user neovim python-lsp-server
 
 #
 # github

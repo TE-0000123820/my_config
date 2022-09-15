@@ -333,6 +333,8 @@ zinit light "Tarrasch/zsh-bd"
 bindkey -r "^O"
 bindkey '^t' kill-word
 bindkey '^j' undo
+bindkey '^o^u' undo
+bindkey '^o^d' kill-word
 bindkey '^o^b' backward-word
 bindkey '^o^f' forward-word
 zle     -N   fr
