@@ -48,7 +48,7 @@ HISTFILE="$HOME/.zhistory"
 HISTSIZE=10000
 SAVEHIST=10000
 setopt append_history
-setopt share_history
+#setopt share_history
 zshaddhistory() {
     local line=${1%%$'\n'}
     local cmd=${line%% *}
