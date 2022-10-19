@@ -136,6 +136,8 @@ alias pon="perl -MOneLinerLib -W -nE"
 alias parallel='parallel --gnu'
 alias pd="popd"
 alias pytest="pytest -rap --tb=line"
+alias q="vim _.sh"
+alias r="bash -x _.sh"
 alias rg="rg --color=always"
 alias rp="realpath"
 alias s="source"
