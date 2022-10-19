@@ -5,6 +5,12 @@ for ${2:i} in ${1:array[@]}; do
 done
 endsnippet
 
+snippet forls "for i in $(ls dir); do \n echo $i \n done"
+for ${2:i} in $(ls ${1:dir}/); do
+    ${3:echo $i}
+done
+endsnippet
+
 # forc
 snippet forc "for ((i=0; i < ${1:100}; i++)); do"
 for ((i=0; i < ${1:100}; i++)); do
@@ -78,6 +84,10 @@ snippet export_gpu_flush_on_execution "export GPU_FLUSH_ON_EXECUTION=1,amd,rocm"
 export GPU_FLUSH_ON_EXECUTION=1
 endsnippet
 
+snippet export_oberon_gpu_command_queue_length "export OBERON_GPU_COMMAND_QUEUE_LENGTH=400,rocm,amd"
+export OBERON_GPU_COMMAND_QUEUE_LENGTH=400
+endsnippet
+
 snippet fileexists "if,file,exists,then"
 if [[ -f file ]] ; then
 	echo "exists"
@@ -136,4 +146,34 @@ sudo apt install gdb python3-dbg
 
 snippet gitremotesetulr "git,remote,set,url,update"
 git remote set-url ${1:url}
+endsnippet
+
+snippet rocmheadersh "rocm,shell,header,env,var,venv" w
+source /opt/rocm/venv/bin/activate
+
+export LD_LIBRARY_PATH=/opt/rocm/lib:/opt/rocm-5.0.0/lib
+#export AMD_LOG_LEVEL=4
+#export MIOPEN_ENABLE_LOGGING=1
+#export MIOPEN_LOG_LEVEL=6
+#export MIOPEN_FIND_ENFORCE=4
+endsnippet
+
+snippet gitresetheadprev "git,reset,head,prev" w
+git reset HEAD^
+endsnippet
+
+snippet growpart "aws,ebs,size,growpart" w
+sudo growpart /dev/nvme0n1 1
+endsnippet
+
+snippet resizee2fs "aws,resize,e2fs,ebs,size,change" w
+sudo resize2fs /dev/nvme0n1p1
+endsnippet
+
+snippet gitseturlremote "git,remote,set,url" w
+git remote set-url origin ${1:url}
+endsnippet
+
+snippet pythonjsondump "python,json,dump,tool" w
+python -m json.tool ${1:a.json}
 endsnippet
