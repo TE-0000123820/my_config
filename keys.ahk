@@ -59,9 +59,11 @@ ExtendWindow(diff_w, diff_h)
 Insert:: Return
 ^h:: Send,{BS}
 ^M:: SendInput, {Enter}
-+Esc:: SendInput, {``}
-^1:: SendInput, {Up}
-^2:: SendInput, {Down}
+;^Space:: SendInput, {Enter}
+;+Esc:: SendInput, {``}
+;^1:: SendInput, {Up}
+;^2:: SendInput, {Down}
+
 
 ;;;
 ;;; date
@@ -231,6 +233,9 @@ Return
 
 !^m:: WinActivate,ahk_exe WindowsTerminal.exe
 
+;
+; Application Specific
+;
 #IfWinActive ahk_class TablacusExplorer
 +^a:: SendInput, {Alt down}{Left}{Alt Up}
 +^s:: SendInput, {Alt down}{Right}{Alt Up}
@@ -244,7 +249,12 @@ Return
     return
 ^n:: SendInput, {Down}
 ^p:: SendInput, {Up}
-#IfWinNotActive
+#IfWinActive
+
+; onenote
+#IfWinActive ahk_exe ApplicationFrameHost.exe
+^k:: SendInput, {Shift down}{End}{Del}{Shift up}
+#IfWinActive
 
 #m:: WinMinimize, A
 #z:: WinMinimize, A
@@ -438,18 +448,29 @@ vk1d & e:: SendInput, {PgDn}
 !/:: SendInput, {\}
 !m:: SendInput, {_}
 !j:: SendInput, {~}
-~LAlt up::   ; 連打
-    If (A_PriorHotKey == A_ThisHotKey && A_TimeSincePriorHotkey < 300)
-    {
-        IME_SET(1)
-    }
-    Return
+!k:: SendInput, {Shift down}{End}{Del}{Shift up}
+;~LAlt up::   ; 連打
+;    If (A_PriorHotKey == A_ThisHotKey && A_TimeSincePriorHotkey < 300)
+;    {
+;        IME_SET(1)
+;    }
+;    Return
+; 上部メニューがアクティブになるのを抑制
+*~LAlt::Send {Blind}{vk07}
+; 空打ちで IME を OFF
+;LAlt up::
+;    if (A_PriorHotkey == "*~LAlt")
+;    {
+;        IME_SET(1)
+;    }
+;    Return
 
 ;;;;;;;;;;;;;;;
 ;;; 変換
 ;;;;;;;;;;;;;;;
 vk1c:: SendInput, {Enter}
 
+#IfWinNotActive,ahk_exe mstsc.exe
 ;;;;;;;;;;;;;;;
 ;;; カタカナ/ひらがな(ChangeKeyでF13(vk7c(sc64))にマップ)
 ;;;;;;;;;;;;;;;
@@ -471,7 +492,7 @@ vk7c & a:: SendInput, {+}
 vk7c & y:: SendInput, {\}
 vk7c & m:: SendInput, {_}
 vk7c & n:: SendInput, {&}
-vk7c & ,:: SendInput, {~}
+;vk7c & ,:: SendInput, {~}
 vk7c & e:: SendInput, {=}
 vk7c & d:: SendInput, {+}
 vk7c & h:: SendInput, {^}
@@ -484,13 +505,28 @@ vk7c & 1:: SendInput, {[}
 vk7c & 2:: SendInput, {]}
 vk7c & 3:: SendInput, {{}
 vk7c & 4:: SendInput, {}}
-vk7c up::   ; 連打
-    If (A_PriorHotKey == A_ThisHotKey && A_TimeSincePriorHotkey < 300)
-    {
-        ;IME_SET(0)
-        SendInput, {Esc}
-    }
-    Return
+vk7c & ,::
+  if GetKeyState("Shift") {
+    SendInput, {`{}
+    return
+  }
+  SendInput, {[}
+  return
+vk7c & .::
+  if GetKeyState("Shift") {
+    SendInput, {`}}
+    return
+  }
+  SendInput, {]}
+  return
+;vk7c up::   ; 連打
+;    If (A_PriorHotKey == A_ThisHotKey && A_TimeSincePriorHotkey < 300)
+;    {
+;        IME_SET(1)
+;        ;SendInput, {Esc}
+;    }
+;    Return
+#IfWinNotActive
 
 ;;;;;;;;;;;;;;;
 ;;; RAlt
@@ -510,6 +546,16 @@ vka5 & n:: SendInput, {&}
 vka5 & Space:: SendInput, {vkf2}
 
 AppsKey & z:: SendInput,{_}
+
+; 上部メニューがアクティブになるのを抑制
+*~RAlt::Send {Blind}{vk07}
+; 左 Alt 空打ちで IME を OFF
+RAlt up::
+    if (A_PriorHotkey == "*~RAlt")
+    {
+        IME_SET(1)
+    }
+    Return
 
 ;;
 ;; Numpad
@@ -546,3 +592,23 @@ Numpad4:: SendInput, {PgUp}
 ^+Up:: SendInput, {\}
 +BS:: SendInput, {|}
 ^+BS:: SendInput, {\}
+
+;
+; Horizontal Scroll
+;
+#IfWinActive, ahk_exe POWERPNT.EXE
+~Lshift & WheelUp::ComObjActive("PowerPoint.Application").ActiveWindow.SmallScroll(0,0,0,10)
+~Lshift & WheelDown::ComObjActive("PowerPoint.Application").ActiveWindow.SmallScroll(0,0,10,0)
+#IfWinActive
+
+#IfWinActive, ahk_exe EXCEL.EXE
+~LShift & WheelUp:: ; Scroll left.
+    SetScrollLockState, On
+    SendInput {Left}
+    SetScrollLockState, Off
+    Return
+~LShift & WheelDown:: ; Scroll right.
+    SetScrollLockState, On
+    SendInput {Right}
+    SetScrollLockState, Off
+#IfWinActive
