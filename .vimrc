@@ -41,6 +41,12 @@ set isf-==
 set viminfo+='1000,s1000
 set switchbuf+=newtab
 
+hi link markdownItalic NONE
+hi link markdownItalic NONE
+hi link markdownBold NONE
+hi link markdownBoldItalic NONE
+hi link markdownError NONE
+
 let &t_ti.="\e[1 q"
 let &t_SI.="\e[5 q"
 let &t_EI.="\e[1 q"
