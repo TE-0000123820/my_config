@@ -27,3 +27,5 @@
     graphColors = white,green,yellow,cyan,magenta
 [rebase]
 	autosquash = true
+[pull]
+    rebase = false
