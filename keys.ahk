@@ -28,7 +28,7 @@ IME_SET(SetSts, WinTitle="A")    {
           ,  Int, SetSts) ;lParam  : 0 or 1
 }
 
-MoveCursorToFocusedWindow()
+MoveMouseCursorToFocusedWindow()
 {
     WinGetPos, _xpos, _ypos, _width, _height, A
     _xpos_r := _width/2
@@ -54,6 +54,60 @@ ExtendWindow(diff_w, diff_h)
     _H := _H + diff_h
     WinMove,A,,_X,_Y,_W,_H
     return
+}
+
+MoveKeyCursor(direction)
+{
+    switch direction {
+        case "u": {
+            If GetKeyState("Shift", "P") {
+                SendInput {Blind}+{Up}
+            }
+            else {
+                SendInput {Up}
+            }
+        }
+        case "d": {
+            If GetKeyState("Shift", "P") {
+                SendInput {Blind}+{Down}
+            }
+            else {
+                SendInput {Down}
+            }
+        }
+        case "l": {
+            If GetKeyState("Shift", "P") {
+                SendInput {Blind}+{Left}
+            }
+            else {
+                SendInput {Left}
+            }
+        }
+        case "r": {
+            If GetKeyState("Shift", "P") {
+                SendInput {Blind}+{Right}
+            }
+            else {
+                SendInput {Right}
+            }
+        }
+        case "e": {
+            If GetKeyState("Shift", "P") {
+                SendInput {Blind}+{End}
+            }
+            else {
+                SendInput {End}
+            }
+        }
+        case "h": {
+            If GetKeyState("Shift", "P") {
+                SendInput {Blind}+{Home}
+            }
+            else {
+                SendInput {Home}
+            }
+        }
+    }
 }
 
 Insert:: Return
@@ -142,32 +196,32 @@ Return
         case "1": {
             WinGetPos,X,Y,W,H,A
             WinMove,A,,60,0,TILE_WIDTH_LEFT,1070
-            MoveCursorToFocusedWindow()
+            MoveMouseCursorToFocusedWindow()
         }
         case "q": {
             WinGetPos,X,Y,W,H,A
             WinMove,A,,60,1080,TILE_WIDTH_LEFT,1070
-            MoveCursorToFocusedWindow()
+            MoveMouseCursorToFocusedWindow()
         }
         case "2": {
             WinGetPos,X,Y,W,H,A
             WinMove,A,,TILE_BORDER_X,0,TILE_WIDTH_RIGHT,1070
-            MoveCursorToFocusedWindow()
+            MoveMouseCursorToFocusedWindow()
         }
         case "w": {
             WinGetPos,X,Y,W,H,A
             WinMove,A,,TILE_BORDER_X,1080,TILE_WIDTH_RIGHT,1070
-            MoveCursorToFocusedWindow()
+            MoveMouseCursorToFocusedWindow()
         }
         case "3": {
             WinGetPos,X,Y,W,H,A
             WinMove,A,,60,0,TILE_WIDTH_LEFT,2000
-            MoveCursorToFocusedWindow()
+            MoveMouseCursorToFocusedWindow()
         }
         case "4": {
             WinGetPos,X,Y,W,H,A
             WinMove,A,,TILE_BORDER_X,0,TILE_WIDTH_RIGHT,2000
-            MoveCursorToFocusedWindow()
+            MoveMouseCursorToFocusedWindow()
         }
     }
     return
@@ -228,7 +282,7 @@ Return
             ;; do nothing
             return
     }
-    MoveCursorToFocusedWindow() ;; move cursor
+    MoveMouseCursorToFocusedWindow() ;; move cursor
     return
 
 !^m:: WinActivate,ahk_exe WindowsTerminal.exe
@@ -325,14 +379,24 @@ vka5 & d:: SendInput, {Right 5}
 ;;;; RCtrl
 ;;;;;;;;;;;;;;;
 vka3 & c:: SendInput, {Esc}
-vka3 & n:: SendInput, {Down}
-vka3 & p:: SendInput, {Up}
-vka3 & b:: SendInput, {Left}
-vka3 & f:: SendInput, {Right}
-vka3 & e:: SendInput, {End}
-vka3 & a:: SendInput, {Home}
-vka3 & w:: SendInput, {Up}
-vka3 & s:: SendInput, {Down}
+
+vka3 & n:: MoveKeyCursor("d")
+vka3 & p:: MoveKeyCursor("u")
+vka3 & b:: MoveKeyCursor("l")
+vka3 & f:: MoveKeyCursor("r")
+vka3 & e:: MoveKeyCursor("e")
+vka3 & q:: MoveKeyCursor("h")
+
+vka3 & w:: MoveKeyCursor("u")
+vka3 & s:: MoveKeyCursor("d")
+vka3 & a:: MoveKeyCursor("l")
+vka3 & d:: MoveKeyCursor("r")
+vka3 & 1:: SendInput, {PgUp}
+vka3 & 2:: SendInput, {PgDn}
+
+vka3 & x:: SendInput, {Del}
+vka3 & h:: SendInput, {BS}
+
 vka3 & v:: SendInput, {Shift Down}{Insert}{Shift Up}
 vka3 & Down::   ExtendWindow(0, 200)
 vka3 & Up::     ExtendWindow(0, -200)
@@ -414,28 +478,18 @@ vk1d & e:: SendInput, {PgDn}
 !1:: SendInput, {PgUp}
 !2:: SendInput, {PgDn}
 ; cursor
-!s:: SendInput, {Down}
-!d:: SendInput, {Right}
-!w:: SendInput, {Up}
-!q:: SendInput, {Home}
-!a:: SendInput, {Home}
-!e:: SendInput, {End}
-!n:: SendInput, {Down}
-!p:: SendInput, {Up}
-!b:: SendInput, {Left}
-!f:: SendInput, {Right}
-!r:: MoveCursorToFocusedWindow()
-+!a:: SendInput, {Shift Down}{Left}{Shift Up}
-+!s:: SendInput, {Shift Down}{Down}{Shift Up}
-+!d:: SendInput, {Shift Down}{Right}{Shift Up}
-+!w:: SendInput, {Shift Down}{Up}{Shift Up}
-+!q:: SendInput, {Shift Down}{Home}{Shift Up}
-+!e:: SendInput, {Shift Down}{End}{Shift Up}
-+!n:: SendInput, {Shift Down}{Down}{Shift Up}
-+!p:: SendInput, {Shift Down}{Up}{Shift Up}
-+!b:: SendInput, {Shift Down}{Left}{Shift Up}
-+!f:: SendInput, {Shift Down}{Right}{Shift Up}
-!Space:: IME_SET(1)
+!s:: MoveKeyCursor("d")
+!d:: MoveKeyCursor("r")
+!w:: MoveKeyCursor("u")
+!q:: MoveKeyCursor("h")
+!a:: MoveKeyCursor("l")
+!e:: MoveKeyCursor("e")
+!n:: MoveKeyCursor("d")
+!p:: MoveKeyCursor("u")
+!b:: MoveKeyCursor("l")
+!f:: MoveKeyCursor("r")
+!r:: MoveMouseCursorToFocusedWindow()
+;!Space:: IME_SET(1)
 !4:: SendInput, {Alt Down}{F4}{Alt Up}
 !5:: SendInput, {Alt Down}{F5}{Alt Up}
 !Down::   ExtendWindow(0, 200)
