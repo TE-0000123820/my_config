@@ -114,7 +114,7 @@ Insert:: Return
 ^h:: Send,{BS}
 ^M:: SendInput, {Enter}
 ;^Space:: SendInput, {Enter}
-;+Esc:: SendInput, {``}
++Esc:: SendInput, {``}
 ;^1:: SendInput, {Up}
 ;^2:: SendInput, {Down}
 
@@ -540,7 +540,8 @@ vk7c & q:: SendInput, {|}
 vk7c & w:: SendInput, {~}
 ; symbols
 vk7c & t:: SendInput, {~}
-vk7c & b:: SendInput, {``}
+;vk7c & b:: SendInput, {``}
+vk7c & b:: SendInput, {\}
 vk7c & p:: SendInput, {|}
 vk7c & a:: SendInput, {+}
 vk7c & y:: SendInput, {\}
