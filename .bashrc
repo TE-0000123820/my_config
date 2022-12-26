@@ -1,4 +1,5 @@
 export PS4='+${BASH_SOURCE}:${LINENO}+'
+stty stop undef
 
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
 _tn_timestamp=`date +%s`
