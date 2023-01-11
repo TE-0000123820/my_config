@@ -1,0 +1,29 @@
+set bg=dark
+set wildmode=list:longest
+set smartindent
+set expandtab
+set incsearch
+set sw=4
+set bs=2
+set tabstop=4
+set laststatus=2
+set hlsearch
+set encoding=utf-8
+"set ruler
+set nonumber
+set statusline=%f:%l(%L)\ %m%r%h%w\ [%{&fenc}][%{&ff}]%y%6l,%-6c[%p%%(%l)]
+"set cursorline
+"set cursorcolumn
+set fileformats=unix,dos,mac
+set nf="hex"
+set ignorecase
+set smartcase
+set smarttab
+set timeoutlen=1000
+
+set filetype=off
+set belloff=all
+set completeopt=longest,menuone
+set isf-==
+set viminfo+='1000,s1000
+set switchbuf+=newtab
