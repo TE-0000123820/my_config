@@ -298,10 +298,8 @@ FAST_HIGHLIGHT_STYLES[globbing]='fg=cyan'
 FAST_HIGHLIGHT[use_brackets]=1
 zinit ice from"gh-r" as"program"
 
-zinit load junegunn/fzf-bin
 zinit light junegunn/fzf
-source ~/.zinit/plugins/junegunn---fzf/shell/completion.zsh
-source ~/.zinit/plugins/junegunn---fzf/shell/key-bindings.zsh
+zinit pack"default+keys" for fzf
 source ${MISC_DIR}/.fzf.zsh
 
 zinit light supercrabtree/k
