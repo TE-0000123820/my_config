@@ -177,3 +177,15 @@ endsnippet
 snippet pythonjsondump "python,json,dump,tool" w
 python -m json.tool ${1:a.json}
 endsnippet
+
+snippet pytestcollectonly "pytest,list,test,all,collect,only"
+pytest --collect-only
+endsnippet
+
+snippet bashpx4x "bash,ps4,-x,lineno"
+env PS4='${LINENO} bash -x '
+endsnippet
+
+snippet pythonvenvsystempackage "python,venv,system,packages"
+python3 -m venv --system-site-packages venv_dir
+endsnippet
