@@ -508,6 +508,7 @@ Plug 'tpope/vim-surround', {'on': []}
 "
 " gtags
 "
+Plug 'ivechan/gtags.vim', {'on': []}
 nnoremap <C-G>r :Gtags -r <C-R><C-W><CR>
 nnoremap <C-G>d :Gtags <C-R><C-W><CR>
 nnoremap <C-G>g :Gtags -g <C-R><C-W><CR>
@@ -591,6 +592,7 @@ function! s:load_plug(timer)
                 \ 'completor.vim',
                 \ 'nerdcommenter',
                 \ 'vim-surround',
+                \ 'gtags.vim',
                 \ 'vim-python-pep8-indent',
                 \ )
 endfunction
