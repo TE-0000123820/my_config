@@ -201,3 +201,7 @@ endsnippet
 snippet gitunshallowbranch "git,unshallow,branch" w
 git remote set-branches origin '*'
 endsnippet
+
+snippet gitcontainesbranch "git,contains,branch" w
+git git branch --contains -a ${1:hash}
+endsnippet
