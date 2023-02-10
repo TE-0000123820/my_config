@@ -559,8 +559,8 @@ if executable('pylsp')
 endif
 let g:lsp_log_file = expand('~/vim-lsp.log') 
 call lsp#register_server({
-        \ 'name': 'clangd-14',
-        \ 'cmd': {server_info->['clangd-14']},
+        \ 'name': 'clangd',
+        \ 'cmd': {server_info->['clangd']},
         \ 'allowlist': ['c','cpp'],
         \ })
 
@@ -596,5 +596,6 @@ function! s:load_plug(timer)
                 \ 'vim-python-pep8-indent',
                 \ )
 endfunction
+
 " load after 500ms
 call timer_start(500, function("s:load_plug"))
