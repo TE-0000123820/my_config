@@ -204,4 +204,9 @@ endsnippet
 
 snippet gitcontainesbranch "git,contains,branch" w
 git git branch --contains -a ${1:hash}
+
+snippet watchmemoryusagelog "watch,memory,free,usage,log" w
+free -s 30 > mem_watch_$(date +%Y%m%d_%H%M).log &
+_SUB_PID=$!
+trap "kill -9 ${_SUB_PID}" EXIT
 endsnippet
