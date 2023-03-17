@@ -8,3 +8,7 @@ cat ${MISC_DIR}/.bashrc >> ~/.bashrc
 
 ### vim
 cat ${MISC_DIR}/.vimrc.min >> ~/.vimrc
+
+### docker
+mkdir -p ~/.docker/
+cp ${MISC_DIR}/docker_config.json ~/.docker/config.json
