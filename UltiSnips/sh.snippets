@@ -210,3 +210,7 @@ free -s 30 > mem_watch_$(date +%Y%m%d_%H%M).log &
 _SUB_PID=$!
 trap "kill -9 ${_SUB_PID}" EXIT
 endsnippet
+
+snippet gitsubmoduleupdate "git,submodule,update,init,recursive" w
+git submodule update --init --recursive
+endsnippet
