@@ -214,3 +214,7 @@ endsnippet
 snippet gitsubmoduleupdate "git,submodule,update,init,recursive" w
 git submodule update --init --recursive
 endsnippet
+
+snippet gitsubmodulerecursivecommand "git,submodule,recursive,foreach,command" w
+git submodule foreach --recursive git clean -ffdx && git clean -ffdx
+endsnippet

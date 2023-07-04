@@ -237,3 +237,7 @@ m = re.search(r'asdfasf (\S+)', l)
 if m:
 	str = m.group(1)
 endsnippet
+
+snippet syspathaddimport "add,import,python,path,relative,upper" w
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+endsnippet
