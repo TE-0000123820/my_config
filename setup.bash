@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eu -o pipefail
+set -u -o pipefail
 
 #
 # vim
@@ -10,6 +10,10 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 mkdir -p ~/vim_swap
+(
+cd ~/
+ln -sf $MISC_DIR/.vimrc .
+)
 }
 
 #
@@ -37,6 +41,11 @@ Host github.com
     HostName ssh.github.com
     Port 443
 EOF
+
+(
+cd ~
+ln -sf $MISC_DIR/.gitconfig ./
+)
 }
 
 #
@@ -44,6 +53,8 @@ EOF
 #
 function setup_misc() {
 mkdir -p ~/.cache/shell/
+
+sudo apt install zsh libevent-dev bison flex
 }
 
 setup_vim
