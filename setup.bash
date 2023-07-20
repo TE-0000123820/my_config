@@ -45,6 +45,8 @@ EOF
 (
 cd ~
 ln -sf $MISC_DIR/.gitconfig ./
+mkdir -p ~/.ssh
+cat $MISC_DIR/.ssh_config >> ./.ssh/config
 )
 }
 
