@@ -10,6 +10,7 @@ X_CENTER_MARGIN := 60
 X_RIGHT_MARGIN := 30 
 TILE_BORDER_X := TILE_WIDTH_LEFT + X_CENTER_MARGIN
 TILE_WIDTH_RIGHT := SCREEN_WIDTH - TILE_BORDER_X - X_RIGHT_MARGIN
+AltTabMenu := false
 
 IME_SET(SetSts, WinTitle="A")    {
 	ControlGet,hwnd,HWND,,,%WinTitle%
@@ -110,49 +111,6 @@ MoveKeyCursor(direction)
     }
 }
 
-Insert:: Return
-^h:: Send,{BS}
-^M:: SendInput, {Enter}
-;^Space:: SendInput, {Enter}
-+Esc:: SendInput, {``}
-;^1:: SendInput, {Up}
-;^2:: SendInput, {Down}
-
-
-;;;
-;;; date
-;;;
-::;d;::
-FormatTime,TimeString,,yyyyMMdd
-Send,%TimeString%
-Return
-
-::;d/;::
-FormatTime,TimeString,,yyyy/MM/dd
-Send,%TimeString%
-Return
-
-::;d-;::
-FormatTime,TimeString,,yyyy-MM-dd
-Send,%TimeString%
-Return
-
-::;ts;::
-FormatTime,TimeString,,M/d HHmm
-Send,%TimeString% テレワーク開始します
-Return
-
-::;te;::
-FormatTime,TimeString,,M/d HHmm
-Send,%TimeString% テレワーク終了します
-Return
-
-+^w::
-    ; Switch focus among the same class window
-    WinGetClass, className, A
-    WinActivateBottom, ahk_class %className%
-    return
-
 GetNextKeyAndRunCmd()
 {
     global TILE_WIDTH_LEFT
@@ -189,10 +147,12 @@ GetNextKeyAndRunCmd()
         case "e": run,"C:\Users\0000123820\OneDrive - Sony\tool\vim81-kaoriya-win64\gvim.exe" %A_ScriptFullPath%
         case "v": run,C:\tool\link\gvim.exe.lnk
         case "w": run,C:\Users\0000123820\AppData\Local\Microsoft\WindowsApps\ubuntu2004.exe
-        case "s": run,C:\Users\0000123820\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell\Windows PowerShell.lnk
+        ;case "s": run,C:\Users\0000123820\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Windows PowerShell\Windows PowerShell.lnk
+        case "s": SendInput, ^!{s}
         case "r": Reload
     }
     return
+}
 
 GetNextKeyAndResizeWindow()
 {
@@ -235,6 +195,46 @@ GetNextKeyAndResizeWindow()
     return
 }
 
+Insert:: Return
+^h:: Send,{BS}
+^M:: SendInput, {Enter}
++Esc:: SendInput, {``}
++^s:: SendInput, ^!{s}
+#Esc:: SendInput, {Enter}
++^j:: IME_SET(1)
++^k:: IME_SET(0)
+
++^h:: SendInput, ^!{s}
++^f:: SendInput, ^!{s}
+
+;;;
+;;; date
+;;;
+::;d;::
+FormatTime,TimeString,,yyyyMMdd
+Send,%TimeString%
+Return
+
+::;d/;::
+FormatTime,TimeString,,yyyy/MM/dd
+Send,%TimeString%
+Return
+
+::;d-;::
+FormatTime,TimeString,,yyyy-MM-dd
+Send,%TimeString%
+Return
+
+::;ts;::
+FormatTime,TimeString,,M/d HHmm
+Send,%TimeString% テレワーク開始します
+Return
+
+::;te;::
+FormatTime,TimeString,,M/d HHmm
+Send,%TimeString% テレワーク終了します
+Return
+
 !^g::
 !g::
 ^+g::
@@ -249,34 +249,11 @@ GetNextKeyAndResizeWindow()
     return
 
 ;
-; resize window
-;
-^!Down::
-    WinGetPos,X,Y,W,H,A
-    H := H + 200
-    WinMove,A,,X,Y,W,H
-    return
-^!Up::
-    WinGetPos,X,Y,W,H,A
-    H := H - 200
-    WinMove,A,,X,Y,W,H
-    return
-^!Right::
-    WinGetPos,X,Y,W,H,A
-    W := W + 200
-    WinMove,A,,X,Y,W,H
-    return
-^!Left::
-    WinGetPos,X,Y,W,H,A
-    W := W - 200
-    WinMove,A,,X,Y,W,H
-    return
-
-;
 ; Window focus
 ;
-!^f::
-    Input Key, L1
+FocusWindow()
+{
+    Input Key, CL1
     switch Key {
         case "c": WinActivate,ahk_exe chrome.exe
         case "b": WinActivate,ahk_exe msedge.exe
@@ -284,12 +261,14 @@ GetNextKeyAndResizeWindow()
         case "m": WinActivate,ahk_class mintty
         case "t": WinActivate,ahk_exe Teams.exe
         case "w": WinActivate,Cygwin ahk_class mintty
+        case "E": WinActivate,ahk_class TablacusExplorer
         case "e": WinActivate,ahk_exe explorer.exe
         case "s": WinActivate,ahk_exe slack.exe
         case "x": WinActivate,ahk_class XLMAIN
         case "o": WinActivate,ahk_exe OUTLOOK.EXE
         case "v": WinActivate,ahk_class Vim
         case "p": WinActivate,ahk_class PPTFrameClass
+        case "r": WinActivate,ahk_exe mstsc.exe
         case "i": WinActivate,ahk_exe iexplore.exe
         case "n": WinActivate,ahk_class ApplicationFrameWindow
         case "d": {
@@ -306,8 +285,10 @@ GetNextKeyAndResizeWindow()
     }
     MoveMouseCursorToFocusedWindow() ;; move cursor
     return
-
-!^m:: WinActivate,ahk_exe WindowsTerminal.exe
+}
+!^f::
+    FocusWindow()
+    return
 
 ;
 ; Application Specific
@@ -338,33 +319,8 @@ GetNextKeyAndResizeWindow()
 #z:: WinMinimize, A
 !^z:: WinMinimize, A
 
-;
-; Mouse
-;
-+#a::
-    CoordMode, Mouse, Screen
-    MouseMove 500,400,0,
-    CoordMode, Mouse, Relative
-    return
-+#z::
-    CoordMode, Mouse, Screen
-    MouseMove 500,1600,0,
-    CoordMode, Mouse, Relative
-    return
-+#s::
-    CoordMode, Mouse, Screen
-    MouseMove 3500,400,0,
-    CoordMode, Mouse, Relative
-    return
-+#x::
-    CoordMode, Mouse, Screen
-    MouseMove 3500,1600,0,
-    CoordMode, Mouse, Relative
-    return
-
 ; PrintScreen
 ^!q::  SendInput, {LWin Down}{PrintScreen}{LWin Up}
-
 vkac:: SendInput, {LWin Down}{PrintScreen}{LWin Up}
 
 XButton2::
@@ -415,37 +371,44 @@ vka3 & w:: MoveKeyCursor("u")
 vka3 & s:: MoveKeyCursor("d")
 vka3 & a:: MoveKeyCursor("l")
 vka3 & d:: MoveKeyCursor("r")
-vka3 & 1:: SendInput, {PgUp}
-vka3 & 2:: SendInput, {PgDn}
 
 vka3 & x:: SendInput, {Del}
 vka3 & h:: SendInput, {BS}
 
+vka3 & g:: GetNextKeyAndRunCmd()
+
 vka3 & v:: SendInput, {Shift Down}{Insert}{Shift Up}
-vka3 & Down::   ExtendWindow(0, 200)
-vka3 & Up::     ExtendWindow(0, -200)
-vka3 & Right::  ExtendWindow(200, 0)
-vka3 & Left::   ExtendWindow(-200, 0)
-vka3 & Tab:: Return
+vka3 & Down::   ExtendWindow(0, 100)
+vka3 & Up::     ExtendWindow(0, -100)
+vka3 & Right::  ExtendWindow(100, 0)
+vka3 & Left::   ExtendWindow(-100, 0)
+
+vka3 & r:: IME_SET(1)
+vka3 & t:: IME_SET(0)
 vka3 & Space:: IME_SET(1)
+vka3 & j:: IME_SET(1)
+vka3 & k:: IME_SET(0)
 
-; num
-vka3 & u:: SendInput, {1}
-vka3 & i:: SendInput, {2}
-vka3 & o:: SendInput, {3}
-vka3 & j:: SendInput, {4}
-vka3 & k:: SendInput, {5}
-vka3 & l:: SendInput, {6}
-vka3 & m:: SendInput, {7}
-vka3 & ,:: SendInput, {8}
-vka3 & .:: SendInput, {9}
-vka3 & `;:: SendInput, {0}
+vka3 & Tab:: 
+    AltTabMenu := true
+    If GetKeyState("Shift","P")
+        Send {Alt Down}{Shift Down}{Tab}
+    else
+        Send {Alt Down}{Tab}
+    return
 
-vka3 & g:: ;; multi key stroke
-    Input Key, L1
-    switch Key {
-        case "s": SendInput, ^!{s}
+~*vka3 Up::
+    If (AltTabMenu){
+       Send {Shift Up}{Alt Up}
+       AltTabMenu := false 
     }
+   return
+vka3 & 1:: FocusWindow()
+vka3 & 3:: FocusWindow()
+vka3 & Esc::
+    ; Switch focus among the same class window
+    WinGetClass, _className, A
+    WinActivateBottom, ahk_class %_className%
     return
 
 ;;;;;;;;;;;;;;;
@@ -503,13 +466,9 @@ vk1d & e:: SendInput, {PgDn}
 ;;;;;;;;;;;;;;;
 ;;;; LAlt
 ;;;;;;;;;;;;;;;
-;!g:: SendInput, {Esc}
 !x:: SendInput, {Del}
 !h:: SendInput, {BS}
-!z:: SendInput, {BS}
 !v:: SendInput, {Shift Down}{Insert}{Shift Up}
-;!1:: SendInput, {PgUp}
-;!2:: SendInput, {PgDn}
 ; cursor
 ;!s:: MoveKeyCursor("d")
 !d:: MoveKeyCursor("r")
@@ -537,8 +496,6 @@ vk1d & e:: SendInput, {PgDn}
 !j:: SendInput, {~}
 !k:: SendInput, {Shift down}{End}{Del}{Shift up}
 !s:: SendInput, !^{s}
-!Esc:: IME_SET(1)
-!1:: IME_SET(0)
 *~LAlt::Send {Blind}{vk07}
 
 ;;;;;;;;;;;;;;;
@@ -570,10 +527,6 @@ vk7c & a:: SendInput, {+}
 vk7c & y:: SendInput, {\}
 vk7c & m:: SendInput, {_}
 vk7c & n:: SendInput, {&}
-;vk7c & ,:: SendInput, {~}
-vk7c & e:: SendInput, {=}
-vk7c & d:: SendInput, {+}
-vk7c & h:: SendInput, {^}
 vk7c & s:: SendInput, {_}
 vk7c & f::
     IME_SET(0)
@@ -598,13 +551,6 @@ vk7c & .::
   }
   SendInput, {]}
   return
-;vk7c up::   ; 連打
-;    If (A_PriorHotKey == A_ThisHotKey && A_TimeSincePriorHotkey < 300)
-;    {
-;        IME_SET(1)
-;        ;SendInput, {Esc}
-;    }
-;    Return
 #IfWinNotActive
 
 ;;;;;;;;;;;;;;;
