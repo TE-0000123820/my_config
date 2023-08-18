@@ -671,3 +671,28 @@ Numpad4:: SendInput, {PgUp}
     SendInput {Right}
     SetScrollLockState, Off
 #IfWinActive
+
+; 同じアプリ内の次のウィンドウに切り替える
+WIN_SameAppNext() {
+    WinGetClass, className, A
+    WinActivateBottom, ahk_class %className%
+}
+!Esc::WIN_SameAppNext()
+
+WIN_SameAppPrev() {
+    WinGet, thisWindowId, ID, A
+    WinGetClass, thisWindowClass, ahk_id %thisWindowId%
+    WinGet, allWindowIds, List, , , Program Manager
+    Loop, %allWindowIds% {
+        StringTrimRight, targetWindowId, allWindowIds%A_index%, 0
+        WinGetClass, targetWindowClass, ahk_id %targetWindowId%
+        if (thisWindowClass = targetWindowClass) {
+            if (thisWindowId <> targetWindowId) {
+                WinSet, Bottom, , ahk_id %thisWindowId%
+                WinActivate, ahk_id %targetWindowId%
+                break
+            }
+        }
+    }
+}
+!+Esc::WIN_SameAppPrev()
