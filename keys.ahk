@@ -153,32 +153,35 @@ Return
     WinActivateBottom, ahk_class %className%
     return
 
-;!^g::
-!g::
-    Input Key, L1
-    switch Key {
+GetNextKeyAndRunCmd()
+{
+    global TILE_WIDTH_LEFT
+    global TILE_WIDTH_RIGHT
+    global TILE_BORDER_X
+    Input _Key, L1
+    switch _Key {
         case "1": {
-            WinGetPos,X,Y,W,H,A
+            WinGetPos,_X,_Y,_W,_H,A
             WinMove,A,,60,0,TILE_WIDTH_LEFT,1070
         }
         case "2": {
-            WinGetPos,X,Y,W,H,A
+            WinGetPos,_X,_Y,_W,_H,A
             WinMove,A,,60,1080,TILE_WIDTH_LEFT,1070
         }
         case "3": {
-            WinGetPos,X,Y,W,H,A
+            WinGetPos,_X,_Y,_W,_H,A
             WinMove,A,,TILE_BORDER_X,0,TILE_WIDTH_RIGHT,1070
         }
         case "4": {
-            WinGetPos,X,Y,W,H,A
+            WinGetPos,_X,_Y,_W,_H,A
             WinMove,A,,TILE_BORDER_X,1080,TILE_WIDTH_RIGHT,1070
         }
         case "5": {
-            WinGetPos,X,Y,W,H,A
+            WinGetPos,_X,_Y,_W,_H,A
             WinMove,A,,60,0,TILE_WIDTH_LEFT,2100
         }
         case "6": {
-            WinGetPos,X,Y,W,H,A
+            WinGetPos,_X,_Y,_W,_H,A
             WinMove,A,,TILE_BORDER_X,0,TILE_WIDTH_RIGHT,2100
         }
         case "p": WinSet, AlwaysOnTop, TOGGLE, A
@@ -191,41 +194,58 @@ Return
     }
     return
 
-;!^w::
-!w::
-    Input Key, L1
-    switch Key {
+GetNextKeyAndResizeWindow()
+{
+    global TILE_WIDTH_LEFT
+    global TILE_WIDTH_RIGHT
+    global TILE_BORDER_X
+    Input _Key, L1
+    switch _Key {
         case "1": {
-            WinGetPos,X,Y,W,H,A
+            WinGetPos,_X,_Y,_W,_H,A
             WinMove,A,,60,0,TILE_WIDTH_LEFT,1070
             MoveMouseCursorToFocusedWindow()
         }
         case "q": {
-            WinGetPos,X,Y,W,H,A
+            WinGetPos,_X,_Y,_W,_H,A
             WinMove,A,,60,1080,TILE_WIDTH_LEFT,1070
             MoveMouseCursorToFocusedWindow()
         }
         case "2": {
-            WinGetPos,X,Y,W,H,A
+            WinGetPos,_X,_Y,_W,_H,A
             WinMove,A,,TILE_BORDER_X,0,TILE_WIDTH_RIGHT,1070
             MoveMouseCursorToFocusedWindow()
         }
         case "w": {
-            WinGetPos,X,Y,W,H,A
+            WinGetPos,_X,_Y,_W,_H,A
             WinMove,A,,TILE_BORDER_X,1080,TILE_WIDTH_RIGHT,1070
             MoveMouseCursorToFocusedWindow()
         }
         case "3": {
-            WinGetPos,X,Y,W,H,A
+            WinGetPos,_X,_Y,_W,_H,A
             WinMove,A,,60,0,TILE_WIDTH_LEFT,2000
             MoveMouseCursorToFocusedWindow()
         }
         case "4": {
-            WinGetPos,X,Y,W,H,A
+            WinGetPos,_X,_Y,_W,_H,A
             WinMove,A,,TILE_BORDER_X,0,TILE_WIDTH_RIGHT,2000
             MoveMouseCursorToFocusedWindow()
         }
     }
+    return
+}
+
+!^g::
+!g::
+^+g::
+    GetNextKeyAndRunCmd()
+    return
+
+!^w::
+!w::
++^w::
++^u::
+    GetNextKeyAndResizeWindow()
     return
 
 ;
