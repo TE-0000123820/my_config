@@ -22,6 +22,7 @@ set nf="hex"
 set ignorecase
 set smartcase
 set smarttab
+set nowrapscan
 set timeoutlen=1000
 set directory=~/vim_swap
 set foldmethod=marker

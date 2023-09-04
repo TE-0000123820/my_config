@@ -8,6 +8,7 @@ set bs=2
 set tabstop=4
 set laststatus=2
 set hlsearch
+set nowrapscan
 set encoding=utf-8
 "set ruler
 set nonumber
