@@ -1,6 +1,8 @@
 #!/bin/bash
 set -u -o pipefail
 
+config_dir=$(pwd)
+
 #
 # vim
 #
@@ -12,8 +14,9 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 mkdir -p ~/vim_swap
 (
 cd ~/
-ln -sf $MISC_DIR/.vimrc .
+ln -sf $config_dir/.vimrc .
 )
+env MISC_DIR=$config_dir vim -c ":PlugInstall|:qa"
 }
 
 #
@@ -21,12 +24,17 @@ ln -sf $MISC_DIR/.vimrc .
 #
 function setup_tmux() {
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+(
+cd ~/
+ln -sf $config_dir/.tmux.conf .
+)
 }
 
 #
 # python
 #
 function setup_python() {
+sudo apt update
 sudo apt install python3-pip
 pip3 install --user neovim python-lsp-server
 }
@@ -44,9 +52,9 @@ EOF
 
 (
 cd ~
-ln -sf $MISC_DIR/.gitconfig ./
+ln -sf $config_dir/.gitconfig ./
 mkdir -p ~/.ssh
-cat $MISC_DIR/.ssh_config >> ./.ssh/config
+cat $config_dir/.ssh_config >> ./.ssh/config
 )
 }
 
@@ -56,11 +64,22 @@ cat $MISC_DIR/.ssh_config >> ./.ssh/config
 function setup_misc() {
 mkdir -p ~/.cache/shell/
 
-sudo apt install zsh libevent-dev bison flex
+sudo apt update
+sudo apt install zsh libevent-dev bison flex vim keychain less wget unzip
+(
+cd ~/
+ln -sf ${config_dir} ./my_config
+)
+
+# zsh
+cat << EOF >> ~/.zshrc
+export MISC_DIR=~/my_config
+source \$MISC_DIR/.zshrc
+EOF
 }
 
-setup_vim
 setup_tmux
 setup_python
 setup_github
 setup_misc
+setup_vim
