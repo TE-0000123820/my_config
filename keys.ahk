@@ -3,11 +3,12 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
-SCREEN_WIDTH  := 3840
-SCREEN_HEIGHT := 2160
-TILE_WIDTH_LEFT := 2020
+SCREEN_WIDTH  := A_ScreenWidth
+SCREEN_HEIGHT := A_ScreenHeight
+TILE_WIDTH_LEFT := A_ScreenWidth/2
 X_CENTER_MARGIN := 60
 X_RIGHT_MARGIN := 30 
+TILE_HEIGHT_FULL := A_ScreenHeight - 30
 TILE_BORDER_X := TILE_WIDTH_LEFT + X_CENTER_MARGIN
 TILE_WIDTH_RIGHT := SCREEN_WIDTH - TILE_BORDER_X - X_RIGHT_MARGIN
 AltTabMenu := false
@@ -158,6 +159,7 @@ GetNextKeyAndResizeWindow()
 {
     global TILE_WIDTH_LEFT
     global TILE_WIDTH_RIGHT
+    global TILE_HEIGHT_FULL
     global TILE_BORDER_X
     Input _Key, L1
     switch _Key {
@@ -183,12 +185,12 @@ GetNextKeyAndResizeWindow()
         }
         case "3": {
             WinGetPos,_X,_Y,_W,_H,A
-            WinMove,A,,60,0,TILE_WIDTH_LEFT,2000
+            WinMove,A,,60,0,TILE_WIDTH_LEFT,TILE_HEIGHT_FULL
             MoveMouseCursorToFocusedWindow()
         }
         case "4": {
             WinGetPos,_X,_Y,_W,_H,A
-            WinMove,A,,TILE_BORDER_X,0,TILE_WIDTH_RIGHT,2000
+            WinMove,A,,TILE_BORDER_X,0,TILE_WIDTH_RIGHT,TILE_HEIGHT_FULL
             MoveMouseCursorToFocusedWindow()
         }
     }
