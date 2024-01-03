@@ -8,7 +8,7 @@ SCREEN_HEIGHT := A_ScreenHeight
 TILE_WIDTH_LEFT := A_ScreenWidth/2
 X_CENTER_MARGIN := 60
 X_RIGHT_MARGIN := 30 
-TILE_HEIGHT_FULL := A_ScreenHeight - 30
+TILE_HEIGHT_FULL := A_ScreenHeight * 0.95
 TILE_BORDER_X := TILE_WIDTH_LEFT + X_CENTER_MARGIN
 TILE_WIDTH_RIGHT := SCREEN_WIDTH - TILE_BORDER_X - X_RIGHT_MARGIN
 AltTabMenu := false
@@ -119,30 +119,6 @@ GetNextKeyAndRunCmd()
     global TILE_BORDER_X
     Input _Key, L1
     switch _Key {
-        case "1": {
-            WinGetPos,_X,_Y,_W,_H,A
-            WinMove,A,,60,0,TILE_WIDTH_LEFT,1070
-        }
-        case "2": {
-            WinGetPos,_X,_Y,_W,_H,A
-            WinMove,A,,60,1080,TILE_WIDTH_LEFT,1070
-        }
-        case "3": {
-            WinGetPos,_X,_Y,_W,_H,A
-            WinMove,A,,TILE_BORDER_X,0,TILE_WIDTH_RIGHT,1070
-        }
-        case "4": {
-            WinGetPos,_X,_Y,_W,_H,A
-            WinMove,A,,TILE_BORDER_X,1080,TILE_WIDTH_RIGHT,1070
-        }
-        case "5": {
-            WinGetPos,_X,_Y,_W,_H,A
-            WinMove,A,,60,0,TILE_WIDTH_LEFT,2100
-        }
-        case "6": {
-            WinGetPos,_X,_Y,_W,_H,A
-            WinMove,A,,TILE_BORDER_X,0,TILE_WIDTH_RIGHT,2100
-        }
         case "p": WinSet, AlwaysOnTop, TOGGLE, A
         case "c": run,C:\tool\link\mintty.exe.lnk -i /Cygwin-Terminal.ico -
         case "e": run,"C:\Users\0000123820\OneDrive - Sony\tool\vim81-kaoriya-win64\gvim.exe" %A_ScriptFullPath%
@@ -201,13 +177,6 @@ Insert:: Return
 ^h:: Send,{BS}
 ^M:: SendInput, {Enter}
 +Esc:: SendInput, {``}
-+^s:: SendInput, ^!{s}
-#Esc:: SendInput, {Enter}
-+^j:: IME_SET(1)
-+^k:: IME_SET(0)
-
-+^h:: SendInput, ^!{s}
-+^f:: SendInput, ^!{s}
 
 ;;;
 ;;; date
@@ -237,16 +206,18 @@ FormatTime,TimeString,,M/d HHmm
 Send,%TimeString% テレワーク終了します
 Return
 
-!^g::
-!g::
-^+g::
+::;m;::
+Send, norito.kato@sony.com
+Return
+
+<^q::
+<^g::
++!g::
     GetNextKeyAndRunCmd()
     return
 
-!^w::
-!w::
-+^w::
-+^u::
+<^w::
++!w::
     GetNextKeyAndResizeWindow()
     return
 
@@ -289,33 +260,9 @@ FocusWindow()
     return
 }
 !^f::
+<^f::
     FocusWindow()
     return
-
-;
-; Application Specific
-;
-#IfWinActive ahk_class TablacusExplorer
-+^a:: SendInput, {Alt down}{Left}{Alt Up}
-+^s:: SendInput, {Alt down}{Right}{Alt Up}
-#IfWinActive
-
-#IfWinActive ahk_exe msedge.exe
-+^n::
-    SendInput, ^{l}
-    Click, L, , 300, 200
-    SendInput, {b}
-    return
-^n:: SendInput, {Down}
-^p:: SendInput, {Up}
-!1:: SendInput, +^{Tab}
-!2:: SendInput, ^{Tab}
-#IfWinActive
-
-; onenote
-#IfWinActive ahk_exe ApplicationFrameHost.exe
-^k:: SendInput, {Shift down}{End}{Del}{Shift up}
-#IfWinActive
 
 #m:: WinMinimize, A
 #z:: WinMinimize, A
@@ -324,94 +271,6 @@ FocusWindow()
 ; PrintScreen
 ^!q::  SendInput, {LWin Down}{PrintScreen}{LWin Up}
 vkac:: SendInput, {LWin Down}{PrintScreen}{LWin Up}
-
-XButton2::
-    IfWinActive ahk_exe msedge.exe
-    {
-        SendInput, {Alt down}{Space}
-        Sleep 100
-        SendInput, {m}{Alt up}
-    }
-    Else
-    {
-        WinGetPos, xpos, ypos, width, height, A
-        pos := width - 300
-        Click,%pos%,20,0
-    }
-    return
-+WheelDown::WheelRight
-+WheelUp::WheelLeft
-
-;; select text
-#+j::
-    Send, {LButton Down}
-    MouseMove 100,0,0,R
-    Send, {LButton Up}
-    return
-
-;;;;;;;;;;;;;;;
-;;;; RAlt
-;;;;;;;;;;;;;;;
-vka5 & s:: SendInput, {Down 5}
-vka5 & w:: SendInput, {Up 5}
-vka5 & a:: SendInput, {Left 5}
-vka5 & d:: SendInput, {Right 5}
-
-;;;;;;;;;;;;;;;
-;;;; RCtrl (mapped to LAlt)
-;;;;;;;;;;;;;;;
-vka3 & c:: SendInput, {Esc}
-
-vka3 & n:: MoveKeyCursor("d")
-vka3 & p:: MoveKeyCursor("u")
-vka3 & b:: MoveKeyCursor("l")
-vka3 & f:: MoveKeyCursor("r")
-vka3 & e:: MoveKeyCursor("e")
-vka3 & q:: MoveKeyCursor("h")
-
-vka3 & w:: MoveKeyCursor("u")
-vka3 & s:: MoveKeyCursor("d")
-vka3 & a:: MoveKeyCursor("l")
-vka3 & d:: MoveKeyCursor("r")
-
-vka3 & x:: SendInput, {Del}
-vka3 & h:: SendInput, {BS}
-
-vka3 & g:: GetNextKeyAndRunCmd()
-
-vka3 & v:: SendInput, {Shift Down}{Insert}{Shift Up}
-vka3 & Down::   ExtendWindow(0, 100)
-vka3 & Up::     ExtendWindow(0, -100)
-vka3 & Right::  ExtendWindow(100, 0)
-vka3 & Left::   ExtendWindow(-100, 0)
-
-vka3 & r:: IME_SET(1)
-vka3 & t:: IME_SET(0)
-vka3 & Space:: IME_SET(1)
-vka3 & j:: IME_SET(1)
-vka3 & k:: IME_SET(0)
-
-vka3 & Tab:: 
-    AltTabMenu := true
-    If GetKeyState("Shift","P")
-        Send {Alt Down}{Shift Down}{Tab}
-    else
-        Send {Alt Down}{Tab}
-    return
-
-~*vka3 Up::
-    If (AltTabMenu){
-       Send {Shift Up}{Alt Up}
-       AltTabMenu := false 
-    }
-   return
-vka3 & 1:: FocusWindow()
-vka3 & 3:: FocusWindow()
-vka3 & Esc::
-    ; Switch focus among the same class window
-    WinGetClass, _className, A
-    WinActivateBottom, ahk_class %_className%
-    return
 
 ;;;;;;;;;;;;;;;
 ;;;; 無変換
@@ -468,121 +327,71 @@ vk1d & e:: SendInput, {PgDn}
 ;;;;;;;;;;;;;;;
 ;;;; LAlt
 ;;;;;;;;;;;;;;;
-!x:: SendInput, {Del}
-!h:: SendInput, {BS}
-!v:: SendInput, {Shift Down}{Insert}{Shift Up}
-; cursor
-;!s:: MoveKeyCursor("d")
-!d:: MoveKeyCursor("r")
-;!w:: MoveKeyCursor("u")
-!q:: MoveKeyCursor("h")
-!a:: MoveKeyCursor("l")
-!e:: MoveKeyCursor("e")
-!n:: MoveKeyCursor("d")
-!p:: MoveKeyCursor("u")
-!b:: MoveKeyCursor("l")
-!f:: MoveKeyCursor("r")
-!r:: MoveMouseCursorToFocusedWindow()
-;!Space:: IME_SET(1)
-!4:: SendInput, {Alt Down}{F4}{Alt Up}
-!5:: SendInput, {Alt Down}{F5}{Alt Up}
-!Down::   ExtendWindow(0, 200)
-!Up::     ExtendWindow(0, -200)
-!Right::  ExtendWindow(200, 0)
-!Left::   ExtendWindow(-200, 0)
-!u:: SendInput, {_}
-!y:: SendInput, {\}
-!,:: SendInput, {~}
-!/:: SendInput, {\}
-!m:: SendInput, {_}
-!j:: SendInput, {~}
-!k:: SendInput, {Shift down}{End}{Del}{Shift up}
-!s:: SendInput, !^{s}
-*~LAlt::Send {Blind}{vk07}
+*~LAlt::Send {Blind}{vkFF} ; map to "no mapping"
+<!n:: MoveKeyCursor("d")
+<!p:: MoveKeyCursor("u")
+;<!b:: MoveKeyCursor("l")
+;<!f:: MoveKeyCursor("r")
+<!e:: MoveKeyCursor("e")
+<!q:: MoveKeyCursor("h")
 
-;;;;;;;;;;;;;;;
-;;; 変換
-;;;;;;;;;;;;;;;
-vk1c:: SendInput, {Enter}
+<!w:: MoveKeyCursor("u")
+<!s:: MoveKeyCursor("d")
+<!a:: MoveKeyCursor("l")
+<!d:: MoveKeyCursor("r")
+
+<!c:: SendInput, {Esc}
+<!x:: SendInput, {Del}
+<!h:: SendInput, {BS}
+<!v:: SendInput, {Shift Down}{Insert}{Shift Up}
+<!k:: SendInput, {Shift down}{End}{Del}{Shift up}
+
+<!Down::   ExtendWindow(0, 200)
+<!Up::     ExtendWindow(0, -200)
+<!Right::  ExtendWindow(200, 0)
+<!Left::   ExtendWindow(-200, 0)
 
 #IfWinNotActive,ahk_exe mstsc.exe
 ;;;;;;;;;;;;;;;
-;;; F13(vk7c(sc64))
+;;; F13
 ;;; カタカナ/ひらがな or RAlt にマップ
 ;;;;;;;;;;;;;;;
-;vk7c:: IME_SET(1)         ;;; IME on
-vk7c & Space:: IME_SET(0) ;;; IME off
-vk7c & j:: SendInput, {vkf2} ;;; IME on
-vk7c & k:: SendInput, {vk1d} ;;; IME off
-vk7c & u:: SendInput, {F10}{Enter}  ;;; hankaku
-vk7c & o:: SendInput, {F10}{Enter}  ;;; hankaku
-vk7c & l:: SendInput, {F10}{Enter}  ;;; hankaku
-vk7c & i:: SendInput, {F7}     ;;; カタカナ
-vk7c & q:: SendInput, {|}
-vk7c & w:: SendInput, {~}
+F13 & Space:: IME_SET(0) ;;; IME off
+F13 & j:: SendInput, {vkf2} ;;; IME on
+F13 & k:: SendInput, {vk1d} ;;; IME off
+F13 & q:: SendInput, {|}
+F13 & w:: SendInput, {~}
 ; symbols
-vk7c & t:: SendInput, {~}
-;vk7c & b:: SendInput, {``}
-vk7c & b:: SendInput, {\}
-vk7c & p:: SendInput, {|}
-vk7c & a:: SendInput, {+}
-vk7c & y:: SendInput, {\}
-vk7c & m:: SendInput, {_}
-vk7c & n:: SendInput, {&}
-vk7c & s:: SendInput, {_}
-vk7c & f::
-    IME_SET(0)
-    SendInput, {-}
-    Return
-vk7c & 1:: SendInput, {[}
-vk7c & 2:: SendInput, {]}
-vk7c & 3:: SendInput, {{}
-vk7c & 4:: SendInput, {}}
-vk7c & Enter:: SendInput, {Enter}{vkf3sc029}
-vk7c & ,::
-  if GetKeyState("Shift") {
-    SendInput, {`{}
-    return
-  }
-  SendInput, {[}
-  return
-vk7c & .::
-  if GetKeyState("Shift") {
-    SendInput, {`}}
-    return
-  }
-  SendInput, {]}
-  return
+F13 & t:: SendInput, {~}
+F13 & b:: SendInput, {\}
+F13 & p:: SendInput, {|}
+F13 & a:: SendInput, {+}
+F13 & y:: SendInput, {\}
+F13 & m:: SendInput, {_}
+F13 & n:: SendInput, {&}
+F13 & s:: SendInput, {_}
+
 #IfWinNotActive
 
 ;;;;;;;;;;;;;;;
 ;;; RAlt
 ;;;;;;;;;;;;;;;
-vka5 & j:: SendInput, {vkf2} ;;; IME on
-vka5 & k:: SendInput, {vk1d} ;;; IME off
-vka5 & u:: SendInput, {F10}{Enter}    ;;; hankaku
-vka5 & o:: SendInput, {F10}{Enter}    ;;; hankaku
-vka5 & l:: SendInput, {F10}{Enter}    ;;; hankaku
-vka5 & i:: SendInput, {F7}{Enter}     ;;; カタカナ
-vka5 & q:: SendInput, {|}
+>!j:: SendInput, {vkf2} ;;; IME on
+>!k:: SendInput, {vk1d} ;;; IME off
+>!q:: SendInput, {|}
 ; symbol
-vka5 & t:: SendInput, {~}
-vka5 & b:: SendInput, {``}
-vka5 & p:: SendInput, {|}
-vka5 & n:: SendInput, {&}
-vka5 & Space:: SendInput, {vkf2}
+>!t:: SendInput, {~}
+>!b:: SendInput, {``}
+>!p:: SendInput, {|}
+>!n:: SendInput, {&}
+>!Space:: SendInput, {vkf2}
 
-AppsKey & z:: SendInput,{_}
+!>s:: SendInput, {Down 5}
+!>w:: SendInput, {Up 5}
+!>a:: SendInput, {Left 5}
+!>d:: SendInput, {Right 5}
 
-; 上部メニューがアクティブになるのを抑制
-*~RAlt::Send {Blind}{vk07}
-; 左 Alt 空打ちで IME を OFF
-RAlt up::
-    if (A_PriorHotkey == "*~RAlt")
-    {
-        IME_SET(1)
-    }
-    Return
+*~RAlt::Send {Blind}{vkFF} ; map to "no mapping"
 
 ;;
 ;; Numpad
@@ -614,15 +423,15 @@ Numpad5:: SendInput, {Up}
 Numpad6:: SendInput, {PgDn}
 Numpad4:: SendInput, {PgUp}
 
-;; for 60% keyboeard
-^+/:: SendInput, {_}
-^+Up:: SendInput, {\}
-+BS:: SendInput, {|}
-^+BS:: SendInput, {\}
+;
+; Application Specific
+;
+#IfWinActive ahk_class TablacusExplorer
++^a:: SendInput, {Alt down}{Left}{Alt Up}
++^s:: SendInput, {Alt down}{Right}{Alt Up}
+#IfWinActive
 
-;
 ; Horizontal Scroll
-;
 #IfWinActive, ahk_exe POWERPNT.EXE
 ~Lshift & WheelUp::ComObjActive("PowerPoint.Application").ActiveWindow.SmallScroll(0,0,0,10)
 ~Lshift & WheelDown::ComObjActive("PowerPoint.Application").ActiveWindow.SmallScroll(0,0,10,0)
