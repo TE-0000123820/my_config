@@ -147,3 +147,8 @@ ctrl-d:execute(${VIM} -c \":Gdiff\" {2..} < /dev/tty > /dev/tty 2>&1)") || retur
     selected=$(echo ${selected} | cut -c3- | perl -pne 's/\n/ /g')
     print -z $selected
 }
+
+# fs - snippets
+fs() {
+  print -z $(cat ${MISC_DIR}/fzf_snippets | fzf +s --tac | sed 's/ ##### .*$//g')
+}

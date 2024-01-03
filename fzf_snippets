@@ -1,0 +1,16 @@
+git remote set-url origin xx ##### change
+git reset HEAD^
+sudo growpart /dev/nvme0n1 1 ##### aws,ebs,size,growpart
+sudo resize2fs /dev/nvme0n1p1 ##### aws,resize,e2fs,ebs,size,change
+python -m json.tool ${1:a.json} ##### python,json,dump,tool
+pytest --collect-only ##### pytest,list,test,all,collect,only
+env PS4='${LINENO} bash -x ' ##### bash,ps4,-x,lineno
+python3 -m venv --system-site-packages venv_dir ##### python,venv,system,packages
+date +"%Y%m%d_%H"
+git fetch --unshallow
+git git branch --contains -a xxx
+git submodule update --init --recursive
+git submodule foreach --recursive git clean -ffdx && git clean -ffdx
+date +"%Y%m%d_%H%M"
+export https_proxy=http://proxy.kanto.sony.co.jp:10080
+export http_proxy=http://proxy.kanto.sony.co.jp:10080
