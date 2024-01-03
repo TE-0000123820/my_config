@@ -1,4 +1,4 @@
-PROMPT_STR=$'(`basename \"$VIRTUAL_ENV\"`) %{\e[31m%}%n%{\e[m%}@%{\e[32m%}%m%{\e[m%}:${vcs_info_msg_0_}|(%1v, $$)|$(get_cpu_info)|%D{%Y/%m/%d %H:%M} %{\e[1;33m%}%~%{\e[m%}\n%{%(?.$bg[black].$bg[red])%}%#%#%#%{$reset_color%} '
+PROMPT_STR=$'%F{red}%n%f@%F{green}%m%f|(%1v, $$)|%D{%Y/%m/%d %H:%M} %{\e[1;33m%}%~%{\e[m%}\n%{%(?.%K{black}.%K{red})%}%#%#%#%{%k%} '
 PS4_STR='[%D{%Y/%m/%d %H:%M:%S.%6.} ]+ '
 PROMPT=${PROMPT_STR}
 PS4=${PS4_STR}
@@ -67,7 +67,7 @@ zstyle ':zle:*' word-chars " _-./;@"
 zstyle ':zle:*' word-style unspecified
 
 autoload -Uz compinit && compinit
-autoload -Uz colors && colors
+#autoload -Uz colors && colors
 autoload -Uz zmv
 
 setopt hist_ignore_all_dups
@@ -95,6 +95,7 @@ alias c="cd"
 alias cmake="cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
 alias dck="docker"
 alias df="df -h"
+alias e="explorer.exe"
 function myfg() { fg %$1 }
 alias f="myfg"
 alias g="git"
