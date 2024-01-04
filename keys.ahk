@@ -423,6 +423,12 @@ Numpad5:: SendInput, {Up}
 Numpad6:: SendInput, {PgDn}
 Numpad4:: SendInput, {PgUp}
 
+;;
+;; Mouse
+;;
++WheelDown::WheelRight
++WheelUp::WheelLeft
+
 ;
 ; Application Specific
 ;
