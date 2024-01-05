@@ -565,6 +565,23 @@ call lsp#register_server({
         \ 'allowlist': ['c','cpp'],
         \ })
 
+""""""""""""""""""""""""
+" utils
+""""""""""""""""""""""""
+
+" get a github permalink of a file
+function! GetPermalink()
+    let filename = "attn.py"
+    let path = system("git ls-files --full-name " . filename . " |  tr '\n' '#'")
+    let rev = system("git rev-parse HEAD | tr '\n' '/'")
+    let repo = system('git remote -v | perl -ne "if(/\s(\S+)\s\(fetch\)/) { print \$1; }"') . "/"
+    let lineno = "L" . line(".")
+    echo repo . "blob/" . rev . path . lineno
+endfunction
+
+"""""""""""""""""""""""
+" delayed plugin load
+"""""""""""""""""""""""
 " Load Event
 function! s:load_plug(timer)
     call plug#load(
