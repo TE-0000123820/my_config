@@ -13,6 +13,23 @@ TILE_BORDER_X := TILE_WIDTH_LEFT + X_CENTER_MARGIN
 TILE_WIDTH_RIGHT := SCREEN_WIDTH - TILE_BORDER_X - X_RIGHT_MARGIN
 AltTabMenu := false
 
+IME_GET(WinTitle="A")  {
+    ControlGet,hwnd,HWND,,,%WinTitle%
+    if    (WinActive(WinTitle))    {
+        ptrSize := !A_PtrSize ? 4 : A_PtrSize
+        VarSetCapacity(stGTI, cbSize:=4+4+(PtrSize*6)+16, 0)
+        NumPut(cbSize, stGTI,  0, "UInt")   ;    DWORD   cbSize;
+        hwnd := DllCall("GetGUIThreadInfo", Uint,0, Uint,&stGTI)
+                 ? NumGet(stGTI,8+PtrSize,"UInt") : hwnd
+    }
+
+    return DllCall("SendMessage"
+          , UInt, DllCall("imm32\ImmGetDefaultIMEWnd", Uint,hwnd)
+          , UInt, 0x0283  ;Message : WM_IME_CONTROL
+          ,  Int, 0x0005  ;wParam  : IMC_GETOPENSTATUS
+          ,  Int, 0)      ;lParam  : 0
+}
+
 IME_SET(SetSts, WinTitle="A")    {
 	ControlGet,hwnd,HWND,,,%WinTitle%
 	if	(WinActive(WinTitle))	{
@@ -210,16 +227,15 @@ Return
 Send, norito.kato@sony.com
 Return
 
-<^q::
-<^g::
 +!g::
     GetNextKeyAndRunCmd()
     return
 
-<^w::
 +!w::
     GetNextKeyAndResizeWindow()
     return
+
++!s:: Send, !^s
 
 ;
 ; Window focus
@@ -328,10 +344,12 @@ vk1d & e:: SendInput, {PgDn}
 ;;;; LAlt
 ;;;;;;;;;;;;;;;
 *~LAlt::Send {Blind}{vkFF} ; map to "no mapping"
-<!n:: MoveKeyCursor("d")
+
+<!c:: IME_SET(0)
+<!z:: IME_SET(1)
+
+<!n:: MdooveKeyCursor("d")
 <!p:: MoveKeyCursor("u")
-;<!b:: MoveKeyCursor("l")
-;<!f:: MoveKeyCursor("r")
 <!e:: MoveKeyCursor("e")
 <!q:: MoveKeyCursor("h")
 
@@ -340,7 +358,7 @@ vk1d & e:: SendInput, {PgDn}
 <!a:: MoveKeyCursor("l")
 <!d:: MoveKeyCursor("r")
 
-<!c:: SendInput, {Esc}
+<!g:: SendInput, {Esc}
 <!x:: SendInput, {Del}
 <!h:: SendInput, {BS}
 <!v:: SendInput, {Shift Down}{Insert}{Shift Up}
@@ -376,22 +394,48 @@ F13 & s:: SendInput, {_}
 ;;;;;;;;;;;;;;;
 ;;; RAlt
 ;;;;;;;;;;;;;;;
->!j:: SendInput, {vkf2} ;;; IME on
->!k:: SendInput, {vk1d} ;;; IME off
->!q:: SendInput, {|}
+;>!j:: SendInput, {vkf2} ;;; IME on
+;>!k:: SendInput, {vk1d} ;;; IME off
+
 ; symbol
 >!t:: SendInput, {~}
 >!b:: SendInput, {``}
 >!p:: SendInput, {|}
 >!n:: SendInput, {&}
->!Space:: SendInput, {vkf2}
+>!Esc:: SendInput, {``}
++>!Esc:: SendInput, {~}
 
-!>s:: SendInput, {Down 5}
-!>w:: SendInput, {Up 5}
-!>a:: SendInput, {Left 5}
-!>d:: SendInput, {Right 5}
+; move
+>!e:: MoveKeyCursor("e")
+>!q:: MoveKeyCursor("h")
+
+>!k:: MoveKeyCursor("u")
+>!j:: MoveKeyCursor("d")
+>!h:: MoveKeyCursor("l")
+>!l:: MoveKeyCursor("r")
+
++>!j:: SendInput, {Down 5}
++>!k:: SendInput, {Up 5}
++>!h:: SendInput, {Left 5}
++>!l:: SendInput, {Right 5}
 
 *~RAlt::Send {Blind}{vkFF} ; map to "no mapping"
+
+;;;
+;;; RCtrl (mapped to capslock)
+;;;
+;>^1:: IME_SET(1)
+;>^2:: IME_SET(0)
+
+;;;
+;;; LCtrl
+;;;
+<^w:: MoveKeyCursor("u")
+<^s:: MoveKeyCursor("d")
+<^a:: MoveKeyCursor("l")
+<^d:: MoveKeyCursor("r")
+
+<^z:: WinMinimize, A
 
 ;;
 ;; Numpad
