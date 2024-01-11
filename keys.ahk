@@ -348,7 +348,7 @@ vk1d & e:: SendInput, {PgDn}
 <!c:: IME_SET(0)
 <!z:: IME_SET(1)
 
-<!n:: MdooveKeyCursor("d")
+<!n:: MoveKeyCursor("d")
 <!p:: MoveKeyCursor("u")
 <!e:: MoveKeyCursor("e")
 <!q:: MoveKeyCursor("h")
