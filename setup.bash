@@ -35,7 +35,7 @@ ln -sf $config_dir/.tmux.conf .
 #
 function setup_python() {
 sudo apt update
-sudo apt install python3-pip
+sudo apt install -y python3-pip
 pip3 install --user neovim python-lsp-server
 }
 
@@ -65,7 +65,7 @@ function setup_misc() {
 mkdir -p ~/.cache/shell/
 
 sudo apt update
-sudo apt install zsh libevent-dev bison flex vim keychain less wget unzip
+sudo apt install -y zsh libevent-dev bison flex vim keychain less wget unzip
 (
 cd ~/
 ln -sf ${config_dir} ./my_config
