@@ -65,7 +65,7 @@ function setup_misc() {
 mkdir -p ~/.cache/shell/
 
 sudo apt update
-sudo apt install -y zsh libevent-dev bison flex vim keychain less wget unzip
+sudo apt install -y zsh libevent-dev bison flex vim keychain less wget unzip jq golang-go global
 (
 cd ~/
 ln -sf ${config_dir} ./my_config
