@@ -549,6 +549,9 @@ augroup END
 "let lsp_log_verbose=1
 "let lsp_log_file = expand('~/lsp.log')
 let g:lsp_diagnostics_echo_cursor = 1 
+let g:lsp_diagnostics_enabled = 0
+let g:lsp_diagnostics_highlights_enabled = 0
+let g:lsp_diagnostics_virtual_text_enabled = 0
 
 if executable('pylsp')
     " pip install python-language-server
