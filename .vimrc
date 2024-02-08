@@ -573,8 +573,8 @@ call lsp#register_server({
 """"""""""""""""""""""""
 
 " get a github permalink of a file
-function! GetPermalink()
-    let filename = "attn.py"
+function! GetGithubPermalink()
+    let filename = expand("%h")
     let path = system("git ls-files --full-name " . filename . " |  tr '\n' '#'")
     let rev = system("git rev-parse HEAD | tr '\n' '/'")
     let repo = system('git remote -v | perl -ne "if(/\s(\S+)\s\(fetch\)/) { print \$1; }"') . "/"
